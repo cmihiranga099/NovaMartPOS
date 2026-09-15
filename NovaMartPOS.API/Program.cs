@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using NovaMartPOS.Infrastructure.Persistence;
 
 namespace NovaMartPOS.API
 {
@@ -14,6 +16,9 @@ namespace NovaMartPOS.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -26,7 +31,6 @@ namespace NovaMartPOS.API
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
