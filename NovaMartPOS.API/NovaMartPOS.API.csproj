@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NovaMartPOS.Application\NovaMartPOS.Application.csproj" />
+    <ProjectReference Include="..\NovaMartPOS.Domain\NovaMartPOS.Domain.csproj" />
+    <ProjectReference Include="..\NovaMartPOS.Infrastructure\NovaMartPOS.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
