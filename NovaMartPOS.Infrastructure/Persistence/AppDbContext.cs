@@ -22,22 +22,30 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Unique constraints
+        // Unique constraints (with max length — required for MySQL utf8mb4 index limits)
         modelBuilder.Entity<User>()
             .HasIndex(u => u.Username)
             .IsUnique();
+        modelBuilder.Entity<User>()
+            .Property(u => u.Username).HasMaxLength(100);
 
         modelBuilder.Entity<Product>()
             .HasIndex(p => p.Barcode)
             .IsUnique();
+        modelBuilder.Entity<Product>()
+            .Property(p => p.Barcode).HasMaxLength(100);
 
         modelBuilder.Entity<Product>()
             .HasIndex(p => p.ProductCode)
             .IsUnique();
+        modelBuilder.Entity<Product>()
+            .Property(p => p.ProductCode).HasMaxLength(100);
 
         modelBuilder.Entity<Sale>()
             .HasIndex(s => s.InvoiceNumber)
             .IsUnique();
+        modelBuilder.Entity<Sale>()
+            .Property(s => s.InvoiceNumber).HasMaxLength(100);
 
         // Decimal precision — never let EF pick a default for money fields
         modelBuilder.Entity<Product>()
