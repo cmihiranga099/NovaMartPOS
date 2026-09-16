@@ -97,8 +97,7 @@ export default function CustomersPage() {
         <h1 className="text-2xl font-bold">Customers</h1>
         <button
           onClick={openAddModal}
-          className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        >
+          className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium transition-colors"        >
           <Plus size={18} /> Add Customer
         </button>
       </div>
@@ -139,7 +138,7 @@ export default function CustomersPage() {
                 <td className="px-4 py-3">{customer.email || '—'}</td>
                 <td className="px-4 py-3 text-right">{customer.loyaltyPoints}</td>
                 <td className="px-4 py-3 text-right space-x-2">
-                  <button onClick={() => openEditModal(customer)} className="text-blue-600 hover:text-blue-800">
+                  <button onClick={() => openEditModal(customer)} className="text-brand-600 hover:text-brand-700">
                     <Pencil size={16} className="inline" />
                   </button>
                   <button onClick={() => handleDelete(customer)} className="text-red-600 hover:text-red-800">
