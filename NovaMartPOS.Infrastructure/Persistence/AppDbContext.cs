@@ -16,6 +16,8 @@ public class AppDbContext : DbContext
     public DbSet<Sale> Sales => Set<Sale>();
     public DbSet<SaleItem> SaleItems => Set<SaleItem>();
     public DbSet<Payment> Payments => Set<Payment>();
+    public DbSet<Return> Returns => Set<Return>();
+   public DbSet<ReturnItem> ReturnItems => Set<ReturnItem>();
     public DbSet<StockTransaction> StockTransactions => Set<StockTransaction>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,6 +48,9 @@ public class AppDbContext : DbContext
             .IsUnique();
         modelBuilder.Entity<Sale>()
             .Property(s => s.InvoiceNumber).HasMaxLength(100);
+
+        modelBuilder.Entity<Return>().Property(r => r.TotalRefund).HasColumnType("decimal(18,2)");
+modelBuilder.Entity<ReturnItem>().Property(ri => ri.RefundAmount).HasColumnType("decimal(18,2)");    
 
         // Decimal precision — never let EF pick a default for money fields
         modelBuilder.Entity<Product>()
