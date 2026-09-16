@@ -131,6 +131,34 @@ namespace NovaMartPOS.API
                     db.SaveChanges();
                 }
             }
+            using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
+
+    if (!db.Users.Any())
+    {
+        db.Users.Add(new User
+        {
+            FullName = "System Administrator",
+            Username = "admin",
+            PasswordHash = hasher.Hash("Admin@123"),
+            Role = UserRole.Administrator,
+            IsActive = true
+        });
+        db.SaveChanges();
+    }
+
+    if (!db.Customers.Any())
+    {
+        db.Customers.Add(new Customer
+        {
+            Name = "Walk-in Customer",
+            IsActive = true
+        });
+        db.SaveChanges();
+    }
+}
 
             app.Run();
         }
