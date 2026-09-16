@@ -50,6 +50,16 @@ namespace NovaMartPOS.API
                 });
             });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services.AddDbContext<AppDbContext>(options =>
@@ -88,7 +98,7 @@ namespace NovaMartPOS.API
             builder.Services.AddScoped<IReturnService, ReturnService>();
 
             builder.Services.AddScoped<IReportRepository, ReportRepository>();
-builder.Services.AddScoped<IReportService, ReportService>();
+            builder.Services.AddScoped<IReportService, ReportService>();
 
             builder.Services.AddAuthentication(options =>
             {
@@ -121,6 +131,9 @@ builder.Services.AddScoped<IReportService, ReportService>();
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowFrontend");
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
@@ -142,35 +155,17 @@ builder.Services.AddScoped<IReportService, ReportService>();
                     });
                     db.SaveChanges();
                 }
+
+                if (!db.Customers.Any())
+                {
+                    db.Customers.Add(new Customer
+                    {
+                        Name = "Walk-in Customer",
+                        IsActive = true
+                    });
+                    db.SaveChanges();
+                }
             }
-            using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
-
-    if (!db.Users.Any())
-    {
-        db.Users.Add(new User
-        {
-            FullName = "System Administrator",
-            Username = "admin",
-            PasswordHash = hasher.Hash("Admin@123"),
-            Role = UserRole.Administrator,
-            IsActive = true
-        });
-        db.SaveChanges();
-    }
-
-    if (!db.Customers.Any())
-    {
-        db.Customers.Add(new Customer
-        {
-            Name = "Walk-in Customer",
-            IsActive = true
-        });
-        db.SaveChanges();
-    }
-}
 
             app.Run();
         }
