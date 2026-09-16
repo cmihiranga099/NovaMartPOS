@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './layouts/MainLayout';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import ProductsPage from './pages/ProductsPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           }
         >
           <Route index element={<DashboardPage />} />
+          <Route path="products" element={<ProductsPage />} />
         </Route>
       </Routes>
     </AuthProvider>
