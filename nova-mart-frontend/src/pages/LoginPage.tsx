@@ -34,22 +34,22 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex bg-surface">
-      <div className="hidden md:flex md:w-1/2 bg-brand-800 text-brand-50 flex-col justify-between p-12">
-        <div className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-md bg-accent-500 flex items-center justify-center font-bold text-brand-900">
+      <div className="hidden md:flex md:w-1/2 bg-brand-50 flex-col justify-between p-12">
+        <div className="flex items-center gap-2.5">
+          <div className="w-10 h-10 rounded-xl bg-brand-500 flex items-center justify-center font-extrabold text-white text-lg">
             N
           </div>
-          <span className="font-bold text-lg">Nova Mart</span>
+          <span className="font-bold text-lg text-ink-900">Nova Mart</span>
         </div>
         <div>
-          <h1 className="text-4xl font-bold leading-tight mb-3">
+          <h1 className="text-4xl font-bold leading-tight mb-3 text-ink-900">
             Ring up sales faster,<br />track stock better.
           </h1>
-          <p className="text-brand-200 max-w-sm">
+          <p className="text-ink-700 max-w-sm">
             One counter, one system — checkout, inventory, and reporting for your shop floor.
           </p>
         </div>
-        <p className="text-sm text-brand-400">Nova Mart POS</p>
+        <p className="text-sm text-ink-500">Nova Mart POS</p>
       </div>
 
       <div className="flex-1 flex items-center justify-center p-8">
@@ -64,7 +64,7 @@ export default function LoginPage() {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-3 py-2.5 border border-ink-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="w-full px-3 py-2.5 border border-line rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
                 required
                 autoFocus
               />
@@ -76,7 +76,7 @@ export default function LoginPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2.5 border border-ink-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
+                className="w-full px-3 py-2.5 border border-line rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
                 required
               />
             </div>
@@ -86,7 +86,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2.5 bg-brand-600 text-white font-medium rounded-lg hover:bg-brand-700 disabled:opacity-50 transition-colors"
+              className="w-full py-2.5 bg-brand-500 text-white font-medium rounded-lg hover:bg-brand-600 disabled:opacity-50 transition-colors"
             >
               {loading ? 'Signing in...' : 'Sign in'}
             </button>

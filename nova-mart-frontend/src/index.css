@@ -3,25 +3,21 @@
 @theme {
   --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
 
-  --color-brand-50: #eef6f3;
-  --color-brand-100: #d3e9e1;
-  --color-brand-300: #78b8a1;
-  --color-brand-500: #2c7d63;
-  --color-brand-600: #1c6350;
-  --color-brand-700: #164e40;
+  --color-brand-50: #fff4ec;
+  --color-brand-100: #ffe4d1;
+  --color-brand-300: #ffab73;
+  --color-brand-500: #fe6c0d;
+  --color-brand-600: #e85a00;
+  --color-brand-700: #bf4700;
   --color-brand-800: #123f34;
   --color-brand-900: #0f2b23;
 
-  --color-accent-100: #fbe7c2;
-  --color-accent-400: #eca430;
-  --color-accent-500: #e0901c;
-  --color-accent-600: #c17414;
+  --color-ink-900: #2f3032;
+  --color-ink-700: #55565a;
+  --color-ink-500: #85868c;
 
-  --color-ink-900: #16211c;
-  --color-ink-700: #33453c;
-  --color-ink-500: #5c6f65;
-
-  --color-surface: #f6f8f5;
+  --color-line: #ece7e2;
+  --color-surface: #fbfaf8;
 }
 
 body {
