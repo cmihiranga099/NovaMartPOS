@@ -87,6 +87,9 @@ namespace NovaMartPOS.API
             builder.Services.AddScoped<IReturnRepository, ReturnRepository>();
             builder.Services.AddScoped<IReturnService, ReturnService>();
 
+            builder.Services.AddScoped<IReportRepository, ReportRepository>();
+builder.Services.AddScoped<IReportService, ReportService>();
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
