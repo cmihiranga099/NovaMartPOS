@@ -40,4 +40,8 @@ public class SalesController : ControllerBase
         var sale = await _service.GetByIdAsync(id);
         return sale is null ? NotFound() : Ok(sale);
     }
+
+    [HttpGet]
+public async Task<IActionResult> GetAll()
+    => Ok(await _service.GetAllAsync());
 }

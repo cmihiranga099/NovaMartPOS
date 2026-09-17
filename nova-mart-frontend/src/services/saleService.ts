@@ -7,6 +7,10 @@ export const saleService = {
     const res = await apiClient.post<SaleResult>('/Sales', data);
     return res.data;
   },
+  getAll: async (): Promise<SaleResult[]> => {
+    const res = await apiClient.get<SaleResult[]>('/Sales');
+    return res.data;
+  },
   searchByBarcode: async (barcode: string): Promise<Product> => {
     const res = await apiClient.get<Product>(`/Products/barcode/${barcode}`);
     return res.data;

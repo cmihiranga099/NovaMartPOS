@@ -121,6 +121,12 @@ public class SaleService : ISaleService
         return sale is null ? null : MapToDto(sale);
     }
 
+    public async Task<List<SaleDto>> GetAllAsync()
+{
+    var sales = await _saleRepository.GetAllWithDetailsAsync();
+    return sales.Select(MapToDto).ToList();
+}
+
     private static SaleDto MapToDto(Sale s) => new()
     {
         Id = s.Id,
