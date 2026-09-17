@@ -1,6 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, ShoppingCart, Package, Users, LogOut, Tag, Layers, History } from 'lucide-react';
 import { useAuth } from '../store/AuthContext';
+import logo from '../assets/logo.png';
 
 const navItems = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard },
@@ -25,9 +26,7 @@ export default function MainLayout() {
       <aside className="w-60 bg-white border-r border-line flex flex-col">
         <div className="p-5 border-b border-line">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-brand-500 flex items-center justify-center font-extrabold text-white text-lg">
-              N
-            </div>
+            <img src={logo} alt="Nova Mart" className="w-9 h-9 rounded-xl object-contain" />
             <div>
               <div className="font-bold leading-none text-ink-900">Nova Mart</div>
               <div className="text-xs text-ink-500 mt-1">Point of Sale</div>

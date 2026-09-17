@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../store/AuthContext';
 import { authService } from '../services/authService';
+import logo from '../assets/logo.png';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
@@ -36,9 +37,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex bg-surface">
       <div className="hidden md:flex md:w-1/2 bg-brand-50 flex-col justify-between p-12">
         <div className="flex items-center gap-2.5">
-          <div className="w-10 h-10 rounded-xl bg-brand-500 flex items-center justify-center font-extrabold text-white text-lg">
-            N
-          </div>
+          <img src={logo} alt="Nova Mart" className="w-10 h-10 rounded-xl object-contain" />
           <span className="font-bold text-lg text-ink-900">Nova Mart</span>
         </div>
         <div>
