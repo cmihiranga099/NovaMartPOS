@@ -11,6 +11,7 @@ import CategoriesPage from './pages/CategoriesPage';
 import BrandsPage from './pages/BrandsPage';
 import SalesHistoryPage from './pages/SalesHistoryPage';
 
+
 function App() {
   return (
     <AuthProvider>

@@ -6,6 +6,7 @@ import { customerService } from '../services/customerService';
 import { saleService } from '../services/saleService';
 import CartItemRow, { type CartLine } from '../features/pos/CartItem';
 import type { SaleResult } from '../types/sale';
+import Receipt from '../features/pos/Receipt';
 
 export default function PosPage() {
   const [search, setSearch] = useState('');
@@ -272,6 +273,12 @@ export default function PosPage() {
               <div className="flex justify-between font-medium"><span>Change</span><span>Rs. {completedSale.change.toFixed(2)}</span></div>
             </div>
             <button
+              onClick={() => window.print()}
+              className="w-full py-2.5 bg-accent-500 text-brand-900 rounded-lg hover:bg-accent-600 font-medium mb-2"
+            >
+              Print Receipt
+            </button>
+            <button
               onClick={() => setCompletedSale(null)}
               className="w-full py-2.5 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium"
             >
@@ -280,6 +287,8 @@ export default function PosPage() {
           </div>
         </div>
       )}
+
+      {completedSale && <Receipt sale={completedSale} />}
     </div>
   );
 }
