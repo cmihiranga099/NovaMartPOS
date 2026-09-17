@@ -25,3 +25,19 @@ body {
   background-color: var(--color-surface);
   color: var(--color-ink-900);
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #print-receipt,
+  #print-receipt * {
+    visibility: visible;
+  }
+  #print-receipt {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80mm;
+  }
+}
