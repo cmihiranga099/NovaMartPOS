@@ -9,6 +9,7 @@ import CustomersPage from './pages/CustomersPage';
 import PosPage from './pages/PosPage';
 import CategoriesPage from './pages/CategoriesPage';
 import BrandsPage from './pages/BrandsPage';
+import SalesHistoryPage from './pages/SalesHistoryPage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="pos" element={<PosPage />} />
           <Route path="categories" element={<CategoriesPage />} />
 <Route path="brands" element={<BrandsPage />} />
+<Route path="sales-history" element={<SalesHistoryPage />} />
         </Route>
       </Routes>
     </AuthProvider>
