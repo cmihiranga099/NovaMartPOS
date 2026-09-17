@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import ProductsPage from './pages/ProductsPage';
 import CustomersPage from './pages/CustomersPage';
+import PosPage from './pages/PosPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route index element={<DashboardPage />} />
           <Route path="products" element={<ProductsPage />} />
           <Route path="customers" element={<CustomersPage />} />
+          <Route path="pos" element={<PosPage />} />
         </Route>
       </Routes>
     </AuthProvider>
