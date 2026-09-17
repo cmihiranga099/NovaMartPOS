@@ -39,6 +39,18 @@ public class SaleRepository : ISaleRepository
         }
     }
 
+    public async Task<List<Sale>> GetAllWithDetailsAsync()
+    => await _context.Sales
+        .Include(s => s.Customer)
+        .Include(s => s.Cashier)
+        .Include(s => s.Payment)
+        .Include(s => s.SaleItems)
+            .ThenInclude(si => si.Product)
+        .OrderByDescending(s => s.CreatedAt)
+        .AsSplitQuery()
+        .AsNoTracking()
+        .ToListAsync();
+
     public async Task<Sale?> GetByIdWithDetailsAsync(int id)
         => await _context.Sales
             .Include(s => s.Customer)
