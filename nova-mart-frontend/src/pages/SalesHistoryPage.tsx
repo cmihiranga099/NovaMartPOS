@@ -2,10 +2,13 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Search, ChevronDown, ChevronUp } from 'lucide-react';
 import { saleService } from '../services/saleService';
+import Receipt from '../features/pos/Receipt';
+import { Printer } from 'lucide-react';
 
 export default function SalesHistoryPage() {
   const [search, setSearch] = useState('');
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [printSale, setPrintSale] = useState<typeof sales[number] | null>(null);
 
   const { data: sales = [], isLoading } = useQuery({ queryKey: ['sales'], queryFn: saleService.getAll });
 
@@ -84,6 +87,12 @@ export default function SalesHistoryPage() {
                         <div className="flex justify-between text-ink-500"><span>Paid ({sale.paymentMethod})</span><span>Rs. {sale.amountPaid.toFixed(2)}</span></div>
                         <div className="flex justify-between text-ink-500"><span>Change</span><span>Rs. {sale.change.toFixed(2)}</span></div>
                       </div>
+                      <button
+                        onClick={() => { setPrintSale(sale); setTimeout(() => window.print(), 50); }}
+                        className="flex items-center gap-2 mt-3 px-3 py-1.5 bg-brand-600 text-white text-xs rounded-lg hover:bg-brand-700"
+                      >
+                        <Printer size={14} /> Print Receipt
+                      </button>
                     </td>
                   </tr>
                 )}
@@ -92,6 +101,8 @@ export default function SalesHistoryPage() {
           </tbody>
         </table>
       </div>
+
+      {printSale && <Receipt sale={printSale} />}
     </div>
   );
 }
