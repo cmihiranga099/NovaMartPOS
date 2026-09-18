@@ -75,8 +75,8 @@
       "leftInStock": "ඉතිරි {{count}}"
     },
     "pos": {
-      "cart": "කරත්තය",
-      "cartEmpty": "කරත්තය හිස්ය.",
+      "cart": "කූඩය",
+      "cartEmpty": "කූඩය හිස් ය.",
       "scanOrSearch": "බාර්කෝඩ් සුපිරික්සන්න හෝ නිෂ්පාදනය සොයන්න...",
       "all": "සියල්ල",
       "pickCategoryPrompt": "නිෂ්පාදන බැලීමට කාණ්ඩයක් තෝරන්න, හෝ සෙවීමක් ටයිප් කර Enter ඔබන්න.",
@@ -100,7 +100,7 @@
       "paid": "ගෙවා ඇත",
       "printReceipt": "රිසිට්පත මුද්‍රණය කරන්න",
       "newSale": "නව විකුණුමක්",
-      "cartEmptyError": "කරත්තය හිස්ය.",
+      "cartEmptyError": "කූඩය හිස්ය.",
       "amountPaidError": "ගෙවූ මුදල අවම වශයෙන් රු. {{amount}} විය යුතුය.",
       "checkoutFailed": "ගෙවීම අසාර්ථක විය."
     },
