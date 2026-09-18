@@ -91,6 +91,9 @@ namespace NovaMartPOS.API
             builder.Services.AddScoped<ISaleRepository, SaleRepository>();
             builder.Services.AddScoped<ISaleService, SaleService>();
 
+            builder.Services.AddScoped<IPromotionRepository, PromotionRepository>();
+            builder.Services.AddScoped<IPromotionService, PromotionService>();
+
             builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
             builder.Services.AddScoped<IInventoryService, InventoryService>();
 
@@ -99,6 +102,12 @@ namespace NovaMartPOS.API
 
             builder.Services.AddScoped<IReportRepository, ReportRepository>();
             builder.Services.AddScoped<IReportService, ReportService>();
+
+            builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+            builder.Services.AddScoped<ISupplierService, SupplierService>();
+
+            builder.Services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
+            builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
 
             builder.Services.AddAuthentication(options =>
             {
