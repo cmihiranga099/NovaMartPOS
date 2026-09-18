@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, Trash2, ChevronDown, ChevronUp, PackageCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { supplierService } from '../services/supplierService';
 import { productService } from '../services/productService';
 import { purchaseOrderService } from '../services/purchaseOrderService';
@@ -12,6 +13,7 @@ interface DraftLine {
 }
 
 export default function PurchaseOrdersPage() {
+  const { t } = useTranslation();
   const [supplierId, setSupplierId] = useState<number | ''>('');
   const [notes, setNotes] = useState('');
   const [lines, setLines] = useState<DraftLine[]>([]);
@@ -90,29 +92,29 @@ export default function PurchaseOrdersPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-1">Purchase Orders</h1>
-      <p className="text-ink-500 mb-6">Receive stock from suppliers and track cost of goods.</p>
+      <h1 className="text-2xl font-bold mb-1">{t('purchaseOrders.title')}</h1>
+      <p className="text-ink-500 mb-6">{t('purchaseOrders.subtitle')}</p>
 
       {/* New purchase order form */}
       <div className="bg-white rounded-lg shadow p-5 mb-8">
-        <h2 className="font-bold mb-4">New Purchase Order</h2>
+        <h2 className="font-bold mb-4">{t('purchaseOrders.newOrder')}</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
           <div>
-            <label className="block text-xs font-medium text-ink-700 mb-1">Supplier</label>
+            <label className="block text-xs font-medium text-ink-700 mb-1">{t('purchaseOrders.supplier')}</label>
             <select
               value={supplierId}
               onChange={(e) => setSupplierId(e.target.value ? Number(e.target.value) : '')}
               className="w-full px-3 py-2 border border-ink-500/20 rounded-lg text-sm"
             >
-              <option value="">Select a supplier...</option>
+              <option value="">{t('purchaseOrders.supplier')}...</option>
               {activeSuppliers.map((s) => (
                 <option key={s.id} value={s.id}>{s.name}</option>
               ))}
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-ink-700 mb-1">Notes (optional)</label>
+            <label className="block text-xs font-medium text-ink-700 mb-1">{t('purchaseOrders.notesOptional')}</label>
             <input
               type="text"
               value={notes}
@@ -129,7 +131,7 @@ export default function PurchaseOrdersPage() {
             onChange={(e) => setProductPick(e.target.value ? Number(e.target.value) : '')}
             className="flex-1 px-3 py-2 border border-ink-500/20 rounded-lg text-sm"
           >
-            <option value="">Add a product...</option>
+            <option value="">{t('purchaseOrders.addProduct')}</option>
             {activeProducts
               .filter((p) => !lines.some((l) => l.productId === p.id))
               .map((p) => (
@@ -141,7 +143,7 @@ export default function PurchaseOrdersPage() {
             disabled={productPick === ''}
             className="flex items-center gap-1.5 px-4 py-2 bg-brand-50 text-brand-600 rounded-lg text-sm font-medium hover:bg-brand-100 disabled:opacity-50"
           >
-            <Plus size={16} /> Add
+            <Plus size={16} /> {t('common.add')}
           </button>
         </div>
 
@@ -150,10 +152,10 @@ export default function PurchaseOrdersPage() {
             <table className="w-full text-sm">
               <thead className="bg-surface text-left text-ink-500">
                 <tr>
-                  <th className="px-3 py-2">Product</th>
-                  <th className="px-3 py-2 w-28">Quantity</th>
-                  <th className="px-3 py-2 w-32">Unit Cost</th>
-                  <th className="px-3 py-2 w-28 text-right">Line Total</th>
+                  <th className="px-3 py-2">{t('products.title')}</th>
+                  <th className="px-3 py-2 w-28">{t('purchaseOrders.quantity')}</th>
+                  <th className="px-3 py-2 w-32">{t('purchaseOrders.unitCost')}</th>
+                  <th className="px-3 py-2 w-28 text-right">{t('purchaseOrders.lineTotal')}</th>
                   <th className="px-3 py-2 w-10"></th>
                 </tr>
               </thead>
@@ -198,9 +200,9 @@ export default function PurchaseOrdersPage() {
 
         <div className="flex items-center justify-between">
           <span className="text-sm text-ink-500">
-            {lines.length === 0 ? 'No items added yet.' : `${lines.length} item${lines.length > 1 ? 's' : ''}`}
+            {lines.length === 0 ? t('purchaseOrders.noItemsYet') : t('purchaseOrders.itemCount', { count: lines.length })}
           </span>
-          <span className="font-bold text-lg">Total: Rs. {total.toFixed(2)}</span>
+          <span className="font-bold text-lg">{t('common.total')}: Rs. {total.toFixed(2)}</span>
         </div>
 
         {error && <p className="text-red-600 text-sm bg-red-50 p-2 rounded mt-3">{error}</p>}
@@ -211,27 +213,27 @@ export default function PurchaseOrdersPage() {
           className="w-full mt-4 flex items-center justify-center gap-2 py-3 bg-accent-500 text-brand-900 font-bold rounded-lg hover:bg-accent-600 disabled:opacity-50 transition-colors"
         >
           <PackageCheck size={18} />
-          {receiveMutation.isPending ? 'Receiving...' : 'Receive Purchase Order'}
+          {receiveMutation.isPending ? t('purchaseOrders.receiving') : t('purchaseOrders.receiveOrder')}
         </button>
       </div>
 
       {/* History */}
-      <h2 className="font-bold text-lg mb-3">Purchase History</h2>
+      <h2 className="font-bold text-lg mb-3">{t('purchaseOrders.purchaseHistory')}</h2>
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-surface text-left text-ink-500">
             <tr>
-              <th className="px-4 py-3">PO Number</th>
-              <th className="px-4 py-3">Supplier</th>
-              <th className="px-4 py-3">Received By</th>
-              <th className="px-4 py-3">Date</th>
-              <th className="px-4 py-3 text-right">Total Cost</th>
+              <th className="px-4 py-3">{t('purchaseOrders.poNumber')}</th>
+              <th className="px-4 py-3">{t('purchaseOrders.supplier')}</th>
+              <th className="px-4 py-3">{t('purchaseOrders.receivedBy')}</th>
+              <th className="px-4 py-3">{t('common.date')}</th>
+              <th className="px-4 py-3 text-right">{t('purchaseOrders.totalCost')}</th>
               <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody className="divide-y">
-            {isLoading && <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">Loading...</td></tr>}
-            {!isLoading && orders.length === 0 && <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">No purchase orders yet.</td></tr>}
+            {isLoading && <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">{t('common.loading')}</td></tr>}
+            {!isLoading && orders.length === 0 && <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">{t('purchaseOrders.noOrdersYet')}</td></tr>}
             {orders.map((po) => (
               <>
                 <tr
@@ -261,9 +263,9 @@ export default function PurchaseOrdersPage() {
                           </div>
                         ))}
                       </div>
-                      {po.notes && <p className="text-xs text-ink-500 mb-2">Notes: {po.notes}</p>}
+                      {po.notes && <p className="text-xs text-ink-500 mb-2">{t('common.notes')}: {po.notes}</p>}
                       <div className="border-t border-ink-500/10 pt-2 text-sm font-bold flex justify-between max-w-xs ml-auto">
-                        <span>Total</span><span>Rs. {po.totalCost.toFixed(2)}</span>
+                        <span>{t('common.total')}</span><span>Rs. {po.totalCost.toFixed(2)}</span>
                       </div>
                     </td>
                   </tr>
