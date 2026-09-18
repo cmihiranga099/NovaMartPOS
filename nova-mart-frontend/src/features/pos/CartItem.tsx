@@ -1,4 +1,5 @@
 import { Minus, Plus, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export interface CartLine {
   productId: number;
@@ -17,13 +18,14 @@ interface Props {
 }
 
 export default function CartItemRow({ item, onQuantityChange, onRemove }: Props) {
+  const { t } = useTranslation();
   const lineTotal = item.unitPrice * item.quantity - item.discount;
 
   return (
     <div className="flex items-center gap-3 py-3 border-b border-ink-500/10">
       <div className="flex-1 min-w-0">
         <p className="font-medium text-sm truncate">{item.name}</p>
-        <p className="text-xs text-ink-500">Rs. {item.unitPrice.toFixed(2)} each</p>
+        <p className="text-xs text-ink-500">Rs. {item.unitPrice.toFixed(2)}</p>
       </div>
 
       <div className="flex items-center gap-1">
