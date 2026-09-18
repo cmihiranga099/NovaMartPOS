@@ -9,6 +9,7 @@ import { lookupService } from '../services/lookupService';
 import CartItemRow, { type CartLine } from '../features/pos/CartItem';
 import type { SaleResult } from '../types/sale';
 import Receipt from '../features/pos/Receipt';
+import { useTranslation } from 'react-i18next';
 
 const TILE_PALETTE = [
   'bg-orange-100 text-orange-700',
@@ -29,6 +30,7 @@ const tileColor = (key: string) => {
 const KEYPAD_KEYS = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '.', '0', 'DEL'];
 
 export default function PosPage() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [submittedSearch, setSubmittedSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState<number | 'all' | null>('all');
@@ -65,7 +67,7 @@ export default function PosPage() {
     },
     onError: (err: unknown) => {
       const message = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
-      setError(message || 'Checkout failed.');
+      setError(message || t('pos.checkoutFailed'));
     },
   });
 
@@ -192,11 +194,11 @@ export default function PosPage() {
   const handleCheckout = () => {
     setError(null);
     if (cart.length === 0) {
-      setError('Cart is empty.');
+      setError(t('pos.cartEmptyError'));
       return;
     }
     if (paidNum < grandTotal) {
-      setError(`Amount paid must be at least Rs. ${grandTotal.toFixed(2)}.`);
+      setError(t('pos.amountPaidError', { amount: grandTotal.toFixed(2) }));
       return;
     }
 
@@ -218,7 +220,7 @@ export default function PosPage() {
           <input
             ref={searchInputRef}
             type="text"
-            placeholder="Scan barcode or search product..."
+            placeholder={t('pos.scanOrSearch')}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={handleBarcodeEnter}
@@ -236,7 +238,7 @@ export default function PosPage() {
                 : 'bg-white text-ink-700 border border-line hover:bg-surface'
             }`}
           >
-            All
+            {t('pos.all')}
           </button>
           {categories.filter((c) => c.isActive).map((c) => (
             <button
@@ -257,10 +259,10 @@ export default function PosPage() {
         <div className="flex-1 overflow-auto">
           {!hasSelection ? (
             <div className="mt-10 text-center text-ink-500 text-sm">
-              Pick a category, or type a search and press Enter, to see products.
+              {t('pos.pickCategoryPrompt')}
             </div>
           ) : visibleProducts.length === 0 ? (
-            <div className="mt-10 text-center text-ink-500 text-sm">No products match.</div>
+            <div className="mt-10 text-center text-ink-500 text-sm">{t('pos.noProductsMatch')}</div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3">
               {visibleProducts.map((product) => {
@@ -280,7 +282,7 @@ export default function PosPage() {
                       <div className="flex items-center justify-between mt-1.5">
                         <span className="font-bold text-sm">Rs. {product.sellingPrice.toFixed(2)}</span>
                         <span className={`text-[10px] ${outOfStock ? 'text-red-600 font-medium' : 'text-ink-500'}`}>
-                          {outOfStock ? 'Out of stock' : `Stock ${product.stockQuantity}`}
+                          {outOfStock ? t('pos.outOfStock') : t('pos.stock', { count: product.stockQuantity })}
                         </span>
                       </div>
                     </div>
@@ -294,11 +296,11 @@ export default function PosPage() {
 
       {/* Right: cart + checkout */}
       <div className="bg-white rounded-lg shadow flex flex-col p-4 min-h-0">
-        <h2 className="font-bold text-lg mb-3">Cart</h2>
+        <h2 className="font-bold text-lg mb-3">{t('pos.cart')}</h2>
 
         <div className="flex-1 overflow-auto min-h-[80px]">
           {cart.length === 0 ? (
-            <p className="text-ink-500 text-sm">Cart is empty.</p>
+            <p className="text-ink-500 text-sm">{t('pos.cartEmpty')}</p>
           ) : (
             cart.map((item) => (
               <CartItemRow
@@ -321,7 +323,7 @@ export default function PosPage() {
                   value={promoInput}
                   onChange={(e) => { setPromoInput(e.target.value); setPromoError(null); }}
                   onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleApplyPromo(); } }}
-                  placeholder="Promo code"
+                  placeholder={t('pos.promoCode')}
                   className="w-full pl-7 pr-2 py-1.5 border border-ink-500/20 rounded-lg text-xs uppercase"
                 />
               </div>
@@ -330,13 +332,13 @@ export default function PosPage() {
                 disabled={validatePromoMutation.isPending || !promoInput.trim()}
                 className="px-3 py-1.5 bg-brand-50 text-brand-600 rounded-lg text-xs font-medium hover:bg-brand-100 disabled:opacity-50"
               >
-                {validatePromoMutation.isPending ? '...' : 'Apply'}
+                {validatePromoMutation.isPending ? '...' : t('pos.apply')}
               </button>
             </div>
           ) : (
             <div className="flex items-center justify-between bg-brand-50 px-2.5 py-1.5 rounded-lg">
               <span className="flex items-center gap-1.5 text-xs font-medium text-brand-700">
-                <Tag size={13} /> {appliedPromo.code} applied
+                <Tag size={13} /> {appliedPromo.code} {t('pos.applied')}
               </span>
               <button onClick={removePromo} className="text-ink-500 hover:text-red-600">
                 <X size={14} />
@@ -348,21 +350,21 @@ export default function PosPage() {
 
         <div className="pt-3 mt-1 space-y-1 text-sm">
           <div className="flex justify-between">
-            <span className="text-ink-500">Subtotal</span>
+            <span className="text-ink-500">{t('common.subtotal')}</span>
             <span>Rs. {subtotal.toFixed(2)}</span>
           </div>
           {promoDiscount > 0 && (
             <div className="flex justify-between text-brand-600">
-              <span>Promo Discount</span>
+              <span>{t('pos.promoCode')} - {t('common.discount')}</span>
               <span>-Rs. {promoDiscount.toFixed(2)}</span>
             </div>
           )}
           <div className="flex justify-between">
-            <span className="text-ink-500">Tax</span>
+            <span className="text-ink-500">{t('common.tax')}</span>
             <span>Rs. {totalTax.toFixed(2)}</span>
           </div>
           <div className="flex justify-between font-bold text-lg pt-1">
-            <span>Total</span>
+            <span>{t('common.total')}</span>
             <span>Rs. {grandTotal.toFixed(2)}</span>
           </div>
         </div>
@@ -382,21 +384,21 @@ export default function PosPage() {
             onChange={(e) => setPaymentMethod(e.target.value)}
             className="px-2.5 py-2 border border-ink-500/20 rounded-lg text-sm"
           >
-            <option value="Cash">Cash</option>
-            <option value="Card">Card</option>
-            <option value="BankTransfer">Bank Transfer</option>
+            <option value="Cash">{t('pos.cash')}</option>
+            <option value="Card">{t('pos.card')}</option>
+            <option value="BankTransfer">{t('pos.bankTransfer')}</option>
           </select>
         </div>
 
         {/* Amount paid + numeric keypad, like a till terminal */}
         <div className="mt-3">
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-xs font-medium text-ink-700">Amount Paid</span>
+            <span className="text-xs font-medium text-ink-700">{t('pos.amountPaid')}</span>
             <button
               onClick={setExactAmount}
               className="text-[11px] font-medium text-brand-600 hover:text-brand-700"
             >
-              Exact
+              {t('pos.exact')}
             </button>
           </div>
           <div className="px-3 py-2.5 border border-ink-500/20 rounded-lg text-right text-xl font-bold mb-2 bg-surface">
@@ -417,7 +419,7 @@ export default function PosPage() {
 
         {paidNum > 0 && (
           <div className="flex justify-between text-sm font-medium mt-3">
-            <span className="text-ink-500">Change</span>
+            <span className="text-ink-500">{t('pos.change')}</span>
             <span className={change < 0 ? 'text-red-600' : 'text-brand-600'}>
               Rs. {change.toFixed(2)}
             </span>
@@ -431,7 +433,7 @@ export default function PosPage() {
           disabled={checkoutMutation.isPending}
           className="w-full py-3 mt-3 bg-accent-500 text-brand-900 font-bold rounded-lg hover:bg-accent-600 disabled:opacity-50 transition-colors"
         >
-          {checkoutMutation.isPending ? 'Processing...' : 'Complete Sale'}
+          {checkoutMutation.isPending ? t('pos.processing') : t('pos.completeSale')}
         </button>
       </div>
 
@@ -439,24 +441,24 @@ export default function PosPage() {
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg shadow-lg w-full max-w-sm p-6 text-center">
             <CheckCircle2 className="mx-auto text-brand-600 mb-3" size={48} />
-            <h2 className="text-xl font-bold mb-1">Sale Complete</h2>
+            <h2 className="text-xl font-bold mb-1">{t('pos.saleComplete')}</h2>
             <p className="text-ink-500 text-sm mb-4">{completedSale.invoiceNumber}</p>
             <div className="text-left text-sm space-y-1 mb-4 bg-surface p-3 rounded-lg">
-              <div className="flex justify-between"><span>Total</span><span>Rs. {completedSale.grandTotal.toFixed(2)}</span></div>
-              <div className="flex justify-between"><span>Paid</span><span>Rs. {completedSale.amountPaid.toFixed(2)}</span></div>
-              <div className="flex justify-between font-medium"><span>Change</span><span>Rs. {completedSale.change.toFixed(2)}</span></div>
+              <div className="flex justify-between"><span>{t('common.total')}</span><span>Rs. {completedSale.grandTotal.toFixed(2)}</span></div>
+              <div className="flex justify-between"><span>{t('pos.paid')}</span><span>Rs. {completedSale.amountPaid.toFixed(2)}</span></div>
+              <div className="flex justify-between font-medium"><span>{t('pos.change')}</span><span>Rs. {completedSale.change.toFixed(2)}</span></div>
             </div>
             <button
               onClick={() => window.print()}
               className="w-full py-2.5 bg-accent-500 text-brand-900 rounded-lg hover:bg-accent-600 font-medium mb-2"
             >
-              Print Receipt
+              {t('pos.printReceipt')}
             </button>
             <button
               onClick={() => setCompletedSale(null)}
               className="w-full py-2.5 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium"
             >
-              New Sale
+              {t('pos.newSale')}
             </button>
           </div>
         </div>

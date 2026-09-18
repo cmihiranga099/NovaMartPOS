@@ -19,6 +19,7 @@ import {
 import { reportService } from '../services/reportService';
 import { saleService } from '../services/saleService';
 import { useAuth } from '../store/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const PIE_COLORS = ['#fe6c0d', '#123f34', '#85868c', '#e85a00'];
 const TREND_DAYS = 14;
@@ -53,6 +54,7 @@ function StatCard({
 
 export default function DashboardPage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const today = new Date();
   const monthStart = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().slice(0, 10);
   const todayStr = today.toISOString().slice(0, 10);
@@ -121,36 +123,36 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-1">Welcome back, {user?.fullName?.split(' ')[0]}</h1>
-      <p className="text-ink-500 mb-6">Here's how Nova Mart is doing today.</p>
+      <h1 className="text-2xl font-bold mb-1">{t('dashboard.welcome', { name: user?.fullName?.split(' ')[0] })}</h1>
+      <p className="text-ink-500 mb-6">{t('dashboard.subtitle')}</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <StatCard icon={DollarSign} label="Today's Sales" value={`Rs. ${(daily?.totalSales ?? 0).toFixed(2)}`} />
-        <StatCard icon={Receipt} label="Transactions" value={String(daily?.transactionCount ?? 0)} tone="accent" />
-        <StatCard icon={TrendingUp} label="Today's Profit" value={`Rs. ${(daily?.totalProfit ?? 0).toFixed(2)}`} />
-        <StatCard icon={AlertTriangle} label="Low Stock Items" value={String(lowStock.length)} tone="accent" />
+        <StatCard icon={DollarSign} label={t('dashboard.todaysSales')} value={`Rs. ${(daily?.totalSales ?? 0).toFixed(2)}`} />
+        <StatCard icon={Receipt} label={t('dashboard.transactions')} value={String(daily?.transactionCount ?? 0)} tone="accent" />
+        <StatCard icon={TrendingUp} label={t('dashboard.todaysProfit')} value={`Rs. ${(daily?.totalProfit ?? 0).toFixed(2)}`} />
+        <StatCard icon={AlertTriangle} label={t('dashboard.lowStockItems')} value={String(lowStock.length)} tone="accent" />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div className="bg-white rounded-lg shadow p-4">
-          <p className="text-xs text-ink-500">Last 7 Days Revenue</p>
+          <p className="text-xs text-ink-500">{t('dashboard.weekRevenue')}</p>
           <p className="text-lg font-bold mt-1">Rs. {weekRevenue.toFixed(2)}</p>
         </div>
         <div className="bg-white rounded-lg shadow p-4">
-          <p className="text-xs text-ink-500">This Month Revenue</p>
+          <p className="text-xs text-ink-500">{t('dashboard.monthRevenue')}</p>
           <p className="text-lg font-bold mt-1">Rs. {monthRevenue.toFixed(2)}</p>
         </div>
         <div className="bg-white rounded-lg shadow p-4">
-          <p className="text-xs text-ink-500">Average Order Value</p>
+          <p className="text-xs text-ink-500">{t('dashboard.avgOrderValue')}</p>
           <p className="text-lg font-bold mt-1">Rs. {avgOrderValue.toFixed(2)}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <div className="lg:col-span-2 bg-white rounded-lg shadow p-5">
-          <h2 className="font-bold mb-4">Revenue Trend (Last {TREND_DAYS} Days)</h2>
+          <h2 className="font-bold mb-4">{t('dashboard.revenueTrend', { days: TREND_DAYS })}</h2>
           {sales.length === 0 ? (
-            <p className="text-ink-500 text-sm">No sales recorded yet.</p>
+            <p className="text-ink-500 text-sm">{t('dashboard.noSalesYet')}</p>
           ) : (
             <ResponsiveContainer width="100%" height={240}>
               <AreaChart data={trend} margin={{ left: -20 }}>
@@ -174,9 +176,9 @@ export default function DashboardPage() {
         </div>
 
         <div className="bg-white rounded-lg shadow p-5">
-          <h2 className="font-bold mb-4">Sales by Payment Method</h2>
+          <h2 className="font-bold mb-4">{t('dashboard.paymentMethodSplit')}</h2>
           {paymentBreakdown.length === 0 ? (
-            <p className="text-ink-500 text-sm">No sales recorded yet.</p>
+            <p className="text-ink-500 text-sm">{t('dashboard.noSalesYet')}</p>
           ) : (
             <ResponsiveContainer width="100%" height={240}>
               <PieChart>
@@ -195,9 +197,9 @@ export default function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white rounded-lg shadow p-5">
-          <h2 className="font-bold mb-4">Top Products This Month</h2>
+          <h2 className="font-bold mb-4">{t('dashboard.topProducts')}</h2>
           {topProductsChart.length === 0 ? (
-            <p className="text-ink-500 text-sm">No sales recorded yet this month.</p>
+            <p className="text-ink-500 text-sm">{t('dashboard.noSalesThisMonth')}</p>
           ) : (
             <ResponsiveContainer width="100%" height={Math.max(180, topProductsChart.length * 38)}>
               <BarChart data={topProductsChart} layout="vertical" margin={{ left: 8, right: 16 }}>
@@ -219,15 +221,15 @@ export default function DashboardPage() {
         </div>
 
         <div className="bg-white rounded-lg shadow p-5">
-          <h2 className="font-bold mb-4">Low Stock Alerts</h2>
+          <h2 className="font-bold mb-4">{t('dashboard.lowStockAlerts')}</h2>
           {lowStock.length === 0 ? (
-            <p className="text-ink-500 text-sm">All products are sufficiently stocked.</p>
+            <p className="text-ink-500 text-sm">{t('dashboard.allStocked')}</p>
           ) : (
             <div className="space-y-3">
               {lowStock.map((p) => (
                 <div key={p.id} className="flex items-center justify-between">
                   <span className="text-sm font-medium">{p.name}</span>
-                  <span className="text-sm text-red-600 font-medium">{p.stockQuantity} left</span>
+                  <span className="text-sm text-red-600 font-medium">{t('dashboard.leftInStock', { count: p.stockQuantity })}</span>
                 </div>
               ))}
             </div>
