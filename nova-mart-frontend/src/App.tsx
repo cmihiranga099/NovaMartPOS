@@ -9,7 +9,10 @@ import CustomersPage from './pages/CustomersPage';
 import PosPage from './pages/PosPage';
 import CategoriesPage from './pages/CategoriesPage';
 import BrandsPage from './pages/BrandsPage';
+import PromotionsPage from './pages/PromotionsPage';
 import SalesHistoryPage from './pages/SalesHistoryPage';
+import SuppliersPage from './pages/SuppliersPage';
+import PurchaseOrdersPage from './pages/PurchaseOrdersPage';
 
 
 function App() {
@@ -31,7 +34,10 @@ function App() {
           <Route path="pos" element={<PosPage />} />
           <Route path="categories" element={<CategoriesPage />} />
 <Route path="brands" element={<BrandsPage />} />
+<Route path="promotions" element={<PromotionsPage />} />
 <Route path="sales-history" element={<SalesHistoryPage />} />
+<Route path="suppliers" element={<SuppliersPage />} />
+<Route path="purchase-orders" element={<PurchaseOrdersPage />} />
         </Route>
       </Routes>
     </AuthProvider>
