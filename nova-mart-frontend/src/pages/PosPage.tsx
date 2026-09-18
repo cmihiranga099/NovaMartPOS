@@ -31,7 +31,7 @@ const KEYPAD_KEYS = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '.', '0', 'DEL
 export default function PosPage() {
   const [search, setSearch] = useState('');
   const [submittedSearch, setSubmittedSearch] = useState('');
-  const [activeCategory, setActiveCategory] = useState<number | 'all' | null>(null);
+  const [activeCategory, setActiveCategory] = useState<number | 'all' | null>('all');
   const [cart, setCart] = useState<CartLine[]>([]);
   const [customerId, setCustomerId] = useState<number>(1);
   const [paymentMethod, setPaymentMethod] = useState('Cash');
