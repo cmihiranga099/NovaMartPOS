@@ -37,3 +37,11 @@ export interface SaleItemRequest {
     createdAt: string;
     items: SaleItemResult[];
   }
+
+  export interface CreateSaleRequest {
+    customerId: number;
+    items: SaleItemRequest[];
+    paymentMethod: string;
+    amountPaid: number;
+    promoCode: string | null;
+  }
