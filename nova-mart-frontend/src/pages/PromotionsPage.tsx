@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, Pencil, Trash2, Tag } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { promotionService } from '../services/promotionService';
 import PromotionFormModal, { type PromotionFormValues } from '../features/promotions/PromotionFormModal';
 import type { Promotion } from '../types/promotion';
 
 export default function PromotionsPage() {
+  const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Promotion | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -61,9 +63,9 @@ export default function PromotionsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold">Promotions</h1>
+        <h1 className="text-2xl font-bold">{t('promotions.title')}</h1>
         <button onClick={openAdd} className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium">
-          <Plus size={18} /> Add Promotion
+          <Plus size={18} /> {t('promotions.addPromotion')}
         </button>
       </div>
 
@@ -71,17 +73,17 @@ export default function PromotionsPage() {
         <table className="w-full text-sm">
           <thead className="bg-surface text-left text-ink-500">
             <tr>
-              <th className="px-4 py-3">Code</th>
-              <th className="px-4 py-3">Discount</th>
+              <th className="px-4 py-3">{t('promotions.code')}</th>
+              <th className="px-4 py-3">{t('common.discount')}</th>
               <th className="px-4 py-3">Min Purchase</th>
-              <th className="px-4 py-3">Expires</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3 text-right">Actions</th>
+              <th className="px-4 py-3">{t('promotions.expiresAt')}</th>
+              <th className="px-4 py-3">{t('common.status')}</th>
+              <th className="px-4 py-3 text-right">{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody className="divide-y">
-            {isLoading && <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">Loading...</td></tr>}
-            {!isLoading && promotions.length === 0 && <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">No promotions yet.</td></tr>}
+            {isLoading && <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">{t('common.loading')}</td></tr>}
+            {!isLoading && promotions.length === 0 && <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">{t('common.noResults')}</td></tr>}
             {promotions.map((p) => (
               <tr key={p.id} className="hover:bg-surface">
                 <td className="px-4 py-3">
@@ -108,12 +110,12 @@ export default function PromotionsPage() {
                         : 'bg-brand-50 text-brand-600'
                     }`}
                   >
-                    {!p.isActive ? 'Inactive' : isExpired(p) ? 'Expired' : 'Active'}
+                    {!p.isActive ? t('common.inactive') : isExpired(p) ? 'Expired' : t('common.active')}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right space-x-2">
                   <button onClick={() => openEdit(p)} className="text-brand-600 hover:text-brand-700"><Pencil size={16} className="inline" /></button>
-                  <button onClick={() => { if (confirm(`Delete "${p.code}"?`)) deleteMutation.mutate(p.id); }} className="text-red-600 hover:text-red-800"><Trash2 size={16} className="inline" /></button>
+                  <button onClick={() => { if (confirm(t('common.confirmDelete', { name: p.code }))) deleteMutation.mutate(p.id); }} className="text-red-600 hover:text-red-800"><Trash2 size={16} className="inline" /></button>
                 </td>
               </tr>
             ))}

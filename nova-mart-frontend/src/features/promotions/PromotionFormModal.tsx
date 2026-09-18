@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type { Promotion } from '../../types/promotion';
 
 const schema = z.object({
@@ -26,6 +27,7 @@ interface Props {
 }
 
 export default function PromotionFormModal({ promotion, onClose, onSubmit, isSubmitting, serverError }: Props) {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -62,7 +64,7 @@ export default function PromotionFormModal({ promotion, onClose, onSubmit, isSub
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-lg font-semibold">{promotion ? 'Edit Promotion' : 'Add Promotion'}</h2>
+          <h2 className="text-lg font-semibold">{promotion ? t('promotions.editPromotion') : t('promotions.addPromotion')}</h2>
           <button onClick={onClose} className="text-ink-500 hover:text-ink-900">
             <X size={20} />
           </button>
@@ -72,26 +74,26 @@ export default function PromotionFormModal({ promotion, onClose, onSubmit, isSub
           {serverError && <p className="text-red-600 text-sm bg-red-50 p-2 rounded">{serverError}</p>}
 
           <div>
-            <label className="block text-sm font-medium mb-1">Promo Code</label>
+            <label className="block text-sm font-medium mb-1">{t('promotions.code')}</label>
             <input {...register('code')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg uppercase" autoFocus />
             {errors.code && <p className="text-red-500 text-xs mt-1">{errors.code.message}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Description</label>
+            <label className="block text-sm font-medium mb-1">{t('common.description')}</label>
             <input {...register('description')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg" />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium mb-1">Type</label>
+              <label className="block text-sm font-medium mb-1">{t('promotions.type')}</label>
               <select {...register('type')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg">
                 <option value="Percentage">Percentage (%)</option>
                 <option value="FixedAmount">Fixed Amount (Rs.)</option>
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Value</label>
+              <label className="block text-sm font-medium mb-1">{t('promotions.value')}</label>
               <input type="number" step="0.01" {...register('value')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg" />
               {errors.value && <p className="text-red-500 text-xs mt-1">{errors.value.message}</p>}
             </div>
@@ -110,20 +112,20 @@ export default function PromotionFormModal({ promotion, onClose, onSubmit, isSub
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Expires On</label>
+            <label className="block text-sm font-medium mb-1">{t('promotions.expiresAt')}</label>
             <input type="date" {...register('expiresAt')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg" />
           </div>
 
           <div className="flex justify-end gap-2 pt-2">
             <button type="button" onClick={onClose} className="px-4 py-2 text-ink-700 hover:bg-surface rounded-lg">
-              Cancel
+              {t('common.cancel')}
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
               className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 disabled:opacity-50 font-medium"
             >
-              {isSubmitting ? 'Saving...' : 'Save'}
+              {isSubmitting ? t('common.saving') : t('common.save')}
             </button>
           </div>
         </form>
