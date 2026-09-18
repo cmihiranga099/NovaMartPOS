@@ -13,6 +13,7 @@ public class CreateSaleDto
     public List<SaleItemRequestDto> Items { get; set; } = new();
     public string PaymentMethod { get; set; } = "Cash";
     public decimal AmountPaid { get; set; }
+    public string? PromoCode { get; set; }
 }
 
 public class SaleItemDto
@@ -33,6 +34,8 @@ public class SaleDto
     public decimal Discount { get; set; }
     public decimal Tax { get; set; }
     public decimal GrandTotal { get; set; }
+    public string? PromoCode { get; set; }
+    public decimal PromoDiscount { get; set; }
     public decimal AmountPaid { get; set; }
     public decimal Change { get; set; }
     public string PaymentMethod { get; set; } = string.Empty;

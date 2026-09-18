@@ -9,11 +9,13 @@ public class SaleService : ISaleService
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IProductRepository _productRepository;
+    private readonly IPromotionService _promotionService;
 
-    public SaleService(ISaleRepository saleRepository, IProductRepository productRepository)
+    public SaleService(ISaleRepository saleRepository, IProductRepository productRepository, IPromotionService promotionService)
     {
         _saleRepository = saleRepository;
         _productRepository = productRepository;
+        _promotionService = promotionService;
     }
 
     public async Task<(SaleDto? Sale, string? Error)> CheckoutAsync(CreateSaleDto dto, int cashierId)
@@ -69,7 +71,21 @@ public class SaleService : ISaleService
             productsToDeduct.Add((product, item.Quantity));
         }
 
-        var grandTotal = (subtotal - totalDiscount) + totalTax;
+        var netAfterLineDiscounts = subtotal - totalDiscount;
+        decimal promoDiscount = 0;
+        string? appliedPromoCode = null;
+
+        if (!string.IsNullOrWhiteSpace(dto.PromoCode))
+        {
+            var (valid, discount, error) = await _promotionService.ValidateAsync(dto.PromoCode, netAfterLineDiscounts);
+            if (!valid)
+                return (null, error ?? "Invalid promo code.");
+
+            promoDiscount = discount;
+            appliedPromoCode = dto.PromoCode.Trim().ToUpperInvariant();
+        }
+
+        var grandTotal = (netAfterLineDiscounts - promoDiscount) + totalTax;
 
         if (dto.AmountPaid < grandTotal)
             return (null, $"Insufficient payment. Grand total is {grandTotal:F2}, amount paid was {dto.AmountPaid:F2}.");
@@ -83,6 +99,8 @@ public class SaleService : ISaleService
             Discount = totalDiscount,
             Tax = totalTax,
             GrandTotal = grandTotal,
+            PromoCode = appliedPromoCode,
+            PromoDiscount = promoDiscount,
             CustomerId = dto.CustomerId,
             CashierId = cashierId,
             SaleItems = saleItems,
@@ -135,6 +153,8 @@ public class SaleService : ISaleService
         Discount = s.Discount,
         Tax = s.Tax,
         GrandTotal = s.GrandTotal,
+        PromoCode = s.PromoCode,
+        PromoDiscount = s.PromoDiscount,
         AmountPaid = s.Payment?.AmountPaid ?? 0,
         Change = s.Payment?.Change ?? 0,
         PaymentMethod = s.Payment?.Method.ToString() ?? string.Empty,

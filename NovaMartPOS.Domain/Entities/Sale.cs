@@ -8,6 +8,9 @@ public class Sale : BaseEntity
     public decimal Tax { get; set; }
     public decimal GrandTotal { get; set; }
 
+    public string? PromoCode { get; set; }
+    public decimal PromoDiscount { get; set; } = 0;
+
     public int CustomerId { get; set; }
     public Customer Customer { get; set; } = null!;
 
