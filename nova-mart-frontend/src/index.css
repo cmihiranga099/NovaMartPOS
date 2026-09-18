@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Manrope', 'Noto Sans Sinhala', ui-sans-serif, system-ui, sans-serif;
 
   --color-brand-50: #fff4ec;
   --color-brand-100: #ffe4d1;
