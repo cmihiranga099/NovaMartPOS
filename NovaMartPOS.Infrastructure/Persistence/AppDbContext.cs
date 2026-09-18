@@ -15,10 +15,13 @@ public class AppDbContext : DbContext
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Sale> Sales => Set<Sale>();
     public DbSet<SaleItem> SaleItems => Set<SaleItem>();
+    public DbSet<Promotion> Promotions => Set<Promotion>();
     public DbSet<Payment> Payments => Set<Payment>();
     public DbSet<Return> Returns => Set<Return>();
    public DbSet<ReturnItem> ReturnItems => Set<ReturnItem>();
     public DbSet<StockTransaction> StockTransactions => Set<StockTransaction>();
+    public DbSet<PurchaseOrder> PurchaseOrders => Set<PurchaseOrder>();
+    public DbSet<PurchaseOrderItem> PurchaseOrderItems => Set<PurchaseOrderItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -49,8 +52,48 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Sale>()
             .Property(s => s.InvoiceNumber).HasMaxLength(100);
 
+        modelBuilder.Entity<Promotion>()
+            .HasIndex(p => p.Code)
+            .IsUnique();
+        modelBuilder.Entity<Promotion>()
+            .Property(p => p.Code).HasMaxLength(50);
+        modelBuilder.Entity<Promotion>()
+            .Property(p => p.Value).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Promotion>()
+            .Property(p => p.MinPurchaseAmount).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Promotion>()
+            .Property(p => p.MaxDiscountAmount).HasColumnType("decimal(18,2)");
+
         modelBuilder.Entity<Return>().Property(r => r.TotalRefund).HasColumnType("decimal(18,2)");
 modelBuilder.Entity<ReturnItem>().Property(ri => ri.RefundAmount).HasColumnType("decimal(18,2)");    
+
+        modelBuilder.Entity<PurchaseOrder>()
+            .HasIndex(po => po.PoNumber)
+            .IsUnique();
+        modelBuilder.Entity<PurchaseOrder>()
+            .Property(po => po.PoNumber).HasMaxLength(100);
+        modelBuilder.Entity<PurchaseOrder>()
+            .Property(po => po.TotalCost).HasColumnType("decimal(18,2)");
+
+        modelBuilder.Entity<PurchaseOrderItem>()
+            .Property(i => i.UnitCost).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<PurchaseOrderItem>()
+            .Property(i => i.Total).HasColumnType("decimal(18,2)");
+
+        modelBuilder.Entity<PurchaseOrderItem>()
+            .HasOne(i => i.Product)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<PurchaseOrder>()
+            .HasOne(po => po.Supplier)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<PurchaseOrder>()
+            .HasOne(po => po.ReceivedBy)
+            .WithMany()
+            .OnDelete(DeleteBehavior.Restrict);
 
         // Decimal precision — never let EF pick a default for money fields
         modelBuilder.Entity<Product>()
@@ -68,6 +111,8 @@ modelBuilder.Entity<ReturnItem>().Property(ri => ri.RefundAmount).HasColumnType(
             .Property(s => s.Tax).HasColumnType("decimal(18,2)");
         modelBuilder.Entity<Sale>()
             .Property(s => s.GrandTotal).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Sale>()
+            .Property(s => s.PromoDiscount).HasColumnType("decimal(18,2)");
 
         modelBuilder.Entity<SaleItem>()
             .Property(si => si.UnitPrice).HasColumnType("decimal(18,2)");
