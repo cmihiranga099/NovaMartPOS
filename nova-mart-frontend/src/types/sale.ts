@@ -9,6 +9,7 @@ export interface SaleItemRequest {
     items: SaleItemRequest[];
     paymentMethod: string;
     amountPaid: number;
+    promoCode: string | null;
   }
   
   export interface SaleItemResult {
@@ -27,6 +28,8 @@ export interface SaleItemRequest {
     discount: number;
     tax: number;
     grandTotal: number;
+    promoCode: string | null;
+    promoDiscount: number;
     amountPaid: number;
     change: number;
     paymentMethod: string;
@@ -36,12 +39,4 @@ export interface SaleItemRequest {
     cashierName: string;
     createdAt: string;
     items: SaleItemResult[];
-  }
-
-  export interface CreateSaleRequest {
-    customerId: number;
-    items: SaleItemRequest[];
-    paymentMethod: string;
-    amountPaid: number;
-    promoCode: string | null;
   }
