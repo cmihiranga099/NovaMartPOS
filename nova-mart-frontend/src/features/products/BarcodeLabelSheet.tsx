@@ -34,7 +34,7 @@ function LabelSvg({ product }: { product: Product }) {
 
 export default function BarcodeLabelSheet({ product, quantity }: Props) {
   return (
-    <div id="print-barcode-labels" className="hidden print:flex print:flex-wrap print:gap-1 p-2 text-black">
+    <div id="print-barcode-labels" className="hidden print:flex print:flex-wrap print:gap-4 p-4 text-black">
       {Array.from({ length: quantity }).map((_, idx) => (
         <LabelSvg key={idx} product={product} />
       ))}
