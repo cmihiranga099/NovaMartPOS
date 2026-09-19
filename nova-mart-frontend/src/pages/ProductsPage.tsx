@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, Pencil, Trash2, Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { productService } from '../services/productService';
 import ProductFormModal, { type ProductFormValues } from '../features/products/ProductFormModal';
 import type { Product } from '../types/product';
 
 export default function ProductsPage() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -76,7 +78,7 @@ export default function ProductsPage() {
   };
 
   const handleDelete = (product: Product) => {
-    if (confirm(`Deactivate "${product.name}"?`)) {
+    if (confirm(t('common.confirmDelete', { name: product.name }))) {
       deleteMutation.mutate(product.id);
     }
   };
@@ -91,49 +93,50 @@ export default function ProductsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold">Products</h1>
+        <h1 className="text-2xl font-bold">{t('products.title')}</h1>
         <button
           onClick={openAddModal}
-          className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium transition-colors"        >
-          <Plus size={18} /> Add Product
+          className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium transition-colors"
+        >
+          <Plus size={18} /> {t('products.addProduct')}
         </button>
       </div>
 
       <div className="relative mb-4 max-w-sm">
-        <Search size={18} className="absolute left-3 top-2.5 text-gray-400" />
+        <Search size={18} className="absolute left-3 top-2.5 text-ink-500" />
         <input
           type="text"
-          placeholder="Search by name, code, or barcode..."
+          placeholder={t('products.searchPlaceholder')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-3 py-2 border rounded-md"
+          className="w-full pl-10 pr-3 py-2 border border-ink-500/20 rounded-lg"
         />
       </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-left text-gray-500">
+          <thead className="bg-surface text-left text-ink-500">
             <tr>
-              <th className="px-4 py-3">Product</th>
-              <th className="px-4 py-3">Category</th>
-              <th className="px-4 py-3">Brand</th>
-              <th className="px-4 py-3 text-right">Price</th>
+              <th className="px-4 py-3">{t('products.title')}</th>
+              <th className="px-4 py-3">{t('products.category')}</th>
+              <th className="px-4 py-3">{t('products.brand')}</th>
+              <th className="px-4 py-3 text-right">{t('common.total')}</th>
               <th className="px-4 py-3 text-right">Stock</th>
-              <th className="px-4 py-3 text-right">Actions</th>
+              <th className="px-4 py-3 text-right">{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody className="divide-y">
             {isLoading && (
-              <tr><td colSpan={6} className="px-4 py-6 text-center text-gray-400">Loading...</td></tr>
+              <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">{t('common.loading')}</td></tr>
             )}
             {!isLoading && filtered.length === 0 && (
-              <tr><td colSpan={6} className="px-4 py-6 text-center text-gray-400">No products found.</td></tr>
+              <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">{t('common.noResults')}</td></tr>
             )}
             {filtered.map((product) => (
-              <tr key={product.id} className="hover:bg-gray-50">
+              <tr key={product.id} className="hover:bg-surface">
                 <td className="px-4 py-3">
                   <div className="font-medium">{product.name}</div>
-                  <div className="text-xs text-gray-400">{product.productCode} · {product.barcode}</div>
+                  <div className="text-xs text-ink-500">{product.productCode} · {product.barcode}</div>
                 </td>
                 <td className="px-4 py-3">{product.categoryName}</td>
                 <td className="px-4 py-3">{product.brandName}</td>
