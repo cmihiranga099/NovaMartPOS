@@ -5,6 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { productService } from '../services/productService';
 import ProductFormModal, { type ProductFormValues } from '../features/products/ProductFormModal';
 import type { Product } from '../types/product';
+import { Tag as TagIcon } from 'lucide-react';
+import BarcodeLabelModal from '../features/products/BarcodeLabelModal';
+import BarcodeLabelSheet from '../features/products/BarcodeLabelSheet';
 
 export default function ProductsPage() {
   const { t } = useTranslation();
@@ -12,6 +15,8 @@ export default function ProductsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [labelProduct, setLabelProduct] = useState<Product | null>(null);
+const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } | null>(null);
 
   const queryClient = useQueryClient();
 
@@ -81,6 +86,13 @@ export default function ProductsPage() {
     if (confirm(t('common.confirmDelete', { name: product.name }))) {
       deleteMutation.mutate(product.id);
     }
+  };
+
+  const handlePrintLabels = (quantity: number) => {
+    if (!labelProduct) return;
+    setPrintJob({ product: labelProduct, quantity });
+    setLabelProduct(null);
+    setTimeout(() => window.print(), 50);
   };
 
   const filtered = products.filter(
@@ -169,6 +181,16 @@ export default function ProductsPage() {
           serverError={serverError}
         />
       )}
+
+{labelProduct && (
+  <BarcodeLabelModal
+    product={labelProduct}
+    onClose={() => setLabelProduct(null)}
+    onPrint={handlePrintLabels}
+  />
+)}
+
+{printJob && <BarcodeLabelSheet product={printJob.product} quantity={printJob.quantity} />}
     </div>
   );
 }
