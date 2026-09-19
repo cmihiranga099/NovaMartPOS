@@ -117,12 +117,22 @@ const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } 
       <div className="relative mb-4 max-w-sm">
         <Search size={18} className="absolute left-3 top-2.5 text-ink-500" />
         <input
-          type="text"
-          placeholder={t('products.searchPlaceholder')}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-3 py-2 border border-ink-500/20 rounded-lg"
-        />
+  type="text"
+  placeholder={t('products.searchPlaceholder')}
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+  onKeyDown={(e) => {
+    if (e.key === 'Enter') {
+      const exact = products.find((p) => p.barcode === search);
+      if (exact) {
+        e.preventDefault();
+        openEditModal(exact);
+        setSearch('');
+      }
+    }
+  }}
+  className="w-full pl-10 pr-3 py-2 border border-ink-500/20 rounded-lg"
+/>
       </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
@@ -159,6 +169,9 @@ const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } 
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right space-x-2">
+                  <button onClick={() => setLabelProduct(product)} className="text-ink-500 hover:text-brand-600" title="Print barcode label">
+                    <TagIcon size={16} className="inline" />
+                  </button>
                   <button onClick={() => openEditModal(product)} className="text-brand-600 hover:text-brand-700">
                     <Pencil size={16} className="inline" />
                   </button>

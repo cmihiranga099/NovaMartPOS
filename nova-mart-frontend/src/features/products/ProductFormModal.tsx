@@ -90,8 +90,17 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">{t('products.barcode')}</label>
-              <input {...register('barcode')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg" />
-              {errors.barcode && <p className="text-red-500 text-xs mt-1">{errors.barcode.message}</p>}
+              <input
+  {...register('barcode')}
+  onFocus={(e) => e.target.select()}
+  onKeyDown={(e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      (e.currentTarget.form?.elements.namedItem('name') as HTMLInputElement | null)?.focus();
+    }
+  }}
+  className="w-full px-3 py-2 border border-ink-500/20 rounded-lg"
+/>              {errors.barcode && <p className="text-red-500 text-xs mt-1">{errors.barcode.message}</p>}
             </div>
           </div>
 
