@@ -1,8 +1,33 @@
+import { useEffect, useRef } from 'react';
+import JsBarcode from 'jsbarcode';
 import { shopInfo } from '../../config/shopInfo';
 import type { SaleResult } from '../../types/sale';
 import logo from '../../assets/logo.png';
 
 const Dots = () => <div className="border-t border-dotted border-black my-1.5" />;
+
+function InvoiceBarcode({ invoiceNumber }: { invoiceNumber: string }) {
+  const svgRef = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    if (svgRef.current) {
+      JsBarcode(svgRef.current, invoiceNumber, {
+        format: 'CODE128',
+        width: 1.3,
+        height: 30,
+        fontSize: 9,
+        margin: 0,
+        displayValue: true,
+      });
+    }
+  }, [invoiceNumber]);
+
+  return (
+    <div className="flex justify-center mt-1.5">
+      <svg ref={svgRef} />
+    </div>
+  );
+}
 
 export default function Receipt({ sale }: { sale: SaleResult }) {
   const totalPcs = sale.items.reduce((sum, i) => sum + i.quantity, 0);
@@ -112,6 +137,9 @@ export default function Receipt({ sale }: { sale: SaleResult }) {
           {String(saleDate.getSeconds()).padStart(2, '0')}
         </span>
       </div>
+
+      {/* Unique scannable barcode for this invoice */}
+      <InvoiceBarcode invoiceNumber={sale.invoiceNumber} />
 
       <div className="text-center mt-2 font-bold">{shopInfo.footer}</div>
 
