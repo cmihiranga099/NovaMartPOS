@@ -1,5 +1,6 @@
 {
     "common": {
+      "somethingWrong": "Something went wrong.",
       "add": "Add",
       "edit": "Edit",
       "delete": "Delete",
@@ -24,10 +25,21 @@
       "discount": "Discount",
       "date": "Date",
       "notes": "Notes",
+      "price": "Price",
+      "stock": "Stock",
       "confirmDelete": "Delete \"{{name}}\"?",
       "noResults": "No results found",
       "tryDifferentSearch": "Try a different search term.",
-      "logout": "Logout"
+      "logout": "Logout",
+      "print": "Print",
+      "saveFailed": "Failed.",
+      "deleteFailed": "Could not delete.",
+      "yes": "Yes",
+      "no": "No",
+      "required": "Required",
+      "invalidEmail": "Invalid email",
+      "cannotBeNegative": "Cannot be negative",
+      "selectEllipsis": "Select..."
     },
     "nav": {
       "dashboard": "Dashboard",
@@ -137,7 +149,10 @@
       "subtitle": "Manage your customers",
       "addCustomer": "Add Customer",
       "editCustomer": "Edit Customer",
-      "searchPlaceholder": "Search by name or phone..."
+      "searchPlaceholder": "Search by name or phone...",
+      "loyaltyPoints": "Loyalty Points",
+      "noneFound": "No customers found.",
+      "deleteFailed": "Could not delete customer."
     },
     "products": {
       "title": "Products",
@@ -145,13 +160,28 @@
       "addProduct": "Add Product",
       "editProduct": "Edit Product",
       "searchPlaceholder": "Search products...",
+      "searchByCodeBarcode": "Search by name, code, or barcode...",
+      "product": "Product",
+      "noneFound": "No products found.",
+      "deactivateConfirm": "Deactivate \"{{name}}\"?",
+      "printLabels": "Print Labels",
+      "printBarcodeLabels": "Print Barcode Labels",
+      "numberOfLabels": "Number of labels",
+      "copies": "Copies",
+      "selectedCount": "{{count}} selected",
+      "noProductForBarcode": "No product found for that barcode.",
       "sellingPrice": "Selling Price",
       "purchasePrice": "Purchase Price",
       "stockQuantity": "Stock Quantity",
       "category": "Category",
       "brand": "Brand",
       "barcode": "Barcode",
-      "productCode": "Product Code"
+      "productCode": "Product Code",
+      "selectCategory": "Select a category",
+      "selectBrand": "Select a brand",
+      "taxRatePercent": "Tax Rate (%)",
+      "stockQty": "Stock Qty",
+      "minStock": "Min Stock"
     },
     "promotions": {
       "title": "Promotions",

@@ -1,5 +1,6 @@
 {
     "common": {
+      "somethingWrong": "යම් දෝෂයක් ඇති විය.",
       "add": "එකතු කරන්න",
       "edit": "සංස්කරණය කරන්න",
       "delete": "මකන්න",
@@ -24,10 +25,21 @@
       "discount": "වට්ටම",
       "date": "දිනය",
       "notes": "සටහන්",
+      "price": "මිල",
+      "stock": "තොගය",
       "confirmDelete": "\"{{name}}\" මකන්නද?",
       "noResults": "ප්‍රතිඵල හමු නොවීය",
       "tryDifferentSearch": "වෙනත් සෙවුම් පදයක් උත්සාහ කරන්න.",
-      "logout": "ඉවත් වන්න"
+      "logout": "ඉවත් වන්න",
+      "print": "මුද්‍රණය කරන්න",
+      "saveFailed": "අසාර්ථක විය.",
+      "deleteFailed": "මකා දැමිය නොහැක.",
+      "yes": "ඔව්",
+      "no": "නැත",
+      "required": "අවශ්‍යයි",
+      "invalidEmail": "වලංගු නොවන ඊමේල්",
+      "cannotBeNegative": "සෘණ විය නොහැක",
+      "selectEllipsis": "තෝරන්න..."
     },
     "nav": {
       "dashboard": "උපකරණ පුවරුව",
@@ -75,8 +87,8 @@
       "leftInStock": "ඉතිරි {{count}}"
     },
     "pos": {
-      "cart": "කූඩය",
-      "cartEmpty": "කූඩය හිස් ය.",
+      "cart": "කරත්තය",
+      "cartEmpty": "කරත්තය හිස්ය.",
       "scanOrSearch": "බාර්කෝඩ් සුපිරික්සන්න හෝ නිෂ්පාදනය සොයන්න...",
       "all": "සියල්ල",
       "pickCategoryPrompt": "නිෂ්පාදන බැලීමට කාණ්ඩයක් තෝරන්න, හෝ සෙවීමක් ටයිප් කර Enter ඔබන්න.",
@@ -100,7 +112,7 @@
       "paid": "ගෙවා ඇත",
       "printReceipt": "රිසිට්පත මුද්‍රණය කරන්න",
       "newSale": "නව විකුණුමක්",
-      "cartEmptyError": "කූඩය හිස්ය.",
+      "cartEmptyError": "කරත්තය හිස්ය.",
       "amountPaidError": "ගෙවූ මුදල අවම වශයෙන් රු. {{amount}} විය යුතුය.",
       "checkoutFailed": "ගෙවීම අසාර්ථක විය."
     },
@@ -137,7 +149,10 @@
       "subtitle": "ඔබේ පාරිභෝගිකයන් කළමනාකරණය කරන්න",
       "addCustomer": "පාරිභෝගිකයෙකු එකතු කරන්න",
       "editCustomer": "පාරිභෝගිකයා සංස්කරණය කරන්න",
-      "searchPlaceholder": "නම හෝ දුරකථන අංකය අනුව සොයන්න..."
+      "searchPlaceholder": "නම හෝ දුරකථන අංකය අනුව සොයන්න...",
+      "loyaltyPoints": "පක්ෂපාතී ලකුණු",
+      "noneFound": "පාරිභෝගිකයන් හමු නොවීය.",
+      "deleteFailed": "පාරිභෝගිකයා මකා දැමිය නොහැක."
     },
     "products": {
       "title": "නිෂ්පාදන",
@@ -145,13 +160,28 @@
       "addProduct": "නිෂ්පාදනයක් එකතු කරන්න",
       "editProduct": "නිෂ්පාදනය සංස්කරණය කරන්න",
       "searchPlaceholder": "නිෂ්පාදන සොයන්න...",
+      "searchByCodeBarcode": "නම, කේතය, හෝ බාර්කෝඩ් අනුව සොයන්න...",
+      "product": "නිෂ්පාදනය",
+      "noneFound": "නිෂ්පාදන හමු නොවීය.",
+      "deactivateConfirm": "\"{{name}}\" අක්‍රිය කරන්නද?",
+      "printLabels": "ලේබල් මුද්‍රණය කරන්න",
+      "printBarcodeLabels": "බාර්කෝඩ් ලේබල් මුද්‍රණය කරන්න",
+      "numberOfLabels": "ලේබල් ගණන",
+      "copies": "පිටපත්",
+      "selectedCount": "{{count}} තෝරා ඇත",
+      "noProductForBarcode": "එම බාර්කෝඩය සඳහා නිෂ්පාදනයක් හමු නොවීය.",
       "sellingPrice": "විකුණුම් මිල",
       "purchasePrice": "මිලදී ගැනීමේ මිල",
       "stockQuantity": "තොග ප්‍රමාණය",
       "category": "කාණ්ඩය",
       "brand": "සන්නාමය",
       "barcode": "බාර්කෝඩ්",
-      "productCode": "නිෂ්පාදන කේතය"
+      "productCode": "නිෂ්පාදන කේතය",
+      "selectCategory": "කාණ්ඩයක් තෝරන්න",
+      "selectBrand": "සන්නාමයක් තෝරන්න",
+      "taxRatePercent": "බද්ද (%)",
+      "stockQty": "තොග ප්‍රමාණය",
+      "minStock": "අවම තොගය"
     },
     "promotions": {
       "title": "ප්‍රවර්ධන",
