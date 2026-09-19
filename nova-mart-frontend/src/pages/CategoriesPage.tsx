@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, Pencil, Trash2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { lookupService } from '../services/lookupService';
 import LookupFormModal, { type LookupFormValues } from '../features/lookup/LookupFormModal';
 import type { Category } from '../types/lookup';
 
 export default function CategoriesPage() {
+  const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Category | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -50,9 +52,9 @@ export default function CategoriesPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold">Categories</h1>
+        <h1 className="text-2xl font-bold">{t('categories.title')}</h1>
         <button onClick={openAdd} className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium">
-          <Plus size={18} /> Add Category
+          <Plus size={18} /> {t('categories.addCategory')}
         </button>
       </div>
 
@@ -60,21 +62,21 @@ export default function CategoriesPage() {
         <table className="w-full text-sm">
           <thead className="bg-surface text-left text-ink-500">
             <tr>
-              <th className="px-4 py-3">Name</th>
-              <th className="px-4 py-3">Description</th>
-              <th className="px-4 py-3 text-right">Actions</th>
+              <th className="px-4 py-3">{t('common.name')}</th>
+              <th className="px-4 py-3">{t('common.description')}</th>
+              <th className="px-4 py-3 text-right">{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody className="divide-y">
-            {isLoading && <tr><td colSpan={3} className="px-4 py-6 text-center text-ink-500">Loading...</td></tr>}
-            {!isLoading && categories.length === 0 && <tr><td colSpan={3} className="px-4 py-6 text-center text-ink-500">No categories yet.</td></tr>}
+            {isLoading && <tr><td colSpan={3} className="px-4 py-6 text-center text-ink-500">{t('common.loading')}</td></tr>}
+            {!isLoading && categories.length === 0 && <tr><td colSpan={3} className="px-4 py-6 text-center text-ink-500">{t('common.noResults')}</td></tr>}
             {categories.map((c) => (
               <tr key={c.id} className="hover:bg-surface">
                 <td className="px-4 py-3 font-medium">{c.name}</td>
                 <td className="px-4 py-3 text-ink-500">{c.description || '—'}</td>
                 <td className="px-4 py-3 text-right space-x-2">
                   <button onClick={() => openEdit(c)} className="text-brand-600 hover:text-brand-700"><Pencil size={16} className="inline" /></button>
-                  <button onClick={() => { if (confirm(`Delete "${c.name}"?`)) deleteMutation.mutate(c.id); }} className="text-red-600 hover:text-red-800"><Trash2 size={16} className="inline" /></button>
+                  <button onClick={() => { if (confirm(t('common.confirmDelete', { name: c.name }))) deleteMutation.mutate(c.id); }} className="text-red-600 hover:text-red-800"><Trash2 size={16} className="inline" /></button>
                 </td>
               </tr>
             ))}
@@ -84,7 +86,7 @@ export default function CategoriesPage() {
 
       {modalOpen && (
         <LookupFormModal
-          title={editing ? 'Edit Category' : 'Add Category'}
+          title={editing ? t('categories.editCategory') : t('categories.addCategory')}
           initial={editing}
           onClose={closeModal}
           onSubmit={handleSubmit}

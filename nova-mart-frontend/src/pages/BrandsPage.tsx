@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, Pencil, Trash2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { lookupService } from '../services/lookupService';
 import LookupFormModal, { type LookupFormValues } from '../features/lookup/LookupFormModal';
 import type { Brand } from '../types/lookup';
 
 export default function BrandsPage() {
+  const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Brand | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -50,9 +52,9 @@ export default function BrandsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold">Brands</h1>
+        <h1 className="text-2xl font-bold">{t('brands.title')}</h1>
         <button onClick={openAdd} className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium">
-          <Plus size={18} /> Add Brand
+          <Plus size={18} /> {t('brands.addBrand')}
         </button>
       </div>
 
@@ -60,21 +62,21 @@ export default function BrandsPage() {
         <table className="w-full text-sm">
           <thead className="bg-surface text-left text-ink-500">
             <tr>
-              <th className="px-4 py-3">Name</th>
-              <th className="px-4 py-3">Description</th>
-              <th className="px-4 py-3 text-right">Actions</th>
+              <th className="px-4 py-3">{t('common.name')}</th>
+              <th className="px-4 py-3">{t('common.description')}</th>
+              <th className="px-4 py-3 text-right">{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody className="divide-y">
-            {isLoading && <tr><td colSpan={3} className="px-4 py-6 text-center text-ink-500">Loading...</td></tr>}
-            {!isLoading && brands.length === 0 && <tr><td colSpan={3} className="px-4 py-6 text-center text-ink-500">No brands yet.</td></tr>}
+            {isLoading && <tr><td colSpan={3} className="px-4 py-6 text-center text-ink-500">{t('common.loading')}</td></tr>}
+            {!isLoading && brands.length === 0 && <tr><td colSpan={3} className="px-4 py-6 text-center text-ink-500">{t('common.noResults')}</td></tr>}
             {brands.map((b) => (
               <tr key={b.id} className="hover:bg-surface">
                 <td className="px-4 py-3 font-medium">{b.name}</td>
                 <td className="px-4 py-3 text-ink-500">{b.description || '—'}</td>
                 <td className="px-4 py-3 text-right space-x-2">
                   <button onClick={() => openEdit(b)} className="text-brand-600 hover:text-brand-700"><Pencil size={16} className="inline" /></button>
-                  <button onClick={() => { if (confirm(`Delete "${b.name}"?`)) deleteMutation.mutate(b.id); }} className="text-red-600 hover:text-red-800"><Trash2 size={16} className="inline" /></button>
+                  <button onClick={() => { if (confirm(t('common.confirmDelete', { name: b.name }))) deleteMutation.mutate(b.id); }} className="text-red-600 hover:text-red-800"><Trash2 size={16} className="inline" /></button>
                 </td>
               </tr>
             ))}
@@ -84,7 +86,7 @@ export default function BrandsPage() {
 
       {modalOpen && (
         <LookupFormModal
-          title={editing ? 'Edit Brand' : 'Add Brand'}
+          title={editing ? t('brands.editBrand') : t('brands.addBrand')}
           initial={editing}
           onClose={closeModal}
           onSubmit={handleSubmit}
