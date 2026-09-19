@@ -64,6 +64,12 @@ export default function Receipt({ sale }: { sale: SaleResult }) {
             <span>-{sale.discount.toFixed(2)}</span>
           </div>
         )}
+        {sale.promoCode && sale.promoDiscount > 0 && (
+          <div className="flex justify-between font-normal text-[10px]">
+            <span>Promo ({sale.promoCode})</span>
+            <span>-{sale.promoDiscount.toFixed(2)}</span>
+          </div>
+        )}
         {sale.tax > 0 && (
           <div className="flex justify-between font-normal text-[10px]">
             <span>Tax</span>
