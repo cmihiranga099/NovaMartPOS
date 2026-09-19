@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, Pencil, Trash2, Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { customerService } from '../services/customerService';
 import CustomerFormModal, { type CustomerFormValues } from '../features/customers/CustomerFormModal';
 import type { Customer } from '../types/customer';
 
 export default function CustomersPage() {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
@@ -80,7 +82,7 @@ export default function CustomersPage() {
   };
 
   const handleDelete = (customer: Customer) => {
-    if (confirm(`Delete "${customer.name}"?`)) {
+    if (confirm(t('common.confirmDelete', { name: customer.name }))) {
       deleteMutation.mutate(customer.id);
     }
   };
@@ -94,49 +96,48 @@ export default function CustomersPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold">Customers</h1>
+        <h1 className="text-2xl font-bold">{t('customers.title')}</h1>
         <button
           onClick={openAddModal}
-          className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium transition-colors"        >
-          <Plus size={18} /> Add Customer
+          className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium transition-colors"
+        >
+          <Plus size={18} /> {t('customers.addCustomer')}
         </button>
       </div>
 
       <div className="relative mb-4 max-w-sm">
-        <Search size={18} className="absolute left-3 top-2.5 text-gray-400" />
+        <Search size={18} className="absolute left-3 top-2.5 text-ink-500" />
         <input
           type="text"
-          placeholder="Search by name or phone..."
+          placeholder={t('customers.searchPlaceholder')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-3 py-2 border rounded-md"
+          className="w-full pl-10 pr-3 py-2 border border-ink-500/20 rounded-lg"
         />
       </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-left text-gray-500">
+          <thead className="bg-surface text-left text-ink-500">
             <tr>
-              <th className="px-4 py-3">Name</th>
-              <th className="px-4 py-3">Phone</th>
-              <th className="px-4 py-3">Email</th>
-              <th className="px-4 py-3 text-right">Loyalty Points</th>
-              <th className="px-4 py-3 text-right">Actions</th>
+              <th className="px-4 py-3">{t('common.name')}</th>
+              <th className="px-4 py-3">{t('common.phone')}</th>
+              <th className="px-4 py-3">{t('common.email')}</th>
+              <th className="px-4 py-3 text-right">{t('common.actions')}</th>
             </tr>
           </thead>
           <tbody className="divide-y">
             {isLoading && (
-              <tr><td colSpan={5} className="px-4 py-6 text-center text-gray-400">Loading...</td></tr>
+              <tr><td colSpan={4} className="px-4 py-6 text-center text-ink-500">{t('common.loading')}</td></tr>
             )}
             {!isLoading && filtered.length === 0 && (
-              <tr><td colSpan={5} className="px-4 py-6 text-center text-gray-400">No customers found.</td></tr>
+              <tr><td colSpan={4} className="px-4 py-6 text-center text-ink-500">{t('common.noResults')}</td></tr>
             )}
             {filtered.map((customer) => (
-              <tr key={customer.id} className="hover:bg-gray-50">
+              <tr key={customer.id} className="hover:bg-surface">
                 <td className="px-4 py-3 font-medium">{customer.name}</td>
                 <td className="px-4 py-3">{customer.phone || '—'}</td>
                 <td className="px-4 py-3">{customer.email || '—'}</td>
-                <td className="px-4 py-3 text-right">{customer.loyaltyPoints}</td>
                 <td className="px-4 py-3 text-right space-x-2">
                   <button onClick={() => openEditModal(customer)} className="text-brand-600 hover:text-brand-700">
                     <Pencil size={16} className="inline" />

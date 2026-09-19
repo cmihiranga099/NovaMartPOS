@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import type { Customer } from '../../types/customer';
 
 const schema = z.object({
@@ -22,6 +23,7 @@ interface Props {
 }
 
 export default function CustomerFormModal({ customer, onClose, onSubmit, isSubmitting, serverError }: Props) {
+  const { t } = useTranslation();
   const { register, handleSubmit, reset, formState: { errors } } = useForm<CustomerFormValues>({
     resolver: zodResolver(schema),
     defaultValues: { name: '', phone: '', email: '' },
@@ -41,8 +43,8 @@ export default function CustomerFormModal({ customer, onClose, onSubmit, isSubmi
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
         <div className="flex items-center justify-between p-4 border-b">
-          <h2 className="text-lg font-semibold">{customer ? 'Edit Customer' : 'Add Customer'}</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+          <h2 className="text-lg font-semibold">{customer ? t('customers.editCustomer') : t('customers.addCustomer')}</h2>
+          <button onClick={onClose} className="text-ink-500 hover:text-ink-900">
             <X size={20} />
           </button>
         </div>
@@ -51,32 +53,32 @@ export default function CustomerFormModal({ customer, onClose, onSubmit, isSubmi
           {serverError && <p className="text-red-600 text-sm bg-red-50 p-2 rounded">{serverError}</p>}
 
           <div>
-            <label className="block text-sm font-medium mb-1">Name</label>
-            <input {...register('name')} className="w-full px-3 py-2 border rounded-md" autoFocus />
+            <label className="block text-sm font-medium mb-1">{t('common.name')}</label>
+            <input {...register('name')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg" autoFocus />
             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Phone</label>
-            <input {...register('phone')} className="w-full px-3 py-2 border rounded-md" />
+            <label className="block text-sm font-medium mb-1">{t('common.phone')}</label>
+            <input {...register('phone')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg" />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <input {...register('email')} className="w-full px-3 py-2 border rounded-md" />
+            <label className="block text-sm font-medium mb-1">{t('common.email')}</label>
+            <input {...register('email')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg" />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
           </div>
 
           <div className="flex justify-end gap-2 pt-2">
-            <button type="button" onClick={onClose} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md">
-              Cancel
+            <button type="button" onClick={onClose} className="px-4 py-2 text-ink-700 hover:bg-surface rounded-lg">
+              {t('common.cancel')}
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
               className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium transition-colors disabled:opacity-50"
             >
-              {isSubmitting ? 'Saving...' : 'Save'}
+              {isSubmitting ? t('common.saving') : t('common.save')}
             </button>
           </div>
         </form>
