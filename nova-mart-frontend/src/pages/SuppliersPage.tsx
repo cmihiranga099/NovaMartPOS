@@ -4,7 +4,7 @@ import { Plus, Pencil, Trash2, Search, Truck, Phone, Mail } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { supplierService } from '../services/supplierService';
 import SupplierFormModal, { type SupplierFormValues } from '../features/suppliers/SupplierFormModal';
-import type { Supplier } from '../types/supplier';
+import type { Supplier, UpdateSupplierRequest } from '../types/supplier';
 
 const AVATAR_PALETTE = [
   'bg-orange-100 text-orange-600',
@@ -39,7 +39,7 @@ export default function SuppliersPage() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: SupplierFormValues & { isActive: boolean } }) =>
+    mutationFn: ({ id, data }: { id: number; data: UpdateSupplierRequest }) =>
       supplierService.update(id, data),
     onSuccess: () => { invalidate(); closeModal(); },
     onError: (err: unknown) => setServerError((err as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Failed.'),

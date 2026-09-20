@@ -1,7 +1,15 @@
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import 'jspdf-autotable';
 import type { SaleResult } from '../types/sale';
+
+// jspdf-autotable is imported for its side effect: it attaches an .autoTable()
+// method directly onto the jsPDF prototype. This is the most version-resilient
+// way to use it, since it doesn't depend on guessing the module's export shape.
+type JsPDFWithAutoTable = jsPDF & {
+  autoTable: (options: Record<string, unknown>) => jsPDF;
+  lastAutoTable: { finalY: number };
+};
 
 export function exportSalesToExcel(sales: SaleResult[], filename = 'sales-history') {
   const rows = sales.map((s) => ({
@@ -95,7 +103,7 @@ export function exportPnLToPdf(
   doc.text(`Period: ${fromDate} to ${toDate}`, 14, 42);
   doc.text(`Generated: ${new Date().toLocaleString('en-LK')}`, 14, 47);
 
-  autoTable(doc, {
+  (doc as JsPDFWithAutoTable).autoTable({
     startY: 54,
     head: [['Metric', 'Amount (Rs.)']],
     body: [
@@ -111,13 +119,13 @@ export function exportPnLToPdf(
     styles: { fontSize: 9 },
   });
 
-  const afterSummaryY = (doc as unknown as { lastAutoTable: { finalY: number } }).lastAutoTable.finalY + 10;
+  const afterSummaryY = (doc as JsPDFWithAutoTable).lastAutoTable.finalY + 10;
 
   doc.setFontSize(11);
   doc.setFont('helvetica', 'bold');
   doc.text('Daily Breakdown', 14, afterSummaryY);
 
-  autoTable(doc, {
+  (doc as JsPDFWithAutoTable).autoTable({
     startY: afterSummaryY + 4,
     head: [['Date', 'Transactions', 'Net Revenue', 'COGS', 'Profit']],
     body: dailyRows.map((r) => [
