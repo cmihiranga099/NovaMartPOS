@@ -13,6 +13,7 @@ import PromotionsPage from './pages/PromotionsPage';
 import SalesHistoryPage from './pages/SalesHistoryPage';
 import SuppliersPage from './pages/SuppliersPage';
 import PurchaseOrdersPage from './pages/PurchaseOrdersPage';
+import ReportsPage from './pages/ReportsPage';
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
 <Route path="sales-history" element={<SalesHistoryPage />} />
 <Route path="suppliers" element={<SuppliersPage />} />
 <Route path="purchase-orders" element={<PurchaseOrdersPage />} />
+<Route path="reports" element={<ReportsPage />} />
         </Route>
       </Routes>
     </AuthProvider>

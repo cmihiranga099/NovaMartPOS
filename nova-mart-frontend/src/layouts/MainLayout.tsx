@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, ShoppingCart, Package, Users, LogOut, Tag, Layers, History, Percent, Truck, PackageCheck } from 'lucide-react';
+import { LayoutDashboard, ShoppingCart, Package, Users, LogOut, Tag, Layers, History, Percent, Truck, PackageCheck, FileBarChart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../store/AuthContext';
 import logo from '../assets/logo.png';
@@ -15,6 +15,7 @@ const navItems = [
   { path: '/customers', key: 'customers', icon: Users },
   { path: '/suppliers', key: 'suppliers', icon: Truck },
   { path: '/purchase-orders', key: 'purchaseOrders', icon: PackageCheck },
+  { path: '/reports', key: 'reports', icon: FileBarChart },
 ] as const;
 
 export default function MainLayout() {
