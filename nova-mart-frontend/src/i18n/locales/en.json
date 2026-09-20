@@ -32,6 +32,9 @@
       "tryDifferentSearch": "Try a different search term.",
       "logout": "Logout",
       "print": "Print",
+      "from": "From",
+      "to": "To",
+      "export": "Export",
       "saveFailed": "Failed.",
       "deleteFailed": "Could not delete.",
       "yes": "Yes",
@@ -52,6 +55,7 @@
       "customers": "Customers",
       "suppliers": "Suppliers",
       "purchaseOrders": "Purchase Orders",
+      "reports": "Reports",
       "tagline": "Point of Sale"
     },
     "login": {
@@ -200,7 +204,23 @@
       "customer": "Customer",
       "cashier": "Cashier",
       "noSalesFound": "No sales found.",
-      "printReceipt": "Print Receipt"
+      "printReceipt": "Print Receipt",
+      "exportExcel": "Export to Excel"
+    },
+    "reports": {
+      "title": "Reports",
+      "subtitle": "Profit & loss over any date range",
+      "netSalesRevenue": "Net Sales Revenue",
+      "discountsGiven": "Discounts Given",
+      "taxCollected": "Tax Collected",
+      "cogs": "Cost of Goods Sold",
+      "grossProfit": "Gross Profit",
+      "transactions": "Transactions",
+      "dailyBreakdown": "Daily Breakdown",
+      "exportPdf": "Export PDF",
+      "exportExcel": "Export to Excel",
+      "noData": "No sales in this date range.",
+      "generate": "Generate Report"
     },
     "purchaseOrders": {
       "title": "Purchase Orders",

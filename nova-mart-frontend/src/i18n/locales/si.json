@@ -32,6 +32,9 @@
       "tryDifferentSearch": "වෙනත් සෙවුම් පදයක් උත්සාහ කරන්න.",
       "logout": "ඉවත් වන්න",
       "print": "මුද්‍රණය කරන්න",
+      "from": "සිට",
+      "to": "දක්වා",
+      "export": "නිර්යාත කරන්න",
       "saveFailed": "අසාර්ථක විය.",
       "deleteFailed": "මකා දැමිය නොහැක.",
       "yes": "ඔව්",
@@ -52,6 +55,7 @@
       "customers": "පාරිභෝගිකයන්",
       "suppliers": "සැපයුම්කරුවන්",
       "purchaseOrders": "මිලදී ගැනීමේ ඇණවුම්",
+      "reports": "වාර්තා",
       "tagline": "විකුණුම් ස්ථානය"
     },
     "login": {
@@ -200,7 +204,23 @@
       "customer": "පාරිභෝගිකයා",
       "cashier": "මුදල් අයකැමි",
       "noSalesFound": "විකුණුම් හමු නොවීය.",
-      "printReceipt": "රිසිට්පත මුද්‍රණය කරන්න"
+      "printReceipt": "රිසිට්පත මුද්‍රණය කරන්න",
+      "exportExcel": "Excel වෙත නිර්යාත කරන්න"
+    },
+    "reports": {
+      "title": "වාර්තා",
+      "subtitle": "ඕනෑම දින පරාසයක් සඳහා ලාභ හා අලාභ",
+      "netSalesRevenue": "නිශුද්ධ විකුණුම් ආදායම",
+      "discountsGiven": "ලබා දුන් වට්ටම්",
+      "taxCollected": "එකතු කළ බදු",
+      "cogs": "විකුණන ලද භාණ්ඩවල පිරිවැය",
+      "grossProfit": "දළ ලාභය",
+      "transactions": "ගනුදෙනු",
+      "dailyBreakdown": "දෛනික විස්තරය",
+      "exportPdf": "PDF නිර්යාත කරන්න",
+      "exportExcel": "Excel වෙත නිර්යාත කරන්න",
+      "noData": "මෙම දින පරාසය තුළ විකුණුම් නැත.",
+      "generate": "වාර්තාව සකසන්න"
     },
     "purchaseOrders": {
       "title": "මිලදී ගැනීමේ ඇණවුම්",
