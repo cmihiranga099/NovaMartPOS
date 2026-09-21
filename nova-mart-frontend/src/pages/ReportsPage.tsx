@@ -17,7 +17,7 @@ function todayISO() {
 
 function StatCard({ icon: Icon, label, value }: { icon: typeof TrendingUp; label: string; value: string }) {
   return (
-    <div className="bg-white rounded-lg shadow p-4 flex items-center gap-3">
+    <div className="bg-white rounded-lg border border-line shadow p-4 flex items-center gap-3">
       <div className="w-10 h-10 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
         <Icon size={20} />
       </div>
@@ -175,7 +175,7 @@ export default function ReportsPage() {
             <StatCard icon={ReceiptIcon} label={t('reports.transactions')} value={String(summary.transactionCount)} />
           </div>
 
-          <div className="bg-white rounded-lg shadow overflow-hidden">
+          <div className="bg-white rounded-lg border border-line shadow overflow-hidden">
             <div className="px-4 py-3 border-b border-line font-bold text-sm">{t('reports.dailyBreakdown')}</div>
             <table className="w-full text-sm">
               <thead className="bg-surface text-left text-ink-500">
