@@ -96,7 +96,7 @@ export default function PurchaseOrdersPage() {
       <p className="text-ink-500 mb-6">{t('purchaseOrders.subtitle')}</p>
 
       {/* New purchase order form */}
-      <div className="bg-white rounded-lg shadow p-5 mb-8">
+      <div className="bg-white rounded-lg border border-line shadow p-5 mb-8">
         <h2 className="font-bold mb-4">{t('purchaseOrders.newOrder')}</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
@@ -210,7 +210,7 @@ export default function PurchaseOrdersPage() {
         <button
           onClick={handleReceive}
           disabled={receiveMutation.isPending}
-          className="w-full mt-4 flex items-center justify-center gap-2 py-3 bg-accent-500 text-brand-900 font-bold rounded-lg hover:bg-accent-600 disabled:opacity-50 transition-colors"
+          className="w-full mt-4 flex items-center justify-center gap-2 py-3 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-700 disabled:opacity-50 transition-colors"
         >
           <PackageCheck size={18} />
           {receiveMutation.isPending ? t('purchaseOrders.receiving') : t('purchaseOrders.receiveOrder')}
@@ -219,7 +219,7 @@ export default function PurchaseOrdersPage() {
 
       {/* History */}
       <h2 className="font-bold text-lg mb-3">{t('purchaseOrders.purchaseHistory')}</h2>
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white rounded-lg border border-line shadow overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-surface text-left text-ink-500">
             <tr>
