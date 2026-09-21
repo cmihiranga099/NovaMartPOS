@@ -88,7 +88,9 @@
       "noSalesYet": "තවම විකුණුම් සටහන් වී නැත.",
       "noSalesThisMonth": "මෙම මාසයේ තවම විකුණුම් සටහන් වී නැත.",
       "allStocked": "සියලුම නිෂ්පාදනවල ප්‍රමාණවත් තොග ඇත.",
-      "leftInStock": "ඉතිරි {{count}}"
+      "leftInStock": "ඉතිරි {{count}}",
+      "live": "සජීවී",
+      "offline": "නොබැඳි"
     },
     "pos": {
       "cart": "කරත්තය",

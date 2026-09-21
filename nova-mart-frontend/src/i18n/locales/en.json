@@ -88,7 +88,9 @@
       "noSalesYet": "No sales recorded yet.",
       "noSalesThisMonth": "No sales recorded yet this month.",
       "allStocked": "All products are sufficiently stocked.",
-      "leftInStock": "{{count}} left"
+      "leftInStock": "{{count}} left",
+      "live": "Live",
+      "offline": "Offline"
     },
     "pos": {
       "cart": "Cart",
