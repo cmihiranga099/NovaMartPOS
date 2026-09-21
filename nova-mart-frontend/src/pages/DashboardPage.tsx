@@ -22,7 +22,7 @@ import { useAuth } from '../store/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { subscribeToDashboardHub } from '../services/dashboardHub';
 
-const PIE_COLORS = ['#fe6c0d', '#123f34', '#85868c', '#e85a00'];
+const PIE_COLORS = ['#fe6c0d', '#55565a', '#85868c', '#e85a00'];
 const TREND_DAYS = 14;
 
 function StatCard({
@@ -37,10 +37,10 @@ function StatCard({
   tone?: 'brand' | 'accent';
 }) {
   return (
-    <div className="bg-white rounded-lg shadow p-5 flex items-center gap-4">
+    <div className="bg-white rounded-lg border border-line shadow p-5 flex items-center gap-4">
       <div
         className={`w-11 h-11 rounded-lg flex items-center justify-center ${
-          tone === 'brand' ? 'bg-brand-50 text-brand-600' : 'bg-accent-100 text-accent-600'
+          tone === 'brand' ? 'bg-brand-50 text-brand-600' : 'bg-ink-100 text-ink-700'
         }`}
       >
         <Icon size={22} />
@@ -169,22 +169,22 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-white rounded-lg border border-line shadow p-4">
           <p className="text-xs text-ink-500">{t('dashboard.weekRevenue')}</p>
           <p className="text-lg font-bold mt-1">Rs. {weekRevenue.toFixed(2)}</p>
         </div>
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-white rounded-lg border border-line shadow p-4">
           <p className="text-xs text-ink-500">{t('dashboard.monthRevenue')}</p>
           <p className="text-lg font-bold mt-1">Rs. {monthRevenue.toFixed(2)}</p>
         </div>
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-white rounded-lg border border-line shadow p-4">
           <p className="text-xs text-ink-500">{t('dashboard.avgOrderValue')}</p>
           <p className="text-lg font-bold mt-1">Rs. {avgOrderValue.toFixed(2)}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div className="lg:col-span-2 bg-white rounded-lg shadow p-5">
+        <div className="lg:col-span-2 bg-white rounded-lg border border-line shadow p-5">
           <h2 className="font-bold mb-4">{t('dashboard.revenueTrend', { days: TREND_DAYS })}</h2>
           {sales.length === 0 ? (
             <p className="text-ink-500 text-sm">{t('dashboard.noSalesYet')}</p>
@@ -210,7 +210,7 @@ export default function DashboardPage() {
           )}
         </div>
 
-        <div className="bg-white rounded-lg shadow p-5">
+        <div className="bg-white rounded-lg border border-line shadow p-5">
           <h2 className="font-bold mb-4">{t('dashboard.paymentMethodSplit')}</h2>
           {paymentBreakdown.length === 0 ? (
             <p className="text-ink-500 text-sm">{t('dashboard.noSalesYet')}</p>
@@ -231,7 +231,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-lg shadow p-5">
+        <div className="bg-white rounded-lg border border-line shadow p-5">
           <h2 className="font-bold mb-4">{t('dashboard.topProducts')}</h2>
           {topProductsChart.length === 0 ? (
             <p className="text-ink-500 text-sm">{t('dashboard.noSalesThisMonth')}</p>
@@ -255,7 +255,7 @@ export default function DashboardPage() {
           )}
         </div>
 
-        <div className="bg-white rounded-lg shadow p-5">
+        <div className="bg-white rounded-lg border border-line shadow p-5">
           <h2 className="font-bold mb-4">{t('dashboard.lowStockAlerts')}</h2>
           {lowStock.length === 0 ? (
             <p className="text-ink-500 text-sm">{t('dashboard.allStocked')}</p>
