@@ -10,6 +10,7 @@ using NovaMartPOS.Domain.Enums;
 using NovaMartPOS.Infrastructure.Auth;
 using NovaMartPOS.Infrastructure.Persistence;
 using NovaMartPOS.Infrastructure.Repositories;
+using NovaMartPOS.API.Hubs;
 
 namespace NovaMartPOS.API
 {
@@ -21,6 +22,7 @@ namespace NovaMartPOS.API
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSignalR();
 
             builder.Services.AddSwaggerGen(options =>
             {
@@ -56,7 +58,8 @@ namespace NovaMartPOS.API
                 {
                     policy.WithOrigins("http://localhost:5173")
                           .AllowAnyHeader()
-                          .AllowAnyMethod();
+                          .AllowAnyMethod()
+                          .AllowCredentials();
                 });
             });
 
@@ -109,6 +112,8 @@ namespace NovaMartPOS.API
             builder.Services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
             builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
 
+            builder.Services.AddScoped<INotificationService, SignalRNotificationService>();
+
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -126,6 +131,24 @@ namespace NovaMartPOS.API
                     ValidAudience = jwtSettings.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
                     ClockSkew = TimeSpan.FromMinutes(1)
+                };
+
+                // SignalR's browser WebSocket transport can't attach an Authorization header,
+                // so the client sends the token as a query string param instead — pick it up here.
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+
+                        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+                        {
+                            context.Token = accessToken;
+                        }
+
+                        return Task.CompletedTask;
+                    }
                 };
             });
 
@@ -146,6 +169,7 @@ namespace NovaMartPOS.API
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
+            app.MapHub<DashboardHub>("/hubs/dashboard");
 
             using (var scope = app.Services.CreateScope())
             {
