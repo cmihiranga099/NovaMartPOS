@@ -3,20 +3,29 @@
 @theme {
   --font-sans: 'Manrope', 'Noto Sans Sinhala', ui-sans-serif, system-ui, sans-serif;
 
-  --color-brand-50: #fff4ec;
-  --color-brand-100: #ffe4d1;
+  /* Orange — primary brand ramp */
+  --color-brand-50: #fff6ef;
+  --color-brand-100: #ffe8d6;
+  --color-brand-200: #ffcea6;
   --color-brand-300: #ffab73;
+  --color-brand-400: #ff8b45;
   --color-brand-500: #fe6c0d;
   --color-brand-600: #e85a00;
   --color-brand-700: #bf4700;
-  --color-brand-800: #123f34;
-  --color-brand-900: #0f2b23;
+  --color-brand-800: #96390a;
+  --color-brand-900: #6b2b08;
 
-  --color-ink-900: #2f3032;
-  --color-ink-700: #55565a;
+  /* Ash — neutral grey ramp for text, icons, chrome */
+  --color-ink-0: #ffffff;
+  --color-ink-50: #f7f6f5;
+  --color-ink-100: #eeedeb;
+  --color-ink-300: #c7c4c0;
   --color-ink-500: #85868c;
+  --color-ink-600: #6c6d72;
+  --color-ink-700: #55565a;
+  --color-ink-900: #2f3032;
 
-  --color-line: #ece7e2;
+  --color-line: #dcdad7;
   --color-surface: #fbfaf8;
 }
 

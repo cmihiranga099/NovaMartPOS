@@ -429,12 +429,12 @@ export default function PosPage() {
         {error && <p className="text-red-600 text-sm bg-red-50 p-2 rounded mt-3">{error}</p>}
 
         <button
-          onClick={handleCheckout}
-          disabled={checkoutMutation.isPending}
-          className="w-full py-3 mt-3 bg-accent-500 text-brand-900 font-bold rounded-lg hover:bg-accent-600 disabled:opacity-50 transition-colors"
-        >
-          {checkoutMutation.isPending ? t('pos.processing') : t('pos.completeSale')}
-        </button>
+  onClick={handleCheckout}
+  disabled={checkoutMutation.isPending}
+  className="w-full py-3 mt-3 bg-brand-600 text-white font-bold rounded-none hover:bg-brand-700 disabled:opacity-50 transition-colors"
+>
+  {checkoutMutation.isPending ? t('pos.processing') : t('pos.completeSale')}
+</button>
       </div>
 
       {completedSale && (
