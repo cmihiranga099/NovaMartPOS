@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { DollarSign, Receipt, TrendingUp, AlertTriangle } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { DollarSign, Receipt, TrendingUp, AlertTriangle, Wifi, WifiOff } from 'lucide-react';
 import {
   AreaChart,
   Area,
@@ -20,6 +20,7 @@ import { reportService } from '../services/reportService';
 import { saleService } from '../services/saleService';
 import { useAuth } from '../store/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { subscribeToDashboardHub } from '../services/dashboardHub';
 
 const PIE_COLORS = ['#fe6c0d', '#123f34', '#85868c', '#e85a00'];
 const TREND_DAYS = 14;
@@ -55,6 +56,9 @@ function StatCard({
 export default function DashboardPage() {
   const { user } = useAuth();
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
+  const [isLive, setIsLive] = useState(false);
+  const [justUpdated, setJustUpdated] = useState(false);
   const today = new Date();
   const monthStart = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().slice(0, 10);
   const todayStr = today.toISOString().slice(0, 10);
@@ -66,6 +70,22 @@ export default function DashboardPage() {
   });
   const { data: lowStock = [] } = useQuery({ queryKey: ['low-stock'], queryFn: reportService.getLowStock });
   const { data: sales = [] } = useQuery({ queryKey: ['sales'], queryFn: saleService.getAll });
+
+  useEffect(() => {
+    const unsubscribe = subscribeToDashboardHub({
+      onSaleCompleted: () => {
+        queryClient.invalidateQueries({ queryKey: ['daily-sales'] });
+        queryClient.invalidateQueries({ queryKey: ['top-products'] });
+        queryClient.invalidateQueries({ queryKey: ['low-stock'] });
+        queryClient.invalidateQueries({ queryKey: ['sales'] });
+        setJustUpdated(true);
+        setTimeout(() => setJustUpdated(false), 2000);
+      },
+      onConnectionStateChange: setIsLive,
+    });
+
+    return unsubscribe;
+  }, [queryClient]);
 
   const { trend, paymentBreakdown, weekRevenue, monthRevenue, avgOrderValue } = useMemo(() => {
     const now = new Date();
@@ -123,7 +143,22 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-1">{t('dashboard.welcome', { name: user?.fullName?.split(' ')[0] })}</h1>
+      <div className="flex items-center justify-between mb-1 flex-wrap gap-2">
+        <h1 className="text-2xl font-bold">{t('dashboard.welcome', { name: user?.fullName?.split(' ')[0] })}</h1>
+        <div
+          className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-colors ${
+            isLive
+              ? justUpdated
+                ? 'bg-brand-100 text-brand-700'
+                : 'bg-emerald-50 text-emerald-600'
+              : 'bg-surface text-ink-500'
+          }`}
+          title={isLive ? t('dashboard.live') : t('dashboard.offline')}
+        >
+          {isLive ? <Wifi size={13} /> : <WifiOff size={13} />}
+          {isLive ? t('dashboard.live') : t('dashboard.offline')}
+        </div>
+      </div>
       <p className="text-ink-500 mb-6">{t('dashboard.subtitle')}</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
