@@ -405,15 +405,15 @@ export default function PosPage() {
             {amountPaid ? `Rs. ${amountPaid}` : <span className="text-ink-500 text-base font-normal">Rs. 0.00</span>}
           </div>
           <div className="grid grid-cols-3 gap-1.5">
-            {KEYPAD_KEYS.map((key) => (
-              <button
-                key={key}
-                onClick={() => handleKeypadPress(key)}
-                className="py-2.5 rounded-lg bg-surface hover:bg-ink-500/10 font-semibold text-ink-900 flex items-center justify-center transition-colors"
-              >
-                {key === 'DEL' ? <Delete size={16} /> : key}
-              </button>
-            ))}
+          {KEYPAD_KEYS.map((key) => (
+  <button
+    key={key}
+    onClick={() => handleKeypadPress(key)}
+    className="py-2.5 rounded-lg border border-line bg-surface hover:bg-ink-500/10 font-semibold text-ink-900 flex items-center justify-center transition-colors"
+  >
+    {key === 'DEL' ? <Delete size={16} /> : key}
+  </button>
+))}
           </div>
         </div>
 
