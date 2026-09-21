@@ -10,12 +10,18 @@ public class SaleService : ISaleService
     private readonly ISaleRepository _saleRepository;
     private readonly IProductRepository _productRepository;
     private readonly IPromotionService _promotionService;
+    private readonly INotificationService _notificationService;
 
-    public SaleService(ISaleRepository saleRepository, IProductRepository productRepository, IPromotionService promotionService)
+    public SaleService(
+        ISaleRepository saleRepository,
+        IProductRepository productRepository,
+        IPromotionService promotionService,
+        INotificationService notificationService)
     {
         _saleRepository = saleRepository;
         _productRepository = productRepository;
         _promotionService = promotionService;
+        _notificationService = notificationService;
     }
 
     public async Task<(SaleDto? Sale, string? Error)> CheckoutAsync(CreateSaleDto dto, int cashierId)
@@ -130,7 +136,18 @@ public class SaleService : ISaleService
         await _saleRepository.CreateSaleAsync(sale, stockTransactions);
 
         var saved = await _saleRepository.GetByIdWithDetailsAsync(sale.Id);
-        return (MapToDto(saved!), null);
+        var saleDto = MapToDto(saved!);
+
+        try
+        {
+            await _notificationService.NotifySaleCompletedAsync(saleDto);
+        }
+        catch
+        {
+            // A dashboard broadcast failing must never fail the sale itself — the sale is already committed.
+        }
+
+        return (saleDto, null);
     }
 
     public async Task<SaleDto?> GetByIdAsync(int id)
