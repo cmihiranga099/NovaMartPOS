@@ -207,14 +207,16 @@ export default function PurchaseOrdersPage() {
 
         {error && <p className="text-red-600 text-sm bg-red-50 p-2 rounded mt-3">{error}</p>}
 
-        <button
-          onClick={handleReceive}
-          disabled={receiveMutation.isPending}
-          className="w-full mt-4 flex items-center justify-center gap-2 py-3 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-700 disabled:opacity-50 transition-colors"
-        >
-          <PackageCheck size={18} />
-          {receiveMutation.isPending ? t('purchaseOrders.receiving') : t('purchaseOrders.receiveOrder')}
-        </button>
+        <div className="flex justify-end mt-4">
+  <button
+    onClick={handleReceive}
+    disabled={receiveMutation.isPending}
+    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-700 disabled:opacity-50 transition-colors"
+  >
+    <PackageCheck size={18} />
+    {receiveMutation.isPending ? t('purchaseOrders.receiving') : t('purchaseOrders.receiveOrder')}
+  </button>
+</div>
       </div>
 
       {/* History */}
