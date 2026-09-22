@@ -10,6 +10,7 @@ export interface SaleItemRequest {
     paymentMethod: string;
     amountPaid: number;
     promoCode: string | null;
+    managerOverridePin?: string | null;
   }
   
   export interface SaleItemResult {

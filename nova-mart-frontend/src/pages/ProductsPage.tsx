@@ -8,9 +8,12 @@ import type { Product } from '../types/product';
 import { Tag as TagIcon } from 'lucide-react';
 import BarcodeLabelModal from '../features/products/BarcodeLabelModal';
 import BarcodeLabelSheet from '../features/products/BarcodeLabelSheet';
+import { useAuth } from '../store/AuthContext';
 
 export default function ProductsPage() {
   const { t } = useTranslation();
+  const { hasRole } = useAuth();
+  const canManage = hasRole('Administrator', 'Manager');
   const [search, setSearch] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -106,12 +109,14 @@ const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } 
     <div>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">{t('products.title')}</h1>
-        <button
-          onClick={openAddModal}
-          className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium transition-colors"
-        >
-          <Plus size={18} /> {t('products.addProduct')}
-        </button>
+        {canManage && (
+          <button
+            onClick={openAddModal}
+            className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium transition-colors"
+          >
+            <Plus size={18} /> {t('products.addProduct')}
+          </button>
+        )}
       </div>
 
       <div className="relative mb-4 max-w-sm">
@@ -124,7 +129,7 @@ const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } 
   onKeyDown={(e) => {
     if (e.key === 'Enter') {
       const exact = products.find((p) => p.barcode === search);
-      if (exact) {
+      if (exact && canManage) {
         e.preventDefault();
         openEditModal(exact);
         setSearch('');
@@ -172,12 +177,16 @@ const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } 
                   <button onClick={() => setLabelProduct(product)} className="text-ink-500 hover:text-brand-600" title="Print barcode label">
                     <TagIcon size={16} className="inline" />
                   </button>
-                  <button onClick={() => openEditModal(product)} className="text-brand-600 hover:text-brand-700">
-                    <Pencil size={16} className="inline" />
-                  </button>
-                  <button onClick={() => handleDelete(product)} className="text-red-600 hover:text-red-800">
-                    <Trash2 size={16} className="inline" />
-                  </button>
+                  {canManage && (
+                    <>
+                      <button onClick={() => openEditModal(product)} className="text-brand-600 hover:text-brand-700">
+                        <Pencil size={16} className="inline" />
+                      </button>
+                      <button onClick={() => handleDelete(product)} className="text-red-600 hover:text-red-800">
+                        <Trash2 size={16} className="inline" />
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}
