@@ -18,6 +18,7 @@ public class PurchaseOrdersController : ControllerBase
         _service = service;
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpPost]
     public async Task<IActionResult> Receive([FromBody] CreatePurchaseOrderDto dto)
     {

@@ -28,6 +28,7 @@ public class SuppliersController : ControllerBase
         return supplier is null ? NotFound() : Ok(supplier);
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateSupplierDto dto)
     {
@@ -35,6 +36,7 @@ public class SuppliersController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateSupplierDto dto)
     {
@@ -42,6 +44,7 @@ public class SuppliersController : ControllerBase
         return success ? NoContent() : NotFound();
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
