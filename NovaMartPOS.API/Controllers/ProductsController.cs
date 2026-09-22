@@ -35,6 +35,7 @@ public class ProductsController : ControllerBase
         return product is null ? NotFound() : Ok(product);
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateProductDto dto)
     {
@@ -45,6 +46,7 @@ public class ProductsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = product!.Id }, product);
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateProductDto dto)
     {
@@ -55,6 +57,7 @@ public class ProductsController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

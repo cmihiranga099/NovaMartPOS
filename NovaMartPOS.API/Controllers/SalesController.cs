@@ -12,10 +12,12 @@ namespace NovaMartPOS.API.Controllers;
 public class SalesController : ControllerBase
 {
     private readonly ISaleService _service;
+    private readonly IAuthService _authService;
 
-    public SalesController(ISaleService service)
+    public SalesController(ISaleService service, IAuthService authService)
     {
         _service = service;
+        _authService = authService;
     }
 
     [HttpPost]
@@ -25,6 +27,14 @@ public class SalesController : ControllerBase
 
         if (!int.TryParse(cashierIdClaim, out var cashierId))
             return Unauthorized(new { message = "Could not identify cashier from token." });
+
+        
+        if (User.IsInRole("Cashier") && dto.Items.Any(i => i.Discount > 0))
+        {
+            var pinCheck = await _authService.VerifyManagerPinAsync(dto.ManagerOverridePin ?? string.Empty);
+            if (!pinCheck.Approved)
+                return StatusCode(403, new { message = "Manager approval is required to apply a discount." });
+        }
 
         var (sale, error) = await _service.CheckoutAsync(dto, cashierId);
 
@@ -42,6 +52,6 @@ public class SalesController : ControllerBase
     }
 
     [HttpGet]
-public async Task<IActionResult> GetAll()
-    => Ok(await _service.GetAllAsync());
+    public async Task<IActionResult> GetAll()
+        => Ok(await _service.GetAllAsync());
 }
