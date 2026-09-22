@@ -14,6 +14,8 @@ public class CreateSaleDto
     public string PaymentMethod { get; set; } = "Cash";
     public decimal AmountPaid { get; set; }
     public string? PromoCode { get; set; }
+  
+    public string? ManagerOverridePin { get; set; }
 }
 
 public class SaleItemDto
