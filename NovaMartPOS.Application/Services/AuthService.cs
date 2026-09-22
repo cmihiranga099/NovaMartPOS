@@ -41,4 +41,18 @@ public class AuthService : IAuthService
             Role = user.Role.ToString()
         };
     }
+
+    public async Task<VerifyPinResponseDto> VerifyManagerPinAsync(string pin)
+    {
+        if (string.IsNullOrWhiteSpace(pin))
+            return new VerifyPinResponseDto { Approved = false };
+
+        var approvers = await _userRepository.GetActiveManagersAndAdminsAsync();
+
+        var match = approvers.FirstOrDefault(u => _passwordHasher.Verify(pin, u.PinHash!));
+
+        return match is null
+            ? new VerifyPinResponseDto { Approved = false }
+            : new VerifyPinResponseDto { Approved = true, ApprovedBy = match.FullName };
+    }
 }

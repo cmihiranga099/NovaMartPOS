@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NovaMartPOS.Application.DTOs;
 using NovaMartPOS.Application.Interfaces;
@@ -23,6 +24,15 @@ public class AuthController : ControllerBase
         if (result is null)
             return Unauthorized(new { message = "Invalid username or password." });
 
+        return Ok(result);
+    }
+
+    
+    [HttpPost("verify-pin")]
+    [Authorize]
+    public async Task<IActionResult> VerifyPin([FromBody] VerifyPinRequestDto request)
+    {
+        var result = await _authService.VerifyManagerPinAsync(request.Pin);
         return Ok(result);
     }
 }
