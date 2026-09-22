@@ -6,7 +6,7 @@ namespace NovaMartPOS.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Roles = "Administrator,Manager")]
 public class ReportsController : ControllerBase
 {
     private readonly IReportService _service;

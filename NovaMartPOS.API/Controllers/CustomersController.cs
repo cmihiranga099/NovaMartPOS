@@ -42,6 +42,7 @@ public class CustomersController : ControllerBase
         return success ? NoContent() : NotFound();
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
