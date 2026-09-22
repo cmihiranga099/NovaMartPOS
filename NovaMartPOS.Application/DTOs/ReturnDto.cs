@@ -11,6 +11,8 @@ public class CreateReturnDto
 {
     public int SaleId { get; set; }
     public List<ReturnItemRequestDto> Items { get; set; } = new();
+    
+    public string? ManagerOverridePin { get; set; }
 }
 
 public class ReturnItemDto

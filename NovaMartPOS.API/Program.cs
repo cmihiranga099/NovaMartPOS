@@ -177,18 +177,18 @@ namespace NovaMartPOS.API
                 var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
 
                 if (!db.Users.Any())
-                {
-                    db.Users.Add(new User
-                    {
-                        FullName = "System Administrator",
-                        Username = "admin",
-                        PasswordHash = hasher.Hash("Admin@123"),
-                        Role = UserRole.Administrator,
-                        IsActive = true
-                    });
-                    db.SaveChanges();
-                }
-
+{
+    db.Users.Add(new User
+    {
+        FullName = "System Administrator",
+        Username = "admin",
+        PasswordHash = hasher.Hash("Admin@123"),
+        Role = UserRole.Administrator,
+        IsActive = true,
+        PinHash = hasher.Hash("1234")
+    });
+    db.SaveChanges();
+}
                 if (!db.Customers.Any())
                 {
                     db.Customers.Add(new Customer
