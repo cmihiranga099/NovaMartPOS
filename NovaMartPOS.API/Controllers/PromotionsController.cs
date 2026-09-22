@@ -28,6 +28,7 @@ public class PromotionsController : ControllerBase
         return promotion is null ? NotFound() : Ok(promotion);
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreatePromotionDto dto)
     {
@@ -36,6 +37,7 @@ public class PromotionsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdatePromotionDto dto)
     {
@@ -46,6 +48,7 @@ public class PromotionsController : ControllerBase
         return NoContent();
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
@@ -56,10 +59,6 @@ public class PromotionsController : ControllerBase
         return NoContent();
     }
 
-    /// <summary>
-    /// Checks a promo code against a subtotal without creating a sale.
-    /// Used by the POS screen to preview the discount before checkout.
-    /// </summary>
     [HttpPost("validate")]
     public async Task<IActionResult> Validate([FromBody] ValidatePromoDto dto)
     {

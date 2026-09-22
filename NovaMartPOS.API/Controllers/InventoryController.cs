@@ -17,6 +17,7 @@ public class InventoryController : ControllerBase
         _service = service;
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpPost("adjust")]
     public async Task<IActionResult> Adjust([FromBody] CreateStockAdjustmentDto dto)
     {
