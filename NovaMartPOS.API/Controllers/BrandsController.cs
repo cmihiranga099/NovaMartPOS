@@ -28,6 +28,7 @@ public class BrandsController : ControllerBase
         return brand is null ? NotFound() : Ok(brand);
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateBrandDto dto)
     {
@@ -35,6 +36,7 @@ public class BrandsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateBrandDto dto)
     {
@@ -42,6 +44,7 @@ public class BrandsController : ControllerBase
         return success ? NoContent() : NotFound();
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

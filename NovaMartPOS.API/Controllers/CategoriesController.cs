@@ -28,6 +28,7 @@ public class CategoriesController : ControllerBase
         return category is null ? NotFound() : Ok(category);
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateCategoryDto dto)
     {
@@ -35,6 +36,7 @@ public class CategoriesController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(int id, [FromBody] UpdateCategoryDto dto)
     {
@@ -42,6 +44,7 @@ public class CategoriesController : ControllerBase
         return success ? NoContent() : NotFound();
     }
 
+    [Authorize(Roles = "Administrator,Manager")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {
