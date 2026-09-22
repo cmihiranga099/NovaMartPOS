@@ -3,6 +3,7 @@ import { LayoutDashboard, ShoppingCart, Package, Users, LogOut, Tag, Layers, His
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../store/AuthContext';
 import logo from '../assets/logo.png';
+import LowStockAlert from '../components/LowStockAlert';
 
 const navItems = [
   { path: '/', key: 'dashboard', icon: LayoutDashboard },
@@ -40,7 +41,9 @@ export default function MainLayout() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <img src={logo} alt="Nova Mart" className="w-9 h-9 rounded-xl object-contain" />
+              
               <div>
+                
                 <div className="font-bold leading-none text-ink-900">Nova Mart</div>
                 <div className="text-xs text-ink-500 mt-1">{t('nav.tagline')}</div>
               </div>
