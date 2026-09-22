@@ -13,15 +13,17 @@ const navItems = [
   { path: '/brands', key: 'brands', icon: Tag },
   { path: '/promotions', key: 'promotions', icon: Percent },
   { path: '/customers', key: 'customers', icon: Users },
-  { path: '/suppliers', key: 'suppliers', icon: Truck },
-  { path: '/purchase-orders', key: 'purchaseOrders', icon: PackageCheck },
-  { path: '/reports', key: 'reports', icon: FileBarChart },
+  { path: '/suppliers', key: 'suppliers', icon: Truck, roles: ['Administrator', 'Manager'] },
+  { path: '/purchase-orders', key: 'purchaseOrders', icon: PackageCheck, roles: ['Administrator', 'Manager'] },
+  { path: '/reports', key: 'reports', icon: FileBarChart, roles: ['Administrator', 'Manager'] },
 ] as const;
 
 export default function MainLayout() {
-  const { user, logout } = useAuth();
+  const { user, logout, hasRole } = useAuth();
   const location = useLocation();
   const { t, i18n } = useTranslation();
+
+  const visibleNavItems = navItems.filter((item) => !('roles' in item) || hasRole(...item.roles));
 
   const initials = user?.fullName
     ? user.fullName.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()
@@ -56,7 +58,7 @@ export default function MainLayout() {
         </div>
 
         <nav className="flex-1 p-3 space-y-1">
-          {navItems.map(({ path, key, icon: Icon }) => {
+          {visibleNavItems.map(({ path, key, icon: Icon }) => {
             const active = location.pathname === path;
             return (
               <Link

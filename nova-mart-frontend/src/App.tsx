@@ -37,9 +37,30 @@ function App() {
 <Route path="brands" element={<BrandsPage />} />
 <Route path="promotions" element={<PromotionsPage />} />
 <Route path="sales-history" element={<SalesHistoryPage />} />
-<Route path="suppliers" element={<SuppliersPage />} />
-<Route path="purchase-orders" element={<PurchaseOrdersPage />} />
-<Route path="reports" element={<ReportsPage />} />
+<Route
+  path="suppliers"
+  element={
+    <ProtectedRoute roles={['Administrator', 'Manager']}>
+      <SuppliersPage />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="purchase-orders"
+  element={
+    <ProtectedRoute roles={['Administrator', 'Manager']}>
+      <PurchaseOrdersPage />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="reports"
+  element={
+    <ProtectedRoute roles={['Administrator', 'Manager']}>
+      <ReportsPage />
+    </ProtectedRoute>
+  }
+/>
         </Route>
       </Routes>
     </AuthProvider>
