@@ -5,9 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { promotionService } from '../services/promotionService';
 import PromotionFormModal, { type PromotionFormValues } from '../features/promotions/PromotionFormModal';
 import type { Promotion } from '../types/promotion';
+import { useAuth } from '../store/AuthContext';
 
 export default function PromotionsPage() {
   const { t } = useTranslation();
+  const { hasRole } = useAuth();
+  const canManage = hasRole('Administrator', 'Manager');
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Promotion | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -64,9 +67,11 @@ export default function PromotionsPage() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">{t('promotions.title')}</h1>
-        <button onClick={openAdd} className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium">
-          <Plus size={18} /> {t('promotions.addPromotion')}
-        </button>
+        {canManage && (
+          <button onClick={openAdd} className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium">
+            <Plus size={18} /> {t('promotions.addPromotion')}
+          </button>
+        )}
       </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
@@ -88,7 +93,7 @@ export default function PromotionsPage() {
               <tr key={p.id} className="hover:bg-surface">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2 font-medium">
-                    <Tag size={14} className="text-accent-500" /> {p.code}
+                    <Tag size={14} className="text-brand-600" /> {p.code}
                   </div>
                   {p.description && <div className="text-xs text-ink-500">{p.description}</div>}
                 </td>
@@ -114,8 +119,12 @@ export default function PromotionsPage() {
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right space-x-2">
-                  <button onClick={() => openEdit(p)} className="text-brand-600 hover:text-brand-700"><Pencil size={16} className="inline" /></button>
-                  <button onClick={() => { if (confirm(t('common.confirmDelete', { name: p.code }))) deleteMutation.mutate(p.id); }} className="text-red-600 hover:text-red-800"><Trash2 size={16} className="inline" /></button>
+                  {canManage && (
+                    <>
+                      <button onClick={() => openEdit(p)} className="text-brand-600 hover:text-brand-700"><Pencil size={16} className="inline" /></button>
+                      <button onClick={() => { if (confirm(t('common.confirmDelete', { name: p.code }))) deleteMutation.mutate(p.id); }} className="text-red-600 hover:text-red-800"><Trash2 size={16} className="inline" /></button>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}

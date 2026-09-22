@@ -5,9 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { customerService } from '../services/customerService';
 import CustomerFormModal, { type CustomerFormValues } from '../features/customers/CustomerFormModal';
 import type { Customer } from '../types/customer';
+import { useAuth } from '../store/AuthContext';
 
 export default function CustomersPage() {
   const { t } = useTranslation();
+  const { hasRole } = useAuth();
+  const canManage = hasRole('Administrator', 'Manager');
   const [search, setSearch] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
@@ -142,9 +145,11 @@ export default function CustomersPage() {
                   <button onClick={() => openEditModal(customer)} className="text-brand-600 hover:text-brand-700">
                     <Pencil size={16} className="inline" />
                   </button>
-                  <button onClick={() => handleDelete(customer)} className="text-red-600 hover:text-red-800">
-                    <Trash2 size={16} className="inline" />
-                  </button>
+                  {canManage && (
+                    <button onClick={() => handleDelete(customer)} className="text-red-600 hover:text-red-800">
+                      <Trash2 size={16} className="inline" />
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
