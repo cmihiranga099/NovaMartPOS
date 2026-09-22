@@ -5,9 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { lookupService } from '../services/lookupService';
 import LookupFormModal, { type LookupFormValues } from '../features/lookup/LookupFormModal';
 import type { Brand } from '../types/lookup';
+import { useAuth } from '../store/AuthContext';
 
 export default function BrandsPage() {
   const { t } = useTranslation();
+  const { hasRole } = useAuth();
+  const canManage = hasRole('Administrator', 'Manager');
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Brand | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -53,9 +56,11 @@ export default function BrandsPage() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">{t('brands.title')}</h1>
+        {canManage && (
         <button onClick={openAdd} className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium">
           <Plus size={18} /> {t('brands.addBrand')}
         </button>
+        )}
       </div>
 
       <div className="bg-white rounded-lg shadow overflow-hidden">
@@ -75,8 +80,12 @@ export default function BrandsPage() {
                 <td className="px-4 py-3 font-medium">{b.name}</td>
                 <td className="px-4 py-3 text-ink-500">{b.description || '—'}</td>
                 <td className="px-4 py-3 text-right space-x-2">
+                  {canManage && (
+                  <>
                   <button onClick={() => openEdit(b)} className="text-brand-600 hover:text-brand-700"><Pencil size={16} className="inline" /></button>
                   <button onClick={() => { if (confirm(t('common.confirmDelete', { name: b.name }))) deleteMutation.mutate(b.id); }} className="text-red-600 hover:text-red-800"><Trash2 size={16} className="inline" /></button>
+                  </>
+                  )}
                 </td>
               </tr>
             ))}
