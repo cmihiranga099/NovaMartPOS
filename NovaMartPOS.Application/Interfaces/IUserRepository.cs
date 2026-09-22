@@ -7,4 +7,5 @@ public interface IUserRepository
     Task<User?> GetByUsernameAsync(string username);
     Task<bool> AnyUsersExistAsync();
     Task AddAsync(User user);
+    Task<List<User>> GetActiveManagersAndAdminsAsync();
 }
