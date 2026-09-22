@@ -41,13 +41,12 @@ export default function MainLayout() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <img src={logo} alt="Nova Mart" className="w-9 h-9 rounded-xl object-contain" />
-              
               <div>
-                
                 <div className="font-bold leading-none text-ink-900">Nova Mart</div>
                 <div className="text-xs text-ink-500 mt-1">{t('nav.tagline')}</div>
               </div>
             </div>
+            <LowStockAlert />
           </div>
           <button
             onClick={toggleLanguage}

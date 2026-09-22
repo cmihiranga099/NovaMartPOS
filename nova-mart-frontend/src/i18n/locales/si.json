@@ -244,5 +244,14 @@
       "poNumber": "ඇණවුම් අංකය",
       "receivedBy": "ලබාගත් අය",
       "totalCost": "මුළු පිරිවැය"
-    }
+    },
+    "lowStockAlert": {
+  "title": "අඩු තොග අනතුරු ඇඟවීම්",
+  "count_one": "අයිතම {{count}}",
+  "count_other": "අයිතම {{count}}",
+  "minimum": "අවම {{count}}",
+  "viewAll": "සියලුම නිෂ්පාදන බලන්න",
+  "toastTitle": "අඩු තොග අනතුරු ඇඟවීම",
+  "toastBody": "{{name}} හි ඉතිරිව ඇත්තේ {{count}} පමණි"
+}
   }

@@ -244,5 +244,14 @@
       "poNumber": "PO Number",
       "receivedBy": "Received By",
       "totalCost": "Total Cost"
-    }
+    },
+    "lowStockAlert": {
+  "title": "Low Stock Alerts",
+  "count_one": "{{count}} item",
+  "count_other": "{{count}} items",
+  "minimum": "Min. {{count}}",
+  "viewAll": "View all products",
+  "toastTitle": "Low stock alert",
+  "toastBody": "{{name}} is down to {{count}} left"
+}
   }
