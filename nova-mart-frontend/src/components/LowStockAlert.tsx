@@ -87,22 +87,22 @@ export default function LowStockAlert() {
 
   return (
     <>
-      <div className="relative" ref={panelRef}>
+      <div className="relative shrink-0" ref={panelRef}>
         <button
           onClick={() => setOpen((v) => !v)}
-          className="relative flex items-center justify-center w-9 h-9 rounded-lg text-ink-700 hover:bg-brand-50 transition-colors"
+          className="relative flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-lg border border-line text-xs font-semibold text-ink-700 hover:bg-surface transition-colors"
           title={t('lowStockAlert.title')}
         >
-          <Bell size={18} />
+          <Bell size={15} className={lowStock.length > 0 ? 'text-red-600' : ''} />
           {lowStock.length > 0 && (
-            <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-red-600 text-white text-[10px] font-bold flex items-center justify-center">
+            <span className="absolute -top-1.5 -right-1.5 min-w-[16px] h-[16px] px-1 rounded-full bg-red-600 text-white text-[9px] font-bold flex items-center justify-center">
               {lowStock.length > 99 ? '99+' : lowStock.length}
             </span>
           )}
         </button>
 
         {open && (
-          <div className="absolute left-0 top-11 z-50 w-80 bg-white rounded-lg border border-line shadow-lg overflow-hidden">
+          <div className="absolute right-0 top-full mt-2 z-50 w-80 bg-white rounded-lg border border-line shadow-lg overflow-hidden">
             <div className="px-4 py-3 border-b border-line flex items-center justify-between">
               <h3 className="font-bold text-sm text-ink-900">{t('lowStockAlert.title')}</h3>
               {lowStock.length > 0 && (
@@ -170,4 +170,4 @@ export default function LowStockAlert() {
       </div>
     </>
   );
-}
+} 

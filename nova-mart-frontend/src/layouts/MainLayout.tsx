@@ -2,8 +2,8 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, ShoppingCart, Package, Users, LogOut, Tag, Layers, History, Percent, Truck, PackageCheck, FileBarChart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../store/AuthContext';
-import logo from '../assets/logo.png';
 import LowStockAlert from '../components/LowStockAlert';
+import logo from '../assets/logo.png';
 
 const navItems = [
   { path: '/', key: 'dashboard', icon: LayoutDashboard },
@@ -38,25 +38,25 @@ export default function MainLayout() {
     <div className="min-h-screen flex bg-surface">
       <aside className="w-60 bg-white border-r border-line flex flex-col">
         <div className="p-5 border-b border-line">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <img src={logo} alt="Nova Mart" className="w-9 h-9 rounded-xl object-contain" />
-              <div>
-                <div className="font-bold leading-none text-ink-900">Nova Mart</div>
-                <div className="text-xs text-ink-500 mt-1">{t('nav.tagline')}</div>
-              </div>
+          <div className="flex items-center gap-2.5">
+            <img src={logo} alt="Nova Mart" className="w-9 h-9 rounded-xl object-contain" />
+            <div>
+              <div className="font-bold leading-none text-ink-900">Nova Mart</div>
+              <div className="text-xs text-ink-500 mt-1">{t('nav.tagline')}</div>
             </div>
+          </div>
+          <div className="mt-3 flex items-center gap-2">
+            <button
+              onClick={toggleLanguage}
+              className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg border border-line text-xs font-semibold text-ink-700 hover:bg-surface transition-colors"
+              title="Switch language"
+            >
+              <span className={i18n.language === 'en' ? 'text-brand-600' : ''}>EN</span>
+              <span className="text-ink-500">/</span>
+              <span className={i18n.language === 'si' ? 'text-brand-600' : ''}>සිං</span>
+            </button>
             <LowStockAlert />
           </div>
-          <button
-            onClick={toggleLanguage}
-            className="mt-3 w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg border border-line text-xs font-semibold text-ink-700 hover:bg-surface transition-colors"
-            title="Switch language"
-          >
-            <span className={i18n.language === 'en' ? 'text-brand-600' : ''}>EN</span>
-            <span className="text-ink-500">/</span>
-            <span className={i18n.language === 'si' ? 'text-brand-600' : ''}>සිං</span>
-          </button>
         </div>
 
         <nav className="flex-1 p-3 space-y-1">

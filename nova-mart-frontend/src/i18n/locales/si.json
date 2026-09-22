@@ -120,7 +120,11 @@
       "newSale": "නව විකුණුමක්",
       "cartEmptyError": "කරත්තය හිස්ය.",
       "amountPaidError": "ගෙවූ මුදල අවම වශයෙන් රු. {{amount}} විය යුතුය.",
-      "checkoutFailed": "ගෙවීම අසාර්ථක විය."
+      "checkoutFailed": "ගෙවීම අසාර්ථක විය.",
+      "addDiscount": "අතින් වට්ටමක් එක් කරන්න",
+      "manualDiscount": "අතින් වට්ටම",
+      "discountAmount": "වට්ටම් මුදල (Rs.)",
+      "approvedBy": "{{name}} විසින් අනුමත කරන ලදී"
     },
     "categories": {
       "title": "කාණ්ඩ",
@@ -244,6 +248,14 @@
       "poNumber": "ඇණවුම් අංකය",
       "receivedBy": "ලබාගත් අය",
       "totalCost": "මුළු පිරිවැය"
+    },
+    "managerOverride": {
+      "title": "කළමනාකරු අනුමැතිය අවශ්‍යයි",
+      "message": "මෙම ක්‍රියාව අනුමත කිරීමට කළමනාකරුගෙන් හෝ පරිපාලකයෙකුගෙන් PIN අංකය ඇතුළත් කරන ලෙස ඉල්ලා සිටින්න.",
+      "pinPlaceholder": "PIN අංකය",
+      "invalidPin": "වැරදි PIN අංකයකි. නැවත උත්සාහ කරන්න.",
+      "checking": "පරීක්ෂා කරමින්...",
+      "approve": "අනුමත කරන්න"
     },
     "lowStockAlert": {
   "title": "අඩු තොග අනතුරු ඇඟවීම්",

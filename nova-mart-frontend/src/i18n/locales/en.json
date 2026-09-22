@@ -120,7 +120,11 @@
       "newSale": "New Sale",
       "cartEmptyError": "Cart is empty.",
       "amountPaidError": "Amount paid must be at least Rs. {{amount}}.",
-      "checkoutFailed": "Checkout failed."
+      "checkoutFailed": "Checkout failed.",
+      "addDiscount": "Add manual discount",
+      "manualDiscount": "Manual discount",
+      "discountAmount": "Discount amount (Rs.)",
+      "approvedBy": "approved by {{name}}"
     },
     "categories": {
       "title": "Categories",
@@ -244,6 +248,14 @@
       "poNumber": "PO Number",
       "receivedBy": "Received By",
       "totalCost": "Total Cost"
+    },
+    "managerOverride": {
+      "title": "Manager Approval Required",
+      "message": "Ask a Manager or Administrator to enter their PIN to approve this action.",
+      "pinPlaceholder": "PIN",
+      "invalidPin": "Incorrect PIN. Please try again.",
+      "checking": "Checking...",
+      "approve": "Approve"
     },
     "lowStockAlert": {
   "title": "Low Stock Alerts",
