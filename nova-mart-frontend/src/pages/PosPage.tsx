@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { Search, CheckCircle2, Tag, X, Delete } from 'lucide-react';
+import { Search, CheckCircle2, Tag, X, Delete, Percent } from 'lucide-react';
 import { productService } from '../services/productService';
 import { customerService } from '../services/customerService';
 import { saleService } from '../services/saleService';
@@ -10,6 +10,8 @@ import CartItemRow, { type CartLine } from '../features/pos/CartItem';
 import type { SaleResult } from '../types/sale';
 import Receipt from '../features/pos/Receipt';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../store/AuthContext';
+import ManagerOverrideModal from '../components/ManagerOverrideModal';
 
 const TILE_PALETTE = [
   'bg-orange-100 text-orange-700',
@@ -31,6 +33,8 @@ const KEYPAD_KEYS = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '.', '0', 'DEL
 
 export default function PosPage() {
   const { t } = useTranslation();
+  const { hasRole } = useAuth();
+  const isCashier = hasRole('Cashier');
   const [search, setSearch] = useState('');
   const [submittedSearch, setSubmittedSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState<number | 'all' | null>('all');
@@ -43,6 +47,11 @@ export default function PosPage() {
   const [promoInput, setPromoInput] = useState('');
   const [appliedPromo, setAppliedPromo] = useState<{ code: string; discount: number } | null>(null);
   const [promoError, setPromoError] = useState<string | null>(null);
+  const [showOverridePrompt, setShowOverridePrompt] = useState(false);
+  const [showDiscountEntry, setShowDiscountEntry] = useState(false);
+  const [discountInput, setDiscountInput] = useState('');
+  const [discountApprovedPin, setDiscountApprovedPin] = useState<string | null>(null);
+  const [discountApprovedBy, setDiscountApprovedBy] = useState<string | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const { data: products = [] } = useQuery({ queryKey: ['products'], queryFn: productService.getAll });
@@ -63,6 +72,8 @@ export default function PosPage() {
       setAppliedPromo(null);
       setPromoInput('');
       setPromoError(null);
+      setDiscountApprovedPin(null);
+      setDiscountApprovedBy(null);
       searchInputRef.current?.focus();
     },
     onError: (err: unknown) => {
@@ -130,6 +141,50 @@ export default function PosPage() {
 
   const removeFromCart = (productId: number) => {
     setCart((prev) => prev.filter((i) => i.productId !== productId));
+  };
+
+  // Manual, cart-wide discount. Distributed proportionally across line items so it
+  // rides the same per-item Discount field (and tax math) the backend already uses.
+  const applyManualDiscount = (amountRs: number) => {
+    setCart((prev) => {
+      const eligibleTotal = prev.reduce((sum, i) => sum + i.unitPrice * i.quantity, 0);
+      if (eligibleTotal <= 0) return prev;
+      const capped = Math.min(amountRs, eligibleTotal);
+      return prev.map((i) => {
+        const lineSubtotal = i.unitPrice * i.quantity;
+        const share = eligibleTotal > 0 ? (lineSubtotal / eligibleTotal) * capped : 0;
+        return { ...i, discount: Math.min(share, lineSubtotal) };
+      });
+    });
+  };
+
+  const clearManualDiscount = () => {
+    setCart((prev) => prev.map((i) => ({ ...i, discount: 0 })));
+    setDiscountApprovedPin(null);
+    setDiscountApprovedBy(null);
+  };
+
+  const openDiscountFlow = () => {
+    if (isCashier) {
+      setShowOverridePrompt(true);
+    } else {
+      setShowDiscountEntry(true);
+    }
+  };
+
+  const handleDiscountApproved = (pin: string, approvedBy: string) => {
+    setDiscountApprovedPin(pin);
+    setDiscountApprovedBy(approvedBy);
+    setShowOverridePrompt(false);
+    setShowDiscountEntry(true);
+  };
+
+  const submitManualDiscount = () => {
+    const amount = Number(discountInput);
+    if (!amount || amount <= 0) return;
+    applyManualDiscount(amount);
+    setShowDiscountEntry(false);
+    setDiscountInput('');
   };
 
   const subtotal = cart.reduce((sum, i) => sum + i.unitPrice * i.quantity, 0);
@@ -208,6 +263,7 @@ export default function PosPage() {
       paymentMethod,
       amountPaid: paidNum,
       promoCode: appliedPromo?.code ?? null,
+      managerOverridePin: discountApprovedPin ?? undefined,
     });
   };
 
@@ -346,6 +402,51 @@ export default function PosPage() {
             </div>
           )}
           {promoError && <p className="text-red-600 text-xs mt-1">{promoError}</p>}
+
+          {totalDiscount === 0 ? (
+            !showDiscountEntry && (
+              <button
+                onClick={openDiscountFlow}
+                disabled={cart.length === 0}
+                className="mt-2 w-full flex items-center justify-center gap-1.5 px-3 py-1.5 border border-line rounded-lg text-xs font-medium text-ink-700 hover:bg-surface disabled:opacity-50"
+              >
+                <Percent size={13} /> {t('pos.addDiscount')}
+              </button>
+            )
+          ) : (
+            <div className="flex items-center justify-between bg-surface px-2.5 py-1.5 rounded-lg mt-2">
+              <span className="flex items-center gap-1.5 text-xs font-medium text-ink-700">
+                <Percent size={13} /> {t('pos.manualDiscount')}
+                {discountApprovedBy && ` · ${t('pos.approvedBy', { name: discountApprovedBy })}`}
+              </span>
+              <button onClick={clearManualDiscount} className="text-ink-500 hover:text-red-600">
+                <X size={14} />
+              </button>
+            </div>
+          )}
+
+          {showDiscountEntry && (
+            <div className="flex gap-2 mt-2">
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                autoFocus
+                value={discountInput}
+                onChange={(e) => setDiscountInput(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); submitManualDiscount(); } }}
+                placeholder={t('pos.discountAmount')}
+                className="w-full px-2.5 py-1.5 border border-ink-500/20 rounded-lg text-xs"
+              />
+              <button
+                onClick={submitManualDiscount}
+                disabled={!discountInput || Number(discountInput) <= 0}
+                className="px-3 py-1.5 bg-brand-50 text-brand-600 rounded-lg text-xs font-medium hover:bg-brand-100 disabled:opacity-50"
+              >
+                {t('pos.apply')}
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="pt-3 mt-1 space-y-1 text-sm">
@@ -353,6 +454,12 @@ export default function PosPage() {
             <span className="text-ink-500">{t('common.subtotal')}</span>
             <span>Rs. {subtotal.toFixed(2)}</span>
           </div>
+          {totalDiscount > 0 && (
+            <div className="flex justify-between text-brand-600">
+              <span>{t('pos.manualDiscount')}</span>
+              <span>-Rs. {totalDiscount.toFixed(2)}</span>
+            </div>
+          )}
           {promoDiscount > 0 && (
             <div className="flex justify-between text-brand-600">
               <span>{t('pos.promoCode')} - {t('common.discount')}</span>
@@ -450,7 +557,7 @@ export default function PosPage() {
             </div>
             <button
               onClick={() => window.print()}
-              className="w-full py-2.5 bg-accent-500 text-brand-900 rounded-lg hover:bg-accent-600 font-medium mb-2"
+              className="w-full py-2.5 border border-line text-ink-900 rounded-lg hover:bg-surface font-medium mb-2"
             >
               {t('pos.printReceipt')}
             </button>
@@ -465,6 +572,15 @@ export default function PosPage() {
       )}
 
       {completedSale && <Receipt sale={completedSale} />}
+
+      {showOverridePrompt && (
+        <ManagerOverrideModal
+          title={t('managerOverride.title')}
+          message={t('managerOverride.message')}
+          onApproved={handleDiscountApproved}
+          onClose={() => setShowOverridePrompt(false)}
+        />
+      )}
     </div>
   );
 }
