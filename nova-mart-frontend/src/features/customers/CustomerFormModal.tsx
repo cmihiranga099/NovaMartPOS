@@ -41,7 +41,7 @@ export default function CustomerFormModal({ customer, onClose, onSubmit, isSubmi
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
+      <div className="bg-card rounded-lg shadow-lg w-full max-w-md">
         <div className="flex items-center justify-between p-4 border-b">
           <h2 className="text-lg font-semibold">{customer ? t('customers.editCustomer') : t('customers.addCustomer')}</h2>
           <button onClick={onClose} className="text-ink-500 hover:text-ink-900">

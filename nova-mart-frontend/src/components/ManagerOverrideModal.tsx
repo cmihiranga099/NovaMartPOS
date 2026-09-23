@@ -36,7 +36,7 @@ export default function ManagerOverrideModal({ title, message, onApproved, onClo
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg border border-line shadow-xl w-full max-w-sm p-5">
+      <div className="bg-card rounded-lg border border-line shadow-xl w-full max-w-sm p-5">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <ShieldCheck size={20} className="text-brand-600" />
