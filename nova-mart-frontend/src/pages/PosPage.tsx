@@ -291,8 +291,7 @@ export default function PosPage() {
             className={`shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
               activeCategory === 'all'
                 ? 'bg-brand-600 text-white'
-                : 'bg-white text-ink-700 border border-line hover:bg-surface'
-            }`}
+                : 'bg-card text-ink-700 border border-line hover:bg-surface'            }`}
           >
             {t('pos.all')}
           </button>
@@ -303,8 +302,7 @@ export default function PosPage() {
               className={`shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
                 activeCategory === c.id
                   ? 'bg-brand-600 text-white'
-                  : 'bg-white text-ink-700 border border-line hover:bg-surface'
-              }`}
+                  : 'bg-card text-ink-700 border border-line hover:bg-surface'              }`}
             >
               {c.name}
             </button>
@@ -328,8 +326,7 @@ export default function PosPage() {
                     key={product.id}
                     onClick={() => addToCart(product)}
                     disabled={outOfStock}
-                    className="group flex flex-col items-stretch rounded-2xl border border-line bg-white overflow-hidden text-left hover:shadow-md hover:border-brand-200 transition-all disabled:opacity-40 disabled:hover:shadow-none disabled:hover:border-line"
-                  >
+                    className="group flex flex-col items-stretch rounded-2xl border border-line bg-card overflow-hidden text-left hover:shadow-md hover:border-brand-200 transition-all disabled:opacity-40 disabled:hover:shadow-none disabled:hover:border-line"                  >
                     <div className={`h-16 flex items-center justify-center font-bold text-2xl ${tileColor(product.categoryName || product.name)}`}>
                       {product.name.charAt(0).toUpperCase()}
                     </div>
@@ -351,8 +348,7 @@ export default function PosPage() {
       </div>
 
       {/* Right: cart + checkout */}
-      <div className="bg-white rounded-lg shadow flex flex-col p-4 min-h-0">
-        <h2 className="font-bold text-lg mb-3">{t('pos.cart')}</h2>
+      <div className="bg-card rounded-lg shadow flex flex-col p-4 min-h-0">        <h2 className="font-bold text-lg mb-3">{t('pos.cart')}</h2>
 
         <div className="flex-1 overflow-auto min-h-[80px]">
           {cart.length === 0 ? (
@@ -546,8 +542,7 @@ export default function PosPage() {
 
       {completedSale && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-sm p-6 text-center">
-            <CheckCircle2 className="mx-auto text-brand-600 mb-3" size={48} />
+          <div className="bg-card rounded-lg shadow-lg w-full max-w-sm p-6 text-center">            <CheckCircle2 className="mx-auto text-brand-600 mb-3" size={48} />
             <h2 className="text-xl font-bold mb-1">{t('pos.saleComplete')}</h2>
             <p className="text-ink-500 text-sm mb-4">{completedSale.invoiceNumber}</p>
             <div className="text-left text-sm space-y-1 mb-4 bg-surface p-3 rounded-lg">
