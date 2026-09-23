@@ -49,7 +49,7 @@ export default function LoginPage() {
           </div>
           <button
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-brand-200 bg-white text-xs font-semibold text-ink-700 hover:bg-surface transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-brand-200 bg-card text-xs font-semibold text-ink-700 hover:bg-surface transition-colors"
           >
             <span className={i18n.language === 'en' ? 'text-brand-600' : ''}>EN</span>
             <span className="text-ink-500">/</span>
