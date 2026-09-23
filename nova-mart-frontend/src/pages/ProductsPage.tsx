@@ -140,7 +140,7 @@ const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } 
 />
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-card rounded-lg shadow overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-surface text-left text-ink-500">
             <tr>
