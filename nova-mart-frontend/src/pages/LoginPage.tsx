@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../store/AuthContext';
 import { authService } from '../services/authService';
+import LanguageDropdown from '../components/LanguageDropdown';
+import ThemeToggle from '../components/ThemeToggle';
 import logo from '../assets/logo.png';
 
 export default function LoginPage() {
@@ -12,11 +14,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-
-  const toggleLanguage = () => {
-    i18n.changeLanguage(i18n.language === 'si' ? 'en' : 'si');
-  };
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,14 +45,10 @@ export default function LoginPage() {
             <img src={logo} alt="Nova Mart" className="w-10 h-10 rounded-xl object-contain" />
             <span className="font-bold text-lg text-ink-900">Nova Mart</span>
           </div>
-          <button
-            onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-brand-200 bg-card text-xs font-semibold text-ink-700 hover:bg-surface transition-colors"
-          >
-            <span className={i18n.language === 'en' ? 'text-brand-600' : ''}>EN</span>
-            <span className="text-ink-500">/</span>
-            <span className={i18n.language === 'si' ? 'text-brand-600' : ''}>සිං</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <LanguageDropdown />
+          </div>
         </div>
         <div>
           <h1 className="text-4xl font-bold leading-tight mb-3 text-ink-900">
@@ -71,14 +65,10 @@ export default function LoginPage() {
         <div className="w-full max-w-sm">
           <div className="flex items-center justify-between mb-1 md:justify-start md:gap-3">
             <h2 className="text-2xl font-bold text-ink-900">{t('login.title')}</h2>
-            <button
-              onClick={toggleLanguage}
-              className="md:hidden flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-line text-xs font-semibold text-ink-700"
-            >
-              <span className={i18n.language === 'en' ? 'text-brand-600' : ''}>EN</span>
-              <span className="text-ink-500">/</span>
-              <span className={i18n.language === 'si' ? 'text-brand-600' : ''}>සිං</span>
-            </button>
+            <div className="md:hidden flex items-center gap-2">
+              <ThemeToggle />
+              <LanguageDropdown />
+            </div>
           </div>
           <p className="text-sm text-ink-500 mb-6">{t('login.enterCredentials')}</p>
 
