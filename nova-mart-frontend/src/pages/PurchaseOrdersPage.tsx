@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Plus, Trash2, ChevronDown, ChevronUp, PackageCheck } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -208,15 +208,15 @@ export default function PurchaseOrdersPage() {
         {error && <p className="text-red-600 text-sm bg-red-50 p-2 rounded mt-3">{error}</p>}
 
         <div className="flex justify-end mt-4">
-  <button
-    onClick={handleReceive}
-    disabled={receiveMutation.isPending}
-    className="flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-700 disabled:opacity-50 transition-colors"
-  >
-    <PackageCheck size={18} />
-    {receiveMutation.isPending ? t('purchaseOrders.receiving') : t('purchaseOrders.receiveOrder')}
-  </button>
-</div>
+          <button
+            onClick={handleReceive}
+            disabled={receiveMutation.isPending}
+            className="flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-700 disabled:opacity-50 transition-colors"
+          >
+            <PackageCheck size={18} />
+            {receiveMutation.isPending ? t('purchaseOrders.receiving') : t('purchaseOrders.receiveOrder')}
+          </button>
+        </div>
       </div>
 
       {/* History */}
@@ -237,9 +237,8 @@ export default function PurchaseOrdersPage() {
             {isLoading && <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">{t('common.loading')}</td></tr>}
             {!isLoading && orders.length === 0 && <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">{t('purchaseOrders.noOrdersYet')}</td></tr>}
             {orders.map((po) => (
-              <>
+              <Fragment key={po.id}>
                 <tr
-                  key={po.id}
                   onClick={() => setExpandedId((prev) => (prev === po.id ? null : po.id))}
                   className="hover:bg-surface cursor-pointer"
                 >
@@ -272,7 +271,7 @@ export default function PurchaseOrdersPage() {
                     </td>
                   </tr>
                 )}
-              </>
+              </Fragment>
             ))}
           </tbody>
         </table>

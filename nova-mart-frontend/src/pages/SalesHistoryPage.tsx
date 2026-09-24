@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { Fragment, useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Search, ChevronDown, ChevronUp, Printer, FileSpreadsheet } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -94,9 +94,8 @@ export default function SalesHistoryPage() {
             {isLoading && <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">{t('common.loading')}</td></tr>}
             {!isLoading && filtered.length === 0 && <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">{t('salesHistory.noSalesFound')}</td></tr>}
             {filtered.map((sale) => (
-              <>
+              <Fragment key={sale.id}>
                 <tr
-                  key={sale.id}
                   onClick={() => toggleExpand(sale.id)}
                   className="hover:bg-surface cursor-pointer"
                 >
@@ -139,7 +138,7 @@ export default function SalesHistoryPage() {
                     </td>
                   </tr>
                 )}
-              </>
+              </Fragment>
             ))}
           </tbody>
         </table>
