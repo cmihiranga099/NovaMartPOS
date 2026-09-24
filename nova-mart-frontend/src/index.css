@@ -27,12 +27,38 @@
 
   --color-line: #dcdad7;
   --color-surface: #fbfaf8;
+  --color-card: #ffffff;
+}
+
+:root.dark {
+  /* Orange ramp stays largely the same; only the very light tints get
+     re-tuned so icon/badge backgrounds still read nicely on dark cards. */
+  --color-brand-50: #3a2a1c;
+  --color-brand-100: #4a3220;
+
+  --color-ink-0: #131417;
+  --color-ink-50: #202126;
+  --color-ink-100: #26272c;
+  --color-ink-300: #3a3b40;
+  --color-ink-500: #9a999c;
+  --color-ink-600: #b4b3b1;
+  --color-ink-700: #d5d4d2;
+  --color-ink-900: #f5f4f2;
+
+  --color-line: #34353a;
+  --color-surface: #131417;
+  --color-card: #1c1d21;
 }
 
 body {
   font-family: var(--font-sans);
   background-color: var(--color-surface);
   color: var(--color-ink-900);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+:root.dark {
+  color-scheme: dark;
 }
 
 @media print {
@@ -58,7 +84,6 @@ body {
     width: 100%;
   }
 }
-
 
 @keyframes fadeIn {
   from {
