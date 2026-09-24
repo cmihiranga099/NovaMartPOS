@@ -119,7 +119,7 @@ export default function CustomersPage() {
         />
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-card rounded-lg shadow overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-surface text-left text-ink-500">
             <tr>
@@ -130,9 +130,15 @@ export default function CustomersPage() {
             </tr>
           </thead>
           <tbody className="divide-y">
-            {isLoading && (
-              <tr><td colSpan={4} className="px-4 py-6 text-center text-ink-500">{t('common.loading')}</td></tr>
-            )}
+            {isLoading && [...Array(5)].map((_, i) => (
+              <tr key={i}>
+                {[...Array(4)].map((__, j) => (
+                  <td key={j} className="px-4 py-3">
+                    <div className="h-4 rounded bg-ink-100 animate-pulse" style={{ width: j === 3 ? '3rem' : '70%', marginLeft: j === 3 ? 'auto' : 0 }} />
+                  </td>
+                ))}
+              </tr>
+            ))}
             {!isLoading && filtered.length === 0 && (
               <tr><td colSpan={4} className="px-4 py-6 text-center text-ink-500">{t('common.noResults')}</td></tr>
             )}

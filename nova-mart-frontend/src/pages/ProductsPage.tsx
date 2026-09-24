@@ -19,7 +19,7 @@ export default function ProductsPage() {
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
   const [labelProduct, setLabelProduct] = useState<Product | null>(null);
-const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } | null>(null);
+  const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } | null>(null);
 
   const queryClient = useQueryClient();
 
@@ -122,22 +122,22 @@ const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } 
       <div className="relative mb-4 max-w-sm">
         <Search size={18} className="absolute left-3 top-2.5 text-ink-500" />
         <input
-  type="text"
-  placeholder={t('products.searchPlaceholder')}
-  value={search}
-  onChange={(e) => setSearch(e.target.value)}
-  onKeyDown={(e) => {
-    if (e.key === 'Enter') {
-      const exact = products.find((p) => p.barcode === search);
-      if (exact && canManage) {
-        e.preventDefault();
-        openEditModal(exact);
-        setSearch('');
-      }
-    }
-  }}
-  className="w-full pl-10 pr-3 py-2 border border-ink-500/20 rounded-lg"
-/>
+          type="text"
+          placeholder={t('products.searchPlaceholder')}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              const exact = products.find((p) => p.barcode === search);
+              if (exact && canManage) {
+                e.preventDefault();
+                openEditModal(exact);
+                setSearch('');
+              }
+            }
+          }}
+          className="w-full pl-10 pr-3 py-2 border border-ink-500/20 rounded-lg"
+        />
       </div>
 
       <div className="bg-card rounded-lg shadow overflow-hidden">
@@ -153,9 +153,18 @@ const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } 
             </tr>
           </thead>
           <tbody className="divide-y">
-            {isLoading && (
-              <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">{t('common.loading')}</td></tr>
-            )}
+            {isLoading && [...Array(6)].map((_, i) => (
+              <tr key={i}>
+                {[...Array(6)].map((__, j) => (
+                  <td key={j} className="px-4 py-3">
+                    <div
+                      className="h-4 rounded bg-ink-100 animate-pulse"
+                      style={{ width: j >= 3 ? '3rem' : '70%', marginLeft: j >= 3 ? 'auto' : 0 }}
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))}
             {!isLoading && filtered.length === 0 && (
               <tr><td colSpan={6} className="px-4 py-6 text-center text-ink-500">{t('common.noResults')}</td></tr>
             )}
@@ -204,15 +213,15 @@ const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } 
         />
       )}
 
-{labelProduct && (
-  <BarcodeLabelModal
-    product={labelProduct}
-    onClose={() => setLabelProduct(null)}
-    onPrint={handlePrintLabels}
-  />
-)}
+      {labelProduct && (
+        <BarcodeLabelModal
+          product={labelProduct}
+          onClose={() => setLabelProduct(null)}
+          onPrint={handlePrintLabels}
+        />
+      )}
 
-{printJob && <BarcodeLabelSheet product={printJob.product} quantity={printJob.quantity} />}
+      {printJob && <BarcodeLabelSheet product={printJob.product} quantity={printJob.quantity} />}
     </div>
   );
 }
