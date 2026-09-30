@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -11,6 +12,7 @@ using NovaMartPOS.Infrastructure.Auth;
 using NovaMartPOS.Infrastructure.Persistence;
 using NovaMartPOS.Infrastructure.Repositories;
 using NovaMartPOS.API.Hubs;
+using System.Threading.RateLimiting;
 
 namespace NovaMartPOS.API
 {
@@ -154,6 +156,37 @@ namespace NovaMartPOS.API
 
             builder.Services.AddAuthorization();
 
+            // Login is the one endpoint anyone, authenticated or not, can hit — so it needs
+            // its own strict limit independent of everything else. Partitioned by client IP:
+            // 5 attempts per minute, then reject immediately (no queueing) with 429.
+            builder.Services.AddRateLimiter(options =>
+            {
+                options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+                options.AddPolicy("login", httpContext =>
+                    RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+                        factory: _ => new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 5,
+                            Window = TimeSpan.FromMinutes(1),
+                            QueueLimit = 0
+                        }));
+
+                // A PIN is only 4 digits (10,000 combinations), so this needs its own tight
+                // limit too — otherwise a logged-in cashier could script through every PIN
+                // in seconds to self-approve their own manager overrides.
+                options.AddPolicy("pin", httpContext =>
+                    RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+                        factory: _ => new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 5,
+                            Window = TimeSpan.FromMinutes(1),
+                            QueueLimit = 0
+                        }));
+            });
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -166,6 +199,8 @@ namespace NovaMartPOS.API
 
             app.UseCors("AllowFrontend");
 
+            app.UseRateLimiter();
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
@@ -177,18 +212,18 @@ namespace NovaMartPOS.API
                 var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
 
                 if (!db.Users.Any())
-{
-    db.Users.Add(new User
-    {
-        FullName = "System Administrator",
-        Username = "admin",
-        PasswordHash = hasher.Hash("Admin@123"),
-        Role = UserRole.Administrator,
-        IsActive = true,
-        PinHash = hasher.Hash("1234")
-    });
-    db.SaveChanges();
-}
+                {
+                    db.Users.Add(new User
+                    {
+                        FullName = "System Administrator",
+                        Username = "admin",
+                        PasswordHash = hasher.Hash("Admin@123"),
+                        Role = UserRole.Administrator,
+                        IsActive = true,
+                        PinHash = hasher.Hash("1234")
+                    });
+                    db.SaveChanges();
+                }
                 if (!db.Customers.Any())
                 {
                     db.Customers.Add(new Customer
