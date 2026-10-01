@@ -36,6 +36,25 @@ public class InventoryRepository : IInventoryRepository
             .AsNoTracking()
             .ToListAsync();
 
+    public async Task<List<Product>> GetExpiringProductsAsync(int withinDays)
+    {
+        // Compute the cutoff in C# (not inside the LINQ-to-SQL expression) so EF can
+        // translate the comparison to plain SQL rather than trying to call DateTime.Now
+        // on the server.
+        var cutoff = DateTime.UtcNow.Date.AddDays(withinDays);
+
+        return await _context.Products
+            .Include(p => p.Category)
+            .Include(p => p.Brand)
+            // Still-in-stock products whose expiry is within the window — this also
+            // naturally includes anything already expired (ExpiryDate in the past),
+            // since "the past" is always <= cutoff too.
+            .Where(p => p.IsActive && p.ExpiryDate != null && p.ExpiryDate <= cutoff && p.StockQuantity > 0)
+            .OrderBy(p => p.ExpiryDate)
+            .AsNoTracking()
+            .ToListAsync();
+    }
+
     public async Task AdjustStockAsync(Product product, StockTransaction transaction)
     {
         using var dbTransaction = await _context.Database.BeginTransactionAsync();

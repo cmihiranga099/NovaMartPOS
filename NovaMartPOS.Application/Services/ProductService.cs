@@ -52,6 +52,7 @@ public class ProductService : IProductService
             CategoryId = dto.CategoryId,
             BrandId = dto.BrandId,
             SupplierId = dto.SupplierId,
+            ExpiryDate = dto.ExpiryDate,
             IsActive = true
         };
 
@@ -84,6 +85,7 @@ public class ProductService : IProductService
         product.CategoryId = dto.CategoryId;
         product.BrandId = dto.BrandId;
         product.SupplierId = dto.SupplierId;
+        product.ExpiryDate = dto.ExpiryDate;
         product.UpdatedAt = DateTime.UtcNow;
 
         await _repository.UpdateAsync(product);
@@ -153,6 +155,7 @@ public class ProductService : IProductService
         CategoryName = p.Category?.Name ?? string.Empty,
         BrandId = p.BrandId,
         BrandName = p.Brand?.Name ?? string.Empty,
-        SupplierId = p.SupplierId
+        SupplierId = p.SupplierId,
+        ExpiryDate = p.ExpiryDate
     };
 }
