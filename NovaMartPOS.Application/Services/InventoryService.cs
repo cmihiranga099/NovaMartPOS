@@ -77,23 +77,32 @@ public class InventoryService : IInventoryService
     public async Task<List<ProductDto>> GetLowStockProductsAsync()
     {
         var products = await _inventoryRepository.GetLowStockProductsAsync();
-        return products.Select(p => new ProductDto
-        {
-            Id = p.Id,
-            ProductCode = p.ProductCode,
-            Barcode = p.Barcode,
-            Name = p.Name,
-            PurchasePrice = p.PurchasePrice,
-            SellingPrice = p.SellingPrice,
-            TaxRate = p.TaxRate,
-            StockQuantity = p.StockQuantity,
-            MinimumStockLevel = p.MinimumStockLevel,
-            IsActive = p.IsActive,
-            CategoryId = p.CategoryId,
-            CategoryName = p.Category?.Name ?? string.Empty,
-            BrandId = p.BrandId,
-            BrandName = p.Brand?.Name ?? string.Empty,
-            SupplierId = p.SupplierId
-        }).ToList();
+        return products.Select(MapToDto).ToList();
     }
+
+    public async Task<List<ProductDto>> GetExpiringProductsAsync(int withinDays = 30)
+    {
+        var products = await _inventoryRepository.GetExpiringProductsAsync(withinDays);
+        return products.Select(MapToDto).ToList();
+    }
+
+    private static ProductDto MapToDto(Product p) => new()
+    {
+        Id = p.Id,
+        ProductCode = p.ProductCode,
+        Barcode = p.Barcode,
+        Name = p.Name,
+        PurchasePrice = p.PurchasePrice,
+        SellingPrice = p.SellingPrice,
+        TaxRate = p.TaxRate,
+        StockQuantity = p.StockQuantity,
+        MinimumStockLevel = p.MinimumStockLevel,
+        IsActive = p.IsActive,
+        CategoryId = p.CategoryId,
+        CategoryName = p.Category?.Name ?? string.Empty,
+        BrandId = p.BrandId,
+        BrandName = p.Brand?.Name ?? string.Empty,
+        SupplierId = p.SupplierId,
+        ExpiryDate = p.ExpiryDate
+    };
 }

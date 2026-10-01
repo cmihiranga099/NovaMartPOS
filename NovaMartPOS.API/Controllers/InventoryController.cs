@@ -35,4 +35,8 @@ public class InventoryController : ControllerBase
     [HttpGet("low-stock")]
     public async Task<IActionResult> GetLowStock()
         => Ok(await _service.GetLowStockProductsAsync());
+
+    [HttpGet("expiring")]
+    public async Task<IActionResult> GetExpiring([FromQuery] int days = 30)
+        => Ok(await _service.GetExpiringProductsAsync(days));
 }
