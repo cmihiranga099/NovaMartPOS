@@ -78,10 +78,11 @@ export default function ProductsPage() {
 
   const handleSubmit = (data: ProductFormValues) => {
     setServerError(null);
+    const payload = { ...data, expiryDate: data.expiryDate || null };
     if (editingProduct) {
-      updateMutation.mutate({ id: editingProduct.id, data: { ...data, isActive: editingProduct.isActive } });
+      updateMutation.mutate({ id: editingProduct.id, data: { ...payload, isActive: editingProduct.isActive } });
     } else {
-      createMutation.mutate(data);
+      createMutation.mutate(payload);
     }
   };
 

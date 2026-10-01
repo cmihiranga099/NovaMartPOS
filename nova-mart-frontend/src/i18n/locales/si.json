@@ -191,7 +191,9 @@
       "selectBrand": "සන්නාමයක් තෝරන්න",
       "taxRatePercent": "බද්ද (%)",
       "stockQty": "තොග ප්‍රමාණය",
-      "minStock": "අවම තොගය"
+      "minStock": "අවම තොගය", 
+      "expiryDate": "අවසාන වන දිනය (ඓච්ඡික)",
+"expiryDateHint": "විසුර නාහූ නිෂ්පාදන සඳහා රික්ත ව තබන්න."
     },
     "promotions": {
       "title": "ප්‍රවර්ධන",
@@ -264,6 +266,16 @@
   "minimum": "අවම {{count}}",
   "viewAll": "සියලුම නිෂ්පාදන බලන්න",
   "toastTitle": "අඩු තොග අනතුරු ඇඟවීම",
-  "toastBody": "{{name}} හි ඉතිරිව ඇත්තේ {{count}} පමණි"
+  "toastBody": "{{name}} හි ඉතිරිව ඇත්තේ {{count}} පමණි",
+  "bellTitle": "අනතුරු ඇඟවීම්",
+"expiringTitle": "ඉක්මනින් කල් ඉකුත් වේ",
+"expiresToday": "අද කල් ඉකුත් වේ",
+"expiresInDays_one": "දින {{count}}ක් ඉතිරිය",
+"expiresInDays_other": "දින {{count}}ක් ඉතිරිය",
+"expiredDaysAgo_one": "දින {{count}}කට පෙර කල් ඉකුත් විය",
+"expiredDaysAgo_other": "දින {{count}}කට පෙර කල් ඉකුත් විය",
+"noneExpiring": "ළඟදී කල් ඉකුත් වන දෙයක් නැත",
+"expiringToastTitle": "කල් ඉකුත්වීමේ අනතුරු ඇඟවීම",
+"expiringToastBody": "{{name}} {{date}} දින කල් ඉකුත් වේ"
 }
   }

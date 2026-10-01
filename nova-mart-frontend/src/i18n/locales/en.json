@@ -191,7 +191,9 @@
       "selectBrand": "Select a brand",
       "taxRatePercent": "Tax Rate (%)",
       "stockQty": "Stock Qty",
-      "minStock": "Min Stock"
+      "minStock": "Min Stock",
+      "expiryDate": "Expiry Date (optional)",
+"expiryDateHint": "Leave blank for products that don’t expire."
     },
     "promotions": {
       "title": "Promotions",
@@ -264,6 +266,16 @@
   "minimum": "Min. {{count}}",
   "viewAll": "View all products",
   "toastTitle": "Low stock alert",
-  "toastBody": "{{name}} is down to {{count}} left"
+  "toastBody": "{{name}} is down to {{count}} left",
+  "bellTitle": "Alerts",
+"expiringTitle": "Expiring Soon",
+"expiresToday": "Expires today",
+"expiresInDays_one": "{{count}} day left",
+"expiresInDays_other": "{{count}} days left",
+"expiredDaysAgo_one": "Expired {{count}} day ago",
+"expiredDaysAgo_other": "Expired {{count}} days ago",
+"noneExpiring": "Nothing expiring soon",
+"expiringToastTitle": "Expiry alert",
+"expiringToastBody": "{{name}} expires on {{date}}"
 }
   }
