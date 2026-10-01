@@ -17,6 +17,7 @@ public class ProductDto
     public int BrandId { get; set; }
     public string BrandName { get; set; } = string.Empty;
     public int? SupplierId { get; set; }
+    public DateTime? ExpiryDate { get; set; }
 }
 
 public class CreateProductDto
@@ -32,6 +33,7 @@ public class CreateProductDto
     public int CategoryId { get; set; }
     public int BrandId { get; set; }
     public int? SupplierId { get; set; }
+    public DateTime? ExpiryDate { get; set; }
 }
 
 public class UpdateProductDto
@@ -48,4 +50,5 @@ public class UpdateProductDto
     public int CategoryId { get; set; }
     public int BrandId { get; set; }
     public int? SupplierId { get; set; }
+    public DateTime? ExpiryDate { get; set; }
 }

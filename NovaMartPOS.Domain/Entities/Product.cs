@@ -12,6 +12,9 @@ public class Product : BaseEntity
     public int MinimumStockLevel { get; set; }
     public bool IsActive { get; set; } = true;
 
+    // Null for products that don't expire (hardware, non-perishables, etc).
+    public DateTime? ExpiryDate { get; set; }
+
     public int CategoryId { get; set; }
     public Category Category { get; set; } = null!;
 
