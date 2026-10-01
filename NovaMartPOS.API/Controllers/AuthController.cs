@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using NovaMartPOS.Application.DTOs;
 using NovaMartPOS.Application.Interfaces;
 
@@ -17,6 +18,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [EnableRateLimiting("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
     {
         var result = await _authService.LoginAsync(request);
@@ -27,9 +29,9 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
-    
     [HttpPost("verify-pin")]
     [Authorize]
+    [EnableRateLimiting("pin")]
     public async Task<IActionResult> VerifyPin([FromBody] VerifyPinRequestDto request)
     {
         var result = await _authService.VerifyManagerPinAsync(request.Pin);
