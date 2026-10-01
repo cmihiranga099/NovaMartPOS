@@ -19,6 +19,7 @@ const schema = z.object({
   minimumStockLevel: z.coerce.number().int().min(0, 'Cannot be negative'),
   categoryId: z.coerce.number().min(1, 'Select a category'),
   brandId: z.coerce.number().min(1, 'Select a brand'),
+  expiryDate: z.string().optional().or(z.literal('')),
 });
 
 export type ProductFormValues = z.infer<typeof schema>;
@@ -49,6 +50,7 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
       minimumStockLevel: 0,
       categoryId: 0,
       brandId: 0,
+      expiryDate: '',
     },
   });
 
@@ -65,6 +67,7 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
         minimumStockLevel: product.minimumStockLevel,
         categoryId: product.categoryId,
         brandId: product.brandId,
+        expiryDate: product.expiryDate ? product.expiryDate.slice(0, 10) : '',
       });
     }
   }, [product, reset]);
@@ -91,16 +94,17 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
             <div>
               <label className="block text-sm font-medium mb-1">{t('products.barcode')}</label>
               <input
-  {...register('barcode')}
-  onFocus={(e) => e.target.select()}
-  onKeyDown={(e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      (e.currentTarget.form?.elements.namedItem('name') as HTMLInputElement | null)?.focus();
-    }
-  }}
-  className="w-full px-3 py-2 border border-ink-500/20 rounded-lg"
-/>              {errors.barcode && <p className="text-red-500 text-xs mt-1">{errors.barcode.message}</p>}
+                {...register('barcode')}
+                onFocus={(e) => e.target.select()}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    (e.currentTarget.form?.elements.namedItem('name') as HTMLInputElement | null)?.focus();
+                  }
+                }}
+                className="w-full px-3 py-2 border border-ink-500/20 rounded-lg"
+              />
+              {errors.barcode && <p className="text-red-500 text-xs mt-1">{errors.barcode.message}</p>}
             </div>
           </div>
 
@@ -156,6 +160,12 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
               <label className="block text-sm font-medium mb-1">Min Stock</label>
               <input type="number" {...register('minimumStockLevel')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg" />
             </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">{t('products.expiryDate')}</label>
+            <input type="date" {...register('expiryDate')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg" />
+            <p className="text-xs text-ink-500 mt-1">{t('products.expiryDateHint')}</p>
           </div>
 
           <div className="flex justify-end gap-2 pt-2">

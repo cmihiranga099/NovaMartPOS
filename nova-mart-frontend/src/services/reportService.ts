@@ -15,4 +15,8 @@ export const reportService = {
     const res = await apiClient.get<Product[]>('/Inventory/low-stock');
     return res.data;
   },
+  getExpiringProducts: async (days = 30): Promise<Product[]> => {
+    const res = await apiClient.get<Product[]>('/Inventory/expiring', { params: { days } });
+    return res.data;
+  },
 };
