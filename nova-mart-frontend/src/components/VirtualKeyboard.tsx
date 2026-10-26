@@ -149,7 +149,7 @@ export default function VirtualKeyboard({
               type="button"
               onClick={handleBackspace}
               title="Backspace"
-              className="flex-1 max-w-[64px] h-11 sm:h-12 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 flex items-center justify-center shadow-2xs active:scale-95 transition-all"
+              className="flex-1 max-w-[64px] h-11 sm:h-12 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 text-rose-400 flex items-center justify-center shadow-2xs active:scale-95 transition-all"
             >
               <Delete size={20} />
             </button>
@@ -215,7 +215,7 @@ export default function VirtualKeyboard({
               type="button"
               onClick={handleClear}
               title="Clear text"
-              className="flex-1 max-w-[70px] h-11 sm:h-12 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-800 font-semibold text-xs flex items-center justify-center shadow-2xs active:scale-95 transition-all"
+              className="flex-1 max-w-[70px] h-11 sm:h-12 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-300 font-semibold text-xs flex items-center justify-center shadow-2xs active:scale-95 transition-all"
             >
               {t('virtualKeyboard.clr', 'CLR')}
             </button>

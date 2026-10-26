@@ -124,7 +124,7 @@ export default function MainLayout() {
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                       active
                         ? 'bg-brand-500 text-white font-bold shadow-xs'
-                        : 'text-ink-700 hover:bg-brand-50'
+                        : 'text-ink-700 hover:bg-brand-500/10 hover:text-ink-900'
                     }`}
                   >
                     <Icon size={18} />
@@ -136,7 +136,7 @@ export default function MainLayout() {
 
             {/* Drawer User Footer */}
             <div className="p-4 border-t border-line flex items-center gap-3 bg-surface/40">
-              <div className="w-9 h-9 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center text-sm font-bold border border-brand-200 shadow-2xs">
+              <div className="w-9 h-9 rounded-full bg-brand-500/15 text-brand-400 flex items-center justify-center text-sm font-bold border border-brand-500/30 shadow-2xs">
                 {initials}
               </div>
               <div className="flex-1 min-w-0">
@@ -149,7 +149,7 @@ export default function MainLayout() {
                   logout();
                 }}
                 title={t('common.logout')}
-                className="p-2 text-ink-500 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors cursor-pointer"
+                className="p-2 text-ink-500 hover:text-rose-400 rounded-lg hover:bg-rose-500/15 transition-colors cursor-pointer"
               >
                 <LogOut size={18} />
               </button>
@@ -187,7 +187,7 @@ export default function MainLayout() {
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                   active
                     ? 'bg-brand-500 text-white font-bold shadow-xs'
-                    : 'text-ink-700 hover:bg-brand-50 hover:text-ink-900'
+                    : 'text-ink-700 hover:bg-brand-500/10 hover:text-ink-900'
                 }`}
               >
                 <Icon size={18} />
@@ -198,7 +198,7 @@ export default function MainLayout() {
         </nav>
 
         <div className="p-4 border-t border-line flex items-center gap-3 bg-surface/30">
-          <div className="w-9 h-9 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center text-sm font-bold border border-brand-200 shadow-2xs">
+          <div className="w-9 h-9 rounded-full bg-brand-500/15 text-brand-400 flex items-center justify-center text-sm font-bold border border-brand-500/30 shadow-2xs">
             {initials}
           </div>
           <div className="flex-1 min-w-0">
@@ -208,7 +208,7 @@ export default function MainLayout() {
           <button
             onClick={logout}
             title={t('common.logout')}
-            className="p-1.5 text-ink-500 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors cursor-pointer"
+            className="p-1.5 text-ink-500 hover:text-rose-400 rounded-lg hover:bg-rose-500/15 transition-colors cursor-pointer"
           >
             <LogOut size={18} />
           </button>
