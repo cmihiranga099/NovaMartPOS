@@ -245,7 +245,7 @@ export default function BarcodeGeneratorPage() {
                     key={p.id}
                     onClick={() => toggleProductInQueue(p)}
                     className={`p-3 flex items-center justify-between gap-3 cursor-pointer transition-colors ${
-                      inQueue ? 'bg-brand-50/60' : 'hover:bg-card'
+                      inQueue ? 'bg-brand-500/15' : 'hover:bg-surface'
                     }`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
@@ -423,7 +423,7 @@ export default function BarcodeGeneratorPage() {
                       <button
                         type="button"
                         onClick={() => toggleProductInQueue(product)}
-                        className="p-1 rounded text-ink-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                        className="p-1 rounded text-ink-400 hover:text-rose-600 hover:bg-rose-500/15 transition-colors"
                       >
                         <Trash2 size={15} />
                       </button>

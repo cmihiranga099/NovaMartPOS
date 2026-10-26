@@ -18,7 +18,7 @@ function todayISO() {
 function StatCard({ icon: Icon, label, value }: { icon: typeof TrendingUp; label: string; value: string }) {
   return (
     <div className="bg-card rounded-lg border border-line shadow p-4 flex items-center gap-3">
-      <div className="w-10 h-10 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
+      <div className="w-10 h-10 rounded-lg bg-brand-500/15 text-brand-400 border border-brand-500/30 flex items-center justify-center shrink-0">
         <Icon size={20} />
       </div>
       <div className="min-w-0">

@@ -40,7 +40,7 @@ function StatCard({
     <div className="bg-card rounded-lg border border-line shadow p-5 flex items-center gap-4">
       <div
         className={`w-11 h-11 rounded-lg flex items-center justify-center ${
-          tone === 'brand' ? 'bg-brand-50 text-brand-600' : 'bg-ink-100 text-ink-700'
+          tone === 'brand' ? 'bg-brand-500/15 text-brand-500 border border-brand-500/30' : 'bg-surface text-ink-700 border border-line'
         }`}
       >
         <Icon size={22} />
@@ -150,7 +150,7 @@ export default function DashboardPage() {
             isLive
               ? justUpdated
                 ? 'bg-brand-100 text-brand-700'
-                : 'bg-emerald-50 text-emerald-600'
+                : 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
               : 'bg-surface text-ink-500'
           }`}
           title={isLive ? t('dashboard.live') : t('dashboard.offline')}
@@ -197,12 +197,12 @@ export default function DashboardPage() {
                     <stop offset="100%" stopColor="#fe6c0d" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ece7e2" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--color-line, #2b2c33)" />
                 <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#85868c' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: '#85868c' }} axisLine={false} tickLine={false} />
                 <Tooltip
                   formatter={(value: number) => [`Rs. ${value.toFixed(2)}`, 'Revenue']}
-                  contentStyle={{ borderRadius: 8, border: '1px solid #ece7e2', fontSize: 12 }}
+                  contentStyle={{ borderRadius: 8, backgroundColor: 'var(--color-card, #18191e)', borderColor: 'var(--color-line, #2b2c33)', color: 'var(--color-ink-900, #f5f5f7)', fontSize: 12 }}
                 />
                 <Area type="monotone" dataKey="revenue" stroke="#fe6c0d" strokeWidth={2} fill="url(#revenueFill)" />
               </AreaChart>
@@ -222,7 +222,7 @@ export default function DashboardPage() {
                     <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value: number) => `Rs. ${value.toFixed(2)}`} contentStyle={{ borderRadius: 8, fontSize: 12 }} />
+                <Tooltip formatter={(value: number) => `Rs. ${value.toFixed(2)}`} contentStyle={{ borderRadius: 8, backgroundColor: 'var(--color-card, #18191e)', borderColor: 'var(--color-line, #2b2c33)', color: 'var(--color-ink-900, #f5f5f7)', fontSize: 12 }} />
                 <Legend wrapperStyle={{ fontSize: 12 }} />
               </PieChart>
             </ResponsiveContainer>
@@ -238,17 +238,17 @@ export default function DashboardPage() {
           ) : (
             <ResponsiveContainer width="100%" height={Math.max(180, topProductsChart.length * 38)}>
               <BarChart data={topProductsChart} layout="vertical" margin={{ left: 8, right: 16 }}>
-                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#ece7e2" />
+                <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="var(--color-line, #2b2c33)" />
                 <XAxis type="number" tick={{ fontSize: 11, fill: '#85868c' }} axisLine={false} tickLine={false} />
                 <YAxis
                   type="category"
                   dataKey="name"
                   width={110}
-                  tick={{ fontSize: 11, fill: '#2f3032' }}
+                  tick={{ fontSize: 11, fill: 'var(--color-ink-700, #85868c)' }}
                   axisLine={false}
                   tickLine={false}
                 />
-                <Tooltip formatter={(value: number) => [`Rs. ${value.toFixed(2)}`, 'Revenue']} contentStyle={{ borderRadius: 8, fontSize: 12 }} />
+                <Tooltip formatter={(value: number) => [`Rs. ${value.toFixed(2)}`, 'Revenue']} contentStyle={{ borderRadius: 8, backgroundColor: 'var(--color-card, #18191e)', borderColor: 'var(--color-line, #2b2c33)', color: 'var(--color-ink-900, #f5f5f7)', fontSize: 12 }} />
                 <Bar dataKey="revenue" fill="#fe6c0d" radius={[0, 6, 6, 0]} barSize={16} />
               </BarChart>
             </ResponsiveContainer>
