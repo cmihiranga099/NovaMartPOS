@@ -33,7 +33,7 @@ public class PurchaseOrderService : IPurchaseOrderService
         decimal totalCost = 0;
         var poItems = new List<PurchaseOrderItem>();
         var stockTransactions = new List<StockTransaction>();
-        var productsToRestock = new List<(Product Product, int Quantity, decimal UnitCost)>();
+        var productsToRestock = new List<(Product Product, decimal Quantity, decimal UnitCost)>();
 
         // Validate every line BEFORE making any changes
         foreach (var item in dto.Items)
