@@ -97,6 +97,8 @@ public class InventoryService : IInventoryService
         TaxRate = p.TaxRate,
         StockQuantity = p.StockQuantity,
         MinimumStockLevel = p.MinimumStockLevel,
+        IsWeighable = p.IsWeighable,
+        UnitOfMeasure = p.UnitOfMeasure,
         IsActive = p.IsActive,
         CategoryId = p.CategoryId,
         CategoryName = p.Category?.Name ?? string.Empty,
