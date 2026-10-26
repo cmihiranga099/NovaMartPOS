@@ -16,6 +16,7 @@ import {
   Lock,
   AlertCircle,
   DollarSign,
+  Scale,
 } from 'lucide-react';
 import { productService } from '../services/productService';
 import { customerService } from '../services/customerService';
@@ -36,6 +37,7 @@ import { customerDisplayService } from '../services/customerDisplayService';
 import OpenShiftModal from '../features/shifts/OpenShiftModal';
 import CashMovementModal from '../features/shifts/CashMovementModal';
 import ZReportModal from '../features/shifts/ZReportModal';
+import WeighModal from '../features/pos/WeighModal';
 import VirtualKeyboard from '../components/VirtualKeyboard';
 import { usePosKeyboard, playScannerBeep } from '../features/pos/usePosKeyboard';
 
@@ -88,6 +90,10 @@ export default function PosPage() {
   const [showCashMovementModal, setShowCashMovementModal] = useState(false);
   const [showZReportModal, setShowZReportModal] = useState(false);
   const [scanFeedback, setScanFeedback] = useState<string | null>(null);
+  const [weighingProduct, setWeighingProduct] = useState<{
+    product: (typeof products)[number];
+    initialWeight?: number;
+  } | null>(null);
   const [activeKeyboardTarget, setActiveKeyboardTarget] = useState<KeyboardTarget>(null);
 
   // Load persistent held carts from localStorage
@@ -194,13 +200,63 @@ export default function PosPage() {
       })
     : [];
 
-  const addToCart = (product: (typeof products)[number]) => {
+  // Helper to parse supermarket scale-embedded barcodes (e.g. 20 + 5-digit PLU + 5-digit weight in grams + checksum)
+  const parseScaleBarcode = (code: string) => {
+    const match = code.trim().match(/^(20|21|02)(\d{5})(\d{5})\d$/);
+    if (!match) return null;
+    const pluRaw = match[2];
+    const pluNum = parseInt(pluRaw, 10).toString();
+    const weightGrams = parseInt(match[3], 10);
+    const weightKg = Number((weightGrams / 1000).toFixed(3));
+    return { pluRaw, pluNum, weightKg };
+  };
+
+  const tryFindProduct = (code: string) => {
+    const trimmed = code.trim();
+    if (!trimmed) return null;
+
+    // 1. Direct match by barcode, productCode, or id
+    let product = activeProducts.find(
+      (p) =>
+        p.barcode === trimmed ||
+        p.productCode.toLowerCase() === trimmed.toLowerCase() ||
+        p.id.toString() === trimmed
+    );
+    if (product) return { product, weightKg: undefined };
+
+    // 2. Check if this is a scale-embedded barcode (e.g. 2000042012503)
+    const scaleData = parseScaleBarcode(trimmed);
+    if (scaleData) {
+      product = activeProducts.find(
+        (p) =>
+          p.productCode.toLowerCase() === scaleData.pluRaw.toLowerCase() ||
+          p.productCode.toLowerCase() === scaleData.pluNum.toLowerCase() ||
+          p.barcode === scaleData.pluRaw ||
+          p.id.toString() === scaleData.pluNum
+      );
+      if (product) {
+        return { product, weightKg: scaleData.weightKg };
+      }
+    }
+    return null;
+  };
+
+  const addToCart = (product: (typeof products)[number], weightQuantity?: number) => {
+    // If it's a weighable item and no specific weight was provided, prompt scale modal
+    if (product.isWeighable && weightQuantity === undefined) {
+      setWeighingProduct({ product });
+      return;
+    }
+
+    const qty = weightQuantity !== undefined ? weightQuantity : 1;
+
     setCart((prev) => {
       const existing = prev.find((i) => i.productId === product.id);
       if (existing) {
-        if (existing.quantity >= product.stockQuantity) return prev;
+        const nextQty = weightQuantity !== undefined ? weightQuantity : existing.quantity + 1;
+        if (nextQty > product.stockQuantity) return prev;
         return prev.map((i) =>
-          i.productId === product.id ? { ...i, quantity: i.quantity + 1 } : i
+          i.productId === product.id ? { ...i, quantity: nextQty } : i
         );
       }
       return [
@@ -210,9 +266,11 @@ export default function PosPage() {
           name: product.name,
           unitPrice: product.sellingPrice,
           taxRate: product.taxRate,
-          quantity: 1,
+          quantity: qty,
           discount: 0,
           availableStock: product.stockQuantity,
+          isWeighable: product.isWeighable,
+          unitOfMeasure: product.unitOfMeasure || (product.isWeighable ? 'kg' : 'pcs'),
         },
       ];
     });
@@ -221,18 +279,18 @@ export default function PosPage() {
   const handleBarcodeEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       const trimmed = search.trim();
-      const exact = activeProducts.find(
-        (p) => p.barcode === trimmed || p.productCode.toLowerCase() === trimmed.toLowerCase()
-      );
-      if (exact) {
-        if (exact.stockQuantity <= 0) {
+      const match = tryFindProduct(trimmed);
+      if (match) {
+        const { product, weightKg } = match;
+        if (product.stockQuantity <= 0) {
           playScannerBeep(false);
-          setError(`${t('pos.outOfStock')}: ${exact.name}`);
+          setError(`${t('pos.outOfStock')}: ${product.name}`);
           return;
         }
-        addToCart(exact);
+        addToCart(product, weightKg);
         playScannerBeep(true);
-        setScanFeedback(`${exact.name} (Rs. ${exact.sellingPrice.toFixed(2)})`);
+        const weightLabel = weightKg !== undefined ? ` (${weightKg.toFixed(3)} ${product.unitOfMeasure || 'kg'})` : '';
+        setScanFeedback(`${product.name}${weightLabel} · Rs. ${product.sellingPrice.toFixed(2)}`);
         setSearch('');
         setSubmittedSearch('');
         setError(null);
@@ -245,18 +303,18 @@ export default function PosPage() {
   const handleBarcodeScanned = (barcode: string) => {
     const trimmed = barcode.trim();
     if (!trimmed) return;
-    const exact = activeProducts.find(
-      (p) => p.barcode === trimmed || p.productCode.toLowerCase() === trimmed.toLowerCase()
-    );
-    if (exact) {
-      if (exact.stockQuantity <= 0) {
+    const match = tryFindProduct(trimmed);
+    if (match) {
+      const { product, weightKg } = match;
+      if (product.stockQuantity <= 0) {
         playScannerBeep(false);
-        setError(`${t('pos.outOfStock')}: ${exact.name}`);
+        setError(`${t('pos.outOfStock')}: ${product.name}`);
         return;
       }
-      addToCart(exact);
+      addToCart(product, weightKg);
       playScannerBeep(true);
-      setScanFeedback(`${exact.name} · Rs. ${exact.sellingPrice.toFixed(2)}`);
+      const weightLabel = weightKg !== undefined ? ` (${weightKg.toFixed(3)} ${product.unitOfMeasure || 'kg'})` : '';
+      setScanFeedback(`${product.name}${weightLabel} · Rs. ${product.sellingPrice.toFixed(2)}`);
       setError(null);
     } else {
       playScannerBeep(false);

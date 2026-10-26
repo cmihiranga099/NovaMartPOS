@@ -236,7 +236,11 @@
     "stockQty": "තොග ප්‍රමාණය",
     "minStock": "අවම තොගය",
     "expiryDate": "අවසාන වන දිනය (ඓච්ඡික)",
-    "expiryDateHint": "විසුර නාහූ නිෂ්පාදන සඳහා රික්ත ව තබන්න."
+    "expiryDateHint": "විසුර නාහූ නිෂ්පාදන සඳහා රික්ත ව තබන්න.",
+    "isWeighable": "බර මැන විකුණන භාණ්ඩ (තරාදියෙන්)",
+    "unitOfMeasure": "මිනුම් ඒකකය",
+    "scaleWeight": "තරාදියේ බර",
+    "weighProduct": "බර මනින්න"
   },
   "promotions": {
     "title": "ප්‍රවර්ධන",
