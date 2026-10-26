@@ -3,6 +3,7 @@ export interface Product {
   productCode: string;
   barcode: string;
   name: string;
+  imageUrl?: string | null;
   purchasePrice: number;
   sellingPrice: number;
   taxRate: number;
@@ -23,6 +24,7 @@ export interface CreateProductRequest {
   productCode: string;
   barcode: string;
   name: string;
+  imageUrl?: string | null;
   purchasePrice: number;
   sellingPrice: number;
   taxRate: number;

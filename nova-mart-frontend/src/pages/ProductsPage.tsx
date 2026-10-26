@@ -160,16 +160,36 @@ export default function ProductsPage() {
             {filtered.map((product) => (
               <tr key={product.id} className="hover:bg-surface">
                 <td className="px-4 py-3">
-                  <div className="font-medium flex items-center gap-1.5">
-                    <span>{product.name}</span>
-                    {product.isWeighable && (
-                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200" title="Weighed produce item">
-                        <Scale size={11} />
-                        {product.unitOfMeasure || 'kg'}
-                      </span>
-                    )}
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-surface border border-line flex items-center justify-center overflow-hidden shrink-0">
+                      {product.imageUrl ? (
+                        <img
+                          src={product.imageUrl}
+                          alt={product.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).style.display = 'none';
+                          }}
+                        />
+                      ) : (
+                        <span className="font-bold text-ink-500 text-xs">
+                          {product.name.charAt(0).toUpperCase()}
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      <div className="font-medium flex items-center gap-1.5">
+                        <span>{product.name}</span>
+                        {product.isWeighable && (
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200" title="Weighed produce item">
+                            <Scale size={11} />
+                            {product.unitOfMeasure || 'kg'}
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-xs text-ink-500">{product.productCode} · {product.barcode}</div>
+                    </div>
                   </div>
-                  <div className="text-xs text-ink-500">{product.productCode} · {product.barcode}</div>
                 </td>
                 <td className="px-4 py-3">{product.categoryName}</td>
                 <td className="px-4 py-3">{product.brandName}</td>

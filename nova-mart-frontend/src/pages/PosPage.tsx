@@ -1039,10 +1039,23 @@ export default function PosPage() {
                     disabled={outOfStock}
                     className="group flex flex-col items-stretch rounded-2xl border border-line bg-card overflow-hidden text-left hover:shadow-md hover:border-brand-200 transition-all disabled:opacity-40 disabled:hover:shadow-none disabled:hover:border-line relative"
                   >
-                    <div className={`h-16 flex items-center justify-center font-bold text-2xl ${tileColor(product.categoryName || product.name)} relative`}>
-                      {product.name.charAt(0).toUpperCase()}
+                    <div className="h-24 w-full bg-surface relative overflow-hidden flex items-center justify-center">
+                      {product.imageUrl ? (
+                        <img
+                          src={product.imageUrl}
+                          alt={product.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLImageElement).style.display = 'none';
+                          }}
+                        />
+                      ) : (
+                        <div className={`w-full h-full flex items-center justify-center font-bold text-2xl ${tileColor(product.categoryName || product.name)}`}>
+                          {product.name.charAt(0).toUpperCase()}
+                        </div>
+                      )}
                       {product.isWeighable && (
-                        <span className="absolute top-2 right-2 bg-emerald-600 text-white rounded-full p-1 shadow-sm" title="Weighed produce item">
+                        <span className="absolute top-2 right-2 bg-emerald-600/95 text-white rounded-full p-1 shadow-sm backdrop-blur-xs" title="Weighed produce item">
                           <Scale size={12} />
                         </span>
                       )}

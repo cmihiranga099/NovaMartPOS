@@ -107,10 +107,21 @@ export default function WeighModal({
       <div className="bg-card rounded-2xl shadow-2xl w-full max-w-lg border border-line overflow-hidden flex flex-col">
         {/* Modal Header */}
         <div className="flex items-center justify-between px-5 py-3.5 bg-surface border-b border-line">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
-              <Scale size={18} />
-            </div>
+          <div className="flex items-center gap-3">
+            {product.imageUrl ? (
+              <img
+                src={product.imageUrl}
+                alt={product.name}
+                className="w-10 h-10 rounded-lg object-cover border border-line shadow-2xs"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = 'none';
+                }}
+              />
+            ) : (
+              <div className="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                <Scale size={18} />
+              </div>
+            )}
             <div>
               <h2 className="text-base font-bold text-ink-900 leading-tight">
                 {product.name}

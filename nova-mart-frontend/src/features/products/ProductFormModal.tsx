@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useQuery } from '@tanstack/react-query';
-import { Scale, X } from 'lucide-react';
+import { Scale, X, Image as ImageIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { lookupService } from '../../services/lookupService';
 import type { Product } from '../../types/product';
@@ -12,6 +12,7 @@ const schema = z.object({
   productCode: z.string().min(1, 'Required'),
   barcode: z.string().min(1, 'Required'),
   name: z.string().min(1, 'Required'),
+  imageUrl: z.string().optional().or(z.literal('')),
   purchasePrice: z.coerce.number().min(0, 'Cannot be negative'),
   sellingPrice: z.coerce.number().min(0, 'Cannot be negative'),
   taxRate: z.coerce.number().min(0, 'Cannot be negative'),
@@ -45,6 +46,7 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
       productCode: '',
       barcode: '',
       name: '',
+      imageUrl: '',
       purchasePrice: 0,
       sellingPrice: 0,
       taxRate: 0,
@@ -59,6 +61,7 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
   });
 
   const isWeighable = watch('isWeighable');
+  const imageUrlValue = watch('imageUrl');
 
   useEffect(() => {
     if (product) {
@@ -66,6 +69,7 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
         productCode: product.productCode,
         barcode: product.barcode,
         name: product.name,
+        imageUrl: product.imageUrl || '',
         purchasePrice: product.purchasePrice,
         sellingPrice: product.sellingPrice,
         taxRate: product.taxRate,
@@ -120,6 +124,34 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
             <label className="block text-sm font-medium mb-1">{t('common.name')}</label>
             <input {...register('name')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg" />
             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              {t('products.imageUrl', 'Product Image URL')}
+            </label>
+            <div className="flex items-center gap-2">
+              <div className="w-10 h-10 rounded-lg border border-line bg-surface overflow-hidden flex items-center justify-center shrink-0">
+                {imageUrlValue ? (
+                  <img
+                    src={imageUrlValue}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                ) : (
+                  <ImageIcon size={18} className="text-ink-400" />
+                )}
+              </div>
+              <input
+                {...register('imageUrl')}
+                placeholder="https://images.unsplash.com/photo-..."
+                className="flex-1 px-3 py-2 border border-ink-500/20 rounded-lg text-sm"
+              />
+            </div>
+            {errors.imageUrl && <p className="text-red-500 text-xs mt-1">{errors.imageUrl.message}</p>}
           </div>
 
           {/* Weighed Produce / Bulk Goods Setting */}
