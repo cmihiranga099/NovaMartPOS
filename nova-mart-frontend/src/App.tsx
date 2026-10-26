@@ -16,6 +16,7 @@ import SuppliersPage from './pages/SuppliersPage';
 import PurchaseOrdersPage from './pages/PurchaseOrdersPage';
 import ReportsPage from './pages/ReportsPage';
 import CustomerDisplayPage from './pages/CustomerDisplayPage';
+import BarcodeGeneratorPage from './pages/BarcodeGeneratorPage';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="pos" element={<PosPage />} />
             <Route path="sales-history" element={<SalesHistoryPage />} />
             <Route path="products" element={<ProductsPage />} />
+            <Route path="barcode-generator" element={<BarcodeGeneratorPage />} />
             <Route path="categories" element={<CategoriesPage />} />
             <Route path="brands" element={<BrandsPage />} />
             <Route path="promotions" element={<PromotionsPage />} />
