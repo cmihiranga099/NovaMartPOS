@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Delete, CornerDownLeft, ChevronDown, Space, Sparkles, Volume2, VolumeX, X } from 'lucide-react';
+import { Delete, CornerDownLeft, ChevronDown, Space, Sparkles, Volume2, VolumeX } from 'lucide-react';
 
 interface Props {
   isOpen: boolean;

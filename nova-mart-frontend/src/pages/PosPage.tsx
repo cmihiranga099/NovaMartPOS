@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../store/AuthContext';
 import ManagerOverrideModal from '../components/ManagerOverrideModal';
 import KeyboardShortcutsModal from '../features/pos/KeyboardShortcutsModal';
+import VirtualKeyboard from '../components/VirtualKeyboard';
 import { usePosKeyboard, playScannerBeep } from '../features/pos/usePosKeyboard';
 
 const TILE_PALETTE = [
@@ -32,6 +33,8 @@ const tileColor = (key: string) => {
 };
 
 const KEYPAD_KEYS = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '.', '0', 'DEL'];
+
+type KeyboardTarget = 'search' | 'promo' | 'discount' | 'amountPaid' | null;
 
 export default function PosPage() {
   const { t } = useTranslation();
@@ -56,6 +59,7 @@ export default function PosPage() {
   const [discountApprovedBy, setDiscountApprovedBy] = useState<string | null>(null);
   const [showShortcutsModal, setShowShortcutsModal] = useState(false);
   const [scanFeedback, setScanFeedback] = useState<string | null>(null);
+  const [activeKeyboardTarget, setActiveKeyboardTarget] = useState<KeyboardTarget>(null);
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const customerSelectRef = useRef<HTMLSelectElement>(null);
@@ -87,6 +91,7 @@ export default function PosPage() {
       setPromoError(null);
       setDiscountApprovedPin(null);
       setDiscountApprovedBy(null);
+      setActiveKeyboardTarget(null);
       searchInputRef.current?.focus();
     },
     onError: (err: unknown) => {
@@ -212,7 +217,9 @@ export default function PosPage() {
   };
 
   const handleClearOrCancel = () => {
-    if (showShortcutsModal) {
+    if (activeKeyboardTarget !== null) {
+      setActiveKeyboardTarget(null);
+    } else if (showShortcutsModal) {
       setShowShortcutsModal(false);
     } else if (showOverridePrompt) {
       setShowOverridePrompt(false);
@@ -264,13 +271,12 @@ export default function PosPage() {
       setShowShortcutsModal((prev) => !prev);
     },
     onBarcodeScanned: handleBarcodeScanned,
-    isModalOpen: showShortcutsModal || showOverridePrompt || showDiscountEntry,
+    isModalOpen: showShortcutsModal || showOverridePrompt || showDiscountEntry || (activeKeyboardTarget !== null),
     isCompletedSaleOpen: !!completedSale,
     onNewSale: () => setCompletedSale(null),
   });
 
-  // Manual, cart-wide discount. Distributed proportionally across line items so it
-  // rides the same per-item Discount field (and tax math) the backend already uses.
+  // Manual, cart-wide discount.
   const applyManualDiscount = (amountRs: number) => {
     setCart((prev) => {
       const eligibleTotal = prev.reduce((sum, i) => sum + i.unitPrice * i.quantity, 0);
@@ -295,6 +301,7 @@ export default function PosPage() {
       setShowOverridePrompt(true);
     } else {
       setShowDiscountEntry(true);
+      setActiveKeyboardTarget('discount');
     }
   };
 
@@ -303,6 +310,7 @@ export default function PosPage() {
     setDiscountApprovedBy(approvedBy);
     setShowOverridePrompt(false);
     setShowDiscountEntry(true);
+    setActiveKeyboardTarget('discount');
   };
 
   const submitManualDiscount = () => {
@@ -311,6 +319,7 @@ export default function PosPage() {
     applyManualDiscount(amount);
     setShowDiscountEntry(false);
     setDiscountInput('');
+    if (activeKeyboardTarget === 'discount') setActiveKeyboardTarget(null);
   };
 
   const subtotal = cart.reduce((sum, i) => sum + i.unitPrice * i.quantity, 0);
@@ -331,6 +340,7 @@ export default function PosPage() {
       if (res.valid) {
         setAppliedPromo({ code: res.code ?? code.toUpperCase(), discount: res.discountAmount });
         setPromoError(null);
+        if (activeKeyboardTarget === 'promo') setActiveKeyboardTarget(null);
       } else {
         setAppliedPromo(null);
         setPromoError(res.error || 'Invalid promo code.');
@@ -342,7 +352,6 @@ export default function PosPage() {
     },
   });
 
-  // Keep the applied discount in sync as the cart changes (e.g. re-check min purchase, recompute %)
   useEffect(() => {
     if (appliedPromo) {
       validatePromoMutation.mutate(appliedPromo.code);
@@ -393,8 +402,83 @@ export default function PosPage() {
     });
   };
 
+  // Virtual Keyboard bindings
+  const getKeyboardValue = () => {
+    switch (activeKeyboardTarget) {
+      case 'search': return search;
+      case 'promo': return promoInput;
+      case 'discount': return discountInput;
+      case 'amountPaid': return amountPaid;
+      default: return '';
+    }
+  };
+
+  const handleKeyboardChange = (val: string) => {
+    switch (activeKeyboardTarget) {
+      case 'search':
+        setSearch(val);
+        break;
+      case 'promo':
+        setPromoInput(val);
+        setPromoError(null);
+        break;
+      case 'discount':
+        setDiscountInput(val);
+        break;
+      case 'amountPaid':
+        setAmountPaid(val);
+        break;
+    }
+  };
+
+  const handleKeyboardEnter = () => {
+    switch (activeKeyboardTarget) {
+      case 'search': {
+        const trimmed = search.trim();
+        const exact = activeProducts.find(
+          (p) => p.barcode === trimmed || p.productCode.toLowerCase() === trimmed.toLowerCase()
+        );
+        if (exact) {
+          if (exact.stockQuantity <= 0) {
+            playScannerBeep(false);
+            setError(`${t('pos.outOfStock')}: ${exact.name}`);
+            return;
+          }
+          addToCart(exact);
+          playScannerBeep(true);
+          setScanFeedback(`${exact.name} (Rs. ${exact.sellingPrice.toFixed(2)})`);
+          setSearch('');
+          setSubmittedSearch('');
+          setError(null);
+          return;
+        }
+        setSubmittedSearch(search);
+        break;
+      }
+      case 'promo':
+        handleApplyPromo();
+        break;
+      case 'discount':
+        submitManualDiscount();
+        break;
+      case 'amountPaid':
+        handleCheckout();
+        break;
+    }
+  };
+
+  const getKeyboardTitle = () => {
+    switch (activeKeyboardTarget) {
+      case 'search': return t('pos.scanOrSearch');
+      case 'promo': return t('pos.promoCode');
+      case 'discount': return t('pos.discountAmount');
+      case 'amountPaid': return t('pos.amountPaid');
+      default: return t('pos.touchKeyboard');
+    }
+  };
+
   return (
-    <div className="grid grid-cols-3 gap-6 h-full">
+    <div className="grid grid-cols-3 gap-6 h-full pb-10">
       {/* Left: category tabs + product grid */}
       <div className="col-span-2 flex flex-col min-h-0">
         {/* Search bar & Keyboard Shortcuts Button */}
@@ -408,11 +492,25 @@ export default function PosPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={handleBarcodeEnter}
-              className="w-full pl-10 pr-12 py-3 border border-ink-500/20 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-brand-500 bg-card shadow-xs"
+              className="w-full pl-10 pr-24 py-3 border border-ink-500/20 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-brand-500 bg-card shadow-xs"
             />
-            <kbd className="absolute right-3.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 text-[11px] font-mono text-ink-500 bg-surface border border-line rounded">
-              F1
-            </kbd>
+            <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setActiveKeyboardTarget(activeKeyboardTarget === 'search' ? null : 'search')}
+                title={t('pos.openTouchKeyboard')}
+                className={`p-1.5 rounded-lg border transition-colors ${
+                  activeKeyboardTarget === 'search'
+                    ? 'bg-brand-600 text-white border-brand-600'
+                    : 'bg-surface hover:bg-ink-500/10 border-line text-ink-600'
+                }`}
+              >
+                <Keyboard size={15} />
+              </button>
+              <kbd className="px-1.5 py-0.5 text-[11px] font-mono text-ink-500 bg-surface border border-line rounded">
+                F1
+              </kbd>
+            </div>
           </div>
 
           <button
@@ -552,11 +650,23 @@ export default function PosPage() {
                   onChange={(e) => { setPromoInput(e.target.value); setPromoError(null); }}
                   onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleApplyPromo(); } }}
                   placeholder={t('pos.promoCode')}
-                  className="w-full pl-7 pr-8 py-1.5 border border-ink-500/20 rounded-lg text-xs uppercase"
+                  className="w-full pl-7 pr-16 py-1.5 border border-ink-500/20 rounded-lg text-xs uppercase"
                 />
-                <kbd className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-mono text-ink-500 bg-surface border border-line px-1 rounded">
-                  F4
-                </kbd>
+                <div className="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setActiveKeyboardTarget(activeKeyboardTarget === 'promo' ? null : 'promo')}
+                    title={t('pos.openTouchKeyboard')}
+                    className={`p-1 rounded text-ink-500 hover:text-brand-600 ${
+                      activeKeyboardTarget === 'promo' ? 'text-brand-600 font-bold' : ''
+                    }`}
+                  >
+                    <Keyboard size={13} />
+                  </button>
+                  <kbd className="text-[9px] font-mono text-ink-500 bg-surface border border-line px-1 rounded">
+                    F4
+                  </kbd>
+                </div>
               </div>
               <button
                 onClick={handleApplyPromo}
@@ -606,17 +716,26 @@ export default function PosPage() {
 
           {showDiscountEntry && (
             <div className="flex gap-2 mt-2">
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                autoFocus
-                value={discountInput}
-                onChange={(e) => setDiscountInput(e.target.value)}
-                onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); submitManualDiscount(); } }}
-                placeholder={t('pos.discountAmount')}
-                className="w-full px-2.5 py-1.5 border border-ink-500/20 rounded-lg text-xs"
-              />
+              <div className="relative flex-1">
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  autoFocus
+                  value={discountInput}
+                  onChange={(e) => setDiscountInput(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); submitManualDiscount(); } }}
+                  placeholder={t('pos.discountAmount')}
+                  className="w-full pl-2.5 pr-8 py-1.5 border border-ink-500/20 rounded-lg text-xs"
+                />
+                <button
+                  type="button"
+                  onClick={() => setActiveKeyboardTarget(activeKeyboardTarget === 'discount' ? null : 'discount')}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-ink-500 hover:text-brand-600"
+                >
+                  <Keyboard size={13} />
+                </button>
+              </div>
               <button
                 onClick={submitManualDiscount}
                 disabled={!discountInput || Number(discountInput) <= 0}
@@ -815,6 +934,33 @@ export default function PosPage() {
       <KeyboardShortcutsModal
         isOpen={showShortcutsModal}
         onClose={() => setShowShortcutsModal(false)}
+      />
+
+      {/* Floating Touch Keyboard Quick Toggle Button */}
+      <button
+        type="button"
+        onClick={() => setActiveKeyboardTarget((prev) => (prev ? null : 'search'))}
+        title={activeKeyboardTarget ? 'Hide touch keyboard' : 'Open touch keyboard'}
+        className={`fixed bottom-4 right-4 z-40 flex items-center gap-2 px-3.5 py-2.5 rounded-full font-bold text-xs shadow-xl border transition-all ${
+          activeKeyboardTarget
+            ? 'bg-brand-600 text-white border-brand-700 shadow-brand-500/30'
+            : 'bg-card text-ink-800 border-line hover:bg-surface shadow-black/15'
+        }`}
+      >
+        <Keyboard size={16} className={activeKeyboardTarget ? 'text-white' : 'text-brand-600'} />
+        <span className="hidden sm:inline">
+          {activeKeyboardTarget ? 'Hide Keyboard' : t('pos.touchKeyboard')}
+        </span>
+      </button>
+
+      {/* On-screen Touchable Virtual Keyboard */}
+      <VirtualKeyboard
+        isOpen={activeKeyboardTarget !== null}
+        onClose={() => setActiveKeyboardTarget(null)}
+        value={getKeyboardValue()}
+        onChange={handleKeyboardChange}
+        onEnter={handleKeyboardEnter}
+        title={getKeyboardTitle()}
       />
     </div>
   );
