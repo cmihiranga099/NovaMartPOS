@@ -82,9 +82,9 @@ export default function ManagerOverrideModal({ title, message, onApproved, onClo
               onClick={() => handleKeypadPress(k)}
               className={`h-11 rounded-xl border border-line font-bold text-base flex items-center justify-center active:scale-95 transition-all shadow-2xs ${
                 k === 'CLR'
-                  ? 'bg-amber-50 text-amber-800 text-xs'
+                  ? 'bg-amber-500/10 text-amber-300 border border-amber-500/30 text-xs'
                   : k === 'DEL'
-                  ? 'bg-rose-50 text-rose-700'
+                  ? 'bg-rose-500/10 text-rose-400 border border-rose-500/30'
                   : 'bg-surface hover:bg-ink-500/10 text-ink-900'
               }`}
             >

@@ -278,7 +278,7 @@ export default function SplitPaymentModal({
                             e.stopPropagation();
                             handleRemoveSplit(split.id);
                           }}
-                          className="p-1 rounded text-ink-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                          className="p-1 rounded text-ink-400 hover:text-rose-600 hover:bg-rose-500/15 transition-colors"
                           title={t('common.remove', 'Remove')}
                         >
                           <Trash2 size={15} />

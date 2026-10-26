@@ -258,7 +258,7 @@ export default function ZReportModal({
           )}
 
           {error && (
-            <div className="flex items-center gap-2 p-2.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs">
+            <div className="flex items-center gap-2 p-2.5 rounded-lg bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs">
               <AlertTriangle size={16} className="shrink-0" />
               <span>{error}</span>
             </div>

@@ -227,7 +227,7 @@ export default function CashMovementModal({
             />
           </div>
 
-          {error && <p className="text-xs text-rose-600 bg-rose-50 border border-rose-200 p-2.5 rounded-lg">{error}</p>}
+          {error && <p className="text-xs text-rose-600 bg-rose-500/10 border border-rose-500/20 text-rose-400 p-2.5 rounded-lg">{error}</p>}
 
           <div className="pt-2 flex items-center gap-3">
             <button

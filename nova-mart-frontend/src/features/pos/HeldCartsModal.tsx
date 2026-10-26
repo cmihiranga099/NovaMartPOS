@@ -75,7 +75,7 @@ export default function HeldCartsModal({
         {/* Header */}
         <div className="flex items-center justify-between p-4 sm:p-5 border-b border-line bg-surface/50">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold">
+            <div className="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center font-bold">
               <ShoppingBag size={20} />
             </div>
             <div>
@@ -101,7 +101,7 @@ export default function HeldCartsModal({
 
         {/* Conflict prompt if current cart is not empty */}
         {pendingRecallCart && (
-          <div className="p-4 bg-amber-50 border-b border-amber-200 text-amber-900 animate-in fade-in duration-150">
+          <div className="p-4 bg-amber-500/10 border-b border-amber-500/30 text-amber-300 animate-in fade-in duration-150">
             <div className="flex items-start gap-2.5 mb-3">
               <AlertCircle size={18} className="text-amber-600 shrink-0 mt-0.5" />
               <div>
@@ -197,7 +197,7 @@ export default function HeldCartsModal({
                     <button
                       type="button"
                       onClick={() => onDiscard(cart.id)}
-                      className="flex items-center gap-1 text-xs text-rose-600 hover:text-rose-700 hover:bg-rose-50 px-2 py-1 rounded-lg transition-colors"
+                      className="flex items-center gap-1 text-xs text-rose-600 hover:text-rose-700 hover:bg-rose-500/15 px-2 py-1 rounded-lg transition-colors"
                     >
                       <Trash2 size={13} />
                       <span>{t('pos.discardCart')}</span>

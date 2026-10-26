@@ -39,7 +39,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex bg-surface">
-      <div className="hidden md:flex md:w-1/2 bg-brand-50 flex-col justify-between p-12">
+      <div className="hidden md:flex md:w-1/2 bg-card border-r border-line flex-col justify-between p-12">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <img src={logo} alt="Nova Mart" className="w-10 h-10 rounded-xl object-contain" />
@@ -61,7 +61,7 @@ export default function LoginPage() {
         <p className="text-sm text-ink-500">{t('login.footer')}</p>
       </div>
 
-      <div className="flex-1 flex items-center justify-center p-8">
+      <div className="flex-1 flex items-center justify-center p-4 sm:p-8">
         <div className="w-full max-w-sm">
           <div className="flex items-center justify-between mb-1 md:justify-start md:gap-3">
             <h2 className="text-2xl font-bold text-ink-900">{t('login.title')}</h2>
