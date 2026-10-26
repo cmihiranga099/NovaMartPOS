@@ -37,7 +37,7 @@ function StatCard({
   tone?: 'brand' | 'accent';
 }) {
   return (
-    <div className="bg-white rounded-lg border border-line shadow p-5 flex items-center gap-4">
+    <div className="bg-card rounded-lg border border-line shadow p-5 flex items-center gap-4">
       <div
         className={`w-11 h-11 rounded-lg flex items-center justify-center ${
           tone === 'brand' ? 'bg-brand-50 text-brand-600' : 'bg-ink-100 text-ink-700'
