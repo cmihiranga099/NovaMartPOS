@@ -15,6 +15,7 @@ import CustomersPage from './pages/CustomersPage';
 import SuppliersPage from './pages/SuppliersPage';
 import PurchaseOrdersPage from './pages/PurchaseOrdersPage';
 import ReportsPage from './pages/ReportsPage';
+import CustomerDisplayPage from './pages/CustomerDisplayPage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/customer-display" element={<CustomerDisplayPage />} />
           <Route
             path="/"
             element={

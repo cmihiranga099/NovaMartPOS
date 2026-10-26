@@ -141,7 +141,9 @@
     "discardCart": "ඉවත් කරන්න",
     "holdCurrentAndResume": "වත්මන් කරත්තය රඳවා මෙය ආරම්භ කරන්න",
     "mergeCart": "වත්මන් කරත්තය සමග එකතු කරන්න",
-    "activeCartNotEmpty": "වත්මන් කරත්තයේ අයිතම ඇත. කුමක් කිරීමට කැමතිද?"
+    "activeCartNotEmpty": "වත්මන් කරත්තයේ අයිතම ඇත. කුමක් කිරීමට කැමතිද?",
+    "customerDisplay": "පාරිභෝගික තිරය",
+    "openCustomerDisplay": "පාරිභෝගික තිරය විවෘත කරන්න (Dual Screen)"
   },
   "keyboardShortcuts": {
     "title": "POS යතුරුපුවරු කෙටිමං",

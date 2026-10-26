@@ -141,7 +141,9 @@
     "discardCart": "Discard",
     "holdCurrentAndResume": "Hold current cart and resume this one",
     "mergeCart": "Merge with current cart",
-    "activeCartNotEmpty": "Current checkout has items. What would you like to do?"
+    "activeCartNotEmpty": "Current checkout has items. What would you like to do?",
+    "customerDisplay": "Customer Display",
+    "openCustomerDisplay": "Open Customer-Facing Display (Dual Screen)"
   },
   "keyboardShortcuts": {
     "title": "POS Keyboard Shortcuts",

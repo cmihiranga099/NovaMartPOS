@@ -11,6 +11,7 @@ import {
   Barcode,
   ShoppingBag,
   PauseCircle,
+  Monitor,
   ArrowDownUp,
   Lock,
   AlertCircle,
@@ -31,6 +32,7 @@ import KeyboardShortcutsModal from '../features/pos/KeyboardShortcutsModal';
 import HeldCartsModal, { type HeldCart } from '../features/pos/HeldCartsModal';
 import SplitPaymentModal from '../features/pos/SplitPaymentModal';
 import { shiftService } from '../services/shiftService';
+import { customerDisplayService } from '../services/customerDisplayService';
 import OpenShiftModal from '../features/shifts/OpenShiftModal';
 import CashMovementModal from '../features/shifts/CashMovementModal';
 import ZReportModal from '../features/shifts/ZReportModal';
@@ -136,6 +138,8 @@ export default function PosPage() {
   useEffect(() => {
     searchInputRef.current?.focus();
   }, []);
+
+
 
   // Sync held carts to localStorage
   useEffect(() => {
@@ -301,6 +305,69 @@ export default function PosPage() {
   const grandTotal = netAfterLineDiscounts - promoDiscount + totalTax;
   const paidNum = Number(amountPaid) || 0;
   const change = paidNum - grandTotal;
+
+  // Broadcast cart updates to Customer-Facing Display
+  useEffect(() => {
+    if (cart.length > 0) {
+      const lastItem = cart[cart.length - 1];
+      customerDisplayService.sendCartUpdate({
+        registerId: 'default-register',
+        cashierName: activeShift?.cashierName || 'Cashier',
+        items: cart.map((i) => ({
+          productId: i.productId,
+          name: i.name,
+          unitPrice: i.unitPrice,
+          quantity: i.quantity,
+          discount: i.discount,
+          total: i.unitPrice * i.quantity - i.discount,
+        })),
+        subtotal,
+        totalDiscount: totalDiscount + (appliedPromo?.discount ?? 0),
+        totalTax,
+        grandTotal,
+        lastScannedItem: lastItem
+          ? {
+              productId: lastItem.productId,
+              name: lastItem.name,
+              unitPrice: lastItem.unitPrice,
+              quantity: lastItem.quantity,
+              discount: lastItem.discount,
+              total: lastItem.unitPrice * lastItem.quantity - lastItem.discount,
+            }
+          : null,
+      });
+    } else if (!completedSale) {
+      customerDisplayService.sendIdle('default-register');
+    }
+  }, [cart, subtotal, totalDiscount, totalTax, grandTotal, appliedPromo, activeShift, completedSale]);
+
+  // Broadcast payment progress to Customer-Facing Display
+  useEffect(() => {
+    if (cart.length > 0 && paidNum > 0) {
+      customerDisplayService.sendPaymentUpdate({
+        registerId: 'default-register',
+        grandTotal,
+        amountPaid: paidNum,
+        change,
+        paymentMethod,
+      });
+    }
+  }, [amountPaid, paidNum, change, paymentMethod, grandTotal, cart.length]);
+
+  // Broadcast sale completion & change return to Customer-Facing Display
+  useEffect(() => {
+    if (completedSale) {
+      customerDisplayService.sendSaleComplete({
+        registerId: 'default-register',
+        invoiceNumber: completedSale.invoiceNumber,
+        grandTotal: completedSale.grandTotal,
+        amountPaid: completedSale.amountPaid,
+        change: completedSale.change,
+        itemsCount: completedSale.items.length,
+      });
+    }
+  }, [completedSale]);
+
 
   // Park / Hold current cart
   const handleHoldCart = () => {
@@ -813,6 +880,16 @@ export default function PosPage() {
               </kbd>
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={() => window.open('/customer-display', 'NovaMartCustomerDisplay', 'width=1100,height=750')}
+            title={t('pos.openCustomerDisplay')}
+            className="flex items-center gap-1.5 px-3 py-3 border border-line bg-card hover:bg-surface rounded-xl text-xs font-semibold text-ink-700 shadow-xs transition-colors shrink-0"
+          >
+            <Monitor size={18} className="text-brand-600" />
+            <span className="hidden sm:inline">{t('pos.customerDisplay')}</span>
+          </button>
 
           <button
             type="button"
