@@ -265,6 +265,16 @@ export default function CustomerDisplayPage() {
                         <span className="w-6 h-6 rounded-md bg-card border border-line text-ink-600 text-[11px] font-mono font-bold flex items-center justify-center shadow-2xs">
                           {index + 1}
                         </span>
+                        {item.imageUrl && (
+                          <img
+                            src={item.imageUrl}
+                            alt={item.name}
+                            className="w-10 h-10 rounded-lg object-cover border border-line shrink-0"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).style.display = 'none';
+                            }}
+                          />
+                        )}
                         <div>
                           <h4 className="text-sm font-bold text-ink-900">{item.name}</h4>
                           <p className="text-xs text-ink-500 mt-0.5 font-mono">

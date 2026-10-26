@@ -264,6 +264,7 @@ export default function PosPage() {
         {
           productId: product.id,
           name: product.name,
+          imageUrl: product.imageUrl,
           unitPrice: product.sellingPrice,
           taxRate: product.taxRate,
           quantity: qty,
@@ -374,6 +375,7 @@ export default function PosPage() {
         items: cart.map((i) => ({
           productId: i.productId,
           name: i.name,
+          imageUrl: i.imageUrl,
           unitPrice: i.unitPrice,
           quantity: i.quantity,
           discount: i.discount,
@@ -389,6 +391,7 @@ export default function PosPage() {
           ? {
               productId: lastItem.productId,
               name: lastItem.name,
+              imageUrl: lastItem.imageUrl,
               unitPrice: lastItem.unitPrice,
               quantity: lastItem.quantity,
               discount: lastItem.discount,
