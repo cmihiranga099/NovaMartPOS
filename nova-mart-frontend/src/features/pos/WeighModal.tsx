@@ -97,7 +97,7 @@ export default function WeighModal({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
-      <div className="w-full max-w-lg bg-card rounded-2xl border border-line shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-150">
+      <div className="w-full max-w-lg w-full max-h-[92vh] overflow-y-auto bg-card rounded-2xl border border-line shadow-2xl flex flex-col animate-in zoom-in-95 duration-150">
         {/* Header */}
         <div className="p-4 bg-surface border-b border-line flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -193,7 +193,7 @@ export default function WeighModal({
               onClick={() => setTareKg(0.02)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all flex items-center gap-1 ${
                 tareKg === 0.02
-                  ? 'bg-amber-100 border-amber-300 text-amber-900 shadow-2xs'
+                  ? 'bg-amber-500/20 border-amber-500/40 text-amber-300 shadow-2xs'
                   : 'bg-card border-line text-ink-700 hover:bg-card/80'
               }`}
             >
@@ -205,7 +205,7 @@ export default function WeighModal({
               onClick={() => setTareKg(0.05)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all flex items-center gap-1 ${
                 tareKg === 0.05
-                  ? 'bg-amber-100 border-amber-300 text-amber-900 shadow-2xs'
+                  ? 'bg-amber-500/20 border-amber-500/40 text-amber-300 shadow-2xs'
                   : 'bg-card border-line text-ink-700 hover:bg-card/80'
               }`}
             >
@@ -218,7 +218,7 @@ export default function WeighModal({
                 setTareKg(0);
                 setWeightStr('');
               }}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card border border-line text-ink-700 hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-all flex items-center gap-1 ml-auto"
+              className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card border border-line text-ink-700 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/30 transition-all flex items-center gap-1 ml-auto"
             >
               <RotateCcw size={13} />
               {t('weigh.zeroReset', 'Zero / Reset')}
@@ -241,7 +241,7 @@ export default function WeighModal({
                 key={p.label}
                 type="button"
                 onClick={() => setPresetWeight(p.kg)}
-                className="px-2.5 py-1 bg-card hover:bg-brand-50 border border-line hover:border-brand-300 rounded-md text-xs font-medium text-ink-800 transition-colors"
+                className="px-2.5 py-1 bg-card hover:bg-brand-500/15 border border-line hover:border-brand-500/30 rounded-md text-xs font-medium text-ink-800 transition-colors"
               >
                 {p.label}
               </button>
@@ -258,7 +258,7 @@ export default function WeighModal({
                 key={a.label}
                 type="button"
                 onClick={() => addWeight(a.delta)}
-                className="px-2 py-1 bg-card hover:bg-emerald-50 border border-line hover:border-emerald-300 rounded-md text-xs font-medium text-ink-800 transition-colors"
+                className="px-2 py-1 bg-card hover:bg-emerald-500/15 border border-line hover:border-emerald-500/30 rounded-md text-xs font-medium text-ink-800 transition-colors"
               >
                 {a.label}
               </button>

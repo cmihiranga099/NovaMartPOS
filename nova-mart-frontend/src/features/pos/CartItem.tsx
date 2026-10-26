@@ -56,7 +56,7 @@ export default function CartItemRow({
             <button
               type="button"
               onClick={() => onWeighClick?.(item.productId)}
-              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25 transition-colors"
               title="Click to adjust weight on scale"
             >
               <Scale size={11} />
@@ -75,7 +75,7 @@ export default function CartItemRow({
             <button
               type="button"
               onClick={() => onWeighClick?.(item.productId)}
-              className="flex items-center gap-1 px-2 py-1 bg-surface hover:bg-emerald-50 border border-line hover:border-emerald-300 rounded-lg text-xs font-semibold text-ink-800 transition-colors"
+              className="flex items-center gap-1 px-2 py-1 bg-surface hover:bg-emerald-500/15 border border-line hover:border-emerald-500/30 rounded-lg text-xs font-semibold text-ink-800 transition-colors"
               title="Open scale modal"
             >
               <Scale size={13} className="text-emerald-600" />
