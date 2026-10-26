@@ -10,18 +10,20 @@ public class AppDbContext : DbContext
     public DbSet<User> Users => Set<User>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Brand> Brands => Set<Brand>();
-    public DbSet<Supplier> Suppliers => Set<Supplier>();
     public DbSet<Product> Products => Set<Product>();
+    public DbSet<Supplier> Suppliers => Set<Supplier>();
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Sale> Sales => Set<Sale>();
     public DbSet<SaleItem> SaleItems => Set<SaleItem>();
     public DbSet<Promotion> Promotions => Set<Promotion>();
     public DbSet<Payment> Payments => Set<Payment>();
     public DbSet<Return> Returns => Set<Return>();
-   public DbSet<ReturnItem> ReturnItems => Set<ReturnItem>();
+    public DbSet<ReturnItem> ReturnItems => Set<ReturnItem>();
     public DbSet<StockTransaction> StockTransactions => Set<StockTransaction>();
     public DbSet<PurchaseOrder> PurchaseOrders => Set<PurchaseOrder>();
     public DbSet<PurchaseOrderItem> PurchaseOrderItems => Set<PurchaseOrderItem>();
+    public DbSet<Shift> Shifts => Set<Shift>();
+    public DbSet<CashMovement> CashMovements => Set<CashMovement>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -65,7 +67,7 @@ public class AppDbContext : DbContext
             .Property(p => p.MaxDiscountAmount).HasColumnType("decimal(18,2)");
 
         modelBuilder.Entity<Return>().Property(r => r.TotalRefund).HasColumnType("decimal(18,2)");
-modelBuilder.Entity<ReturnItem>().Property(ri => ri.RefundAmount).HasColumnType("decimal(18,2)");    
+        modelBuilder.Entity<ReturnItem>().Property(ri => ri.RefundAmount).HasColumnType("decimal(18,2)");    
 
         modelBuilder.Entity<PurchaseOrder>()
             .HasIndex(po => po.PoNumber)
@@ -130,6 +132,36 @@ modelBuilder.Entity<ReturnItem>().Property(ri => ri.RefundAmount).HasColumnType(
             .OnDelete(DeleteBehavior.Cascade);
         modelBuilder.Entity<Payment>()
             .Property(p => p.Change).HasColumnType("decimal(18,2)");
+
+        // Shifts and Till Management
+        modelBuilder.Entity<Shift>()
+            .Property(s => s.StartingCash).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Shift>()
+            .Property(s => s.EndingCash).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Shift>()
+            .Property(s => s.ExpectedCash).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Shift>()
+            .Property(s => s.CashDifference).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Shift>()
+            .HasOne(s => s.Cashier)
+            .WithMany()
+            .HasForeignKey(s => s.CashierId)
+            .OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<Shift>()
+            .HasMany(s => s.CashMovements)
+            .WithOne(cm => cm.Shift)
+            .HasForeignKey(cm => cm.ShiftId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<CashMovement>()
+            .Property(cm => cm.Amount).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<CashMovement>()
+            .Property(cm => cm.Reason).HasMaxLength(250);
+        modelBuilder.Entity<CashMovement>()
+            .HasOne(cm => cm.User)
+            .WithMany()
+            .HasForeignKey(cm => cm.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         // Prevent accidental cascade-delete chains (e.g. deleting a product shouldn't wipe sale history)
         modelBuilder.Entity<SaleItem>()
