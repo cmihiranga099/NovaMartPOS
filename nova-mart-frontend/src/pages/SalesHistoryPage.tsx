@@ -79,7 +79,8 @@ export default function SalesHistoryPage() {
       </div>
 
       <div className="bg-card rounded-lg border border-line shadow overflow-hidden">
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-surface text-left text-ink-500">
             <tr>
               <th className="px-4 py-3">{t('salesHistory.invoice')}</th>
@@ -142,6 +143,7 @@ export default function SalesHistoryPage() {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
 
       {printSale && <Receipt sale={printSale} />}

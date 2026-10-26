@@ -98,7 +98,7 @@ export default function CustomersPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
         <h1 className="text-2xl font-bold">{t('customers.title')}</h1>
         <button
           onClick={openAddModal}
@@ -120,7 +120,8 @@ export default function CustomersPage() {
       </div>
 
       <div className="bg-card rounded-lg shadow overflow-hidden">
-        <table className="w-full text-sm">
+        <div className="overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead className="bg-surface text-left text-ink-500">
             <tr>
               <th className="px-4 py-3">{t('common.name')}</th>
@@ -161,6 +162,7 @@ export default function CustomersPage() {
             ))}
           </tbody>
         </table>
+      </div>
       </div>
 
       {modalOpen && (

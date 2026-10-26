@@ -177,7 +177,8 @@ export default function ReportsPage() {
 
           <div className="bg-card rounded-lg border border-line shadow overflow-hidden">
             <div className="px-4 py-3 border-b border-line font-bold text-sm">{t('reports.dailyBreakdown')}</div>
-            <table className="w-full text-sm">
+            <div className="overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
               <thead className="bg-surface text-left text-ink-500">
                 <tr>
                   <th className="px-4 py-2">{t('common.date')}</th>
@@ -199,6 +200,7 @@ export default function ReportsPage() {
                 ))}
               </tbody>
             </table>
+      </div>
           </div>
         </>
       )}
