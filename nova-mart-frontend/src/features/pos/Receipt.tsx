@@ -60,20 +60,26 @@ export default function Receipt({ sale }: { sale: SaleResult }) {
       <Dots />
 
       {/* Items */}
-      {sale.items.map((item, idx) => (
-        <div key={idx} className="mb-1.5">
-          <div className="flex justify-between">
-            <span className="pr-1">{item.productName}</span>
-            <span>({idx + 1})</span>
+      {sale.items.map((item, idx) => {
+        const qtyFormatted = Number.isInteger(item.quantity)
+          ? item.quantity.toString()
+          : item.quantity.toFixed(3);
+        const unitLabel = item.unitOfMeasure && item.unitOfMeasure !== 'pcs' ? ` ${item.unitOfMeasure}` : '';
+        return (
+          <div key={idx} className="mb-1.5">
+            <div className="flex justify-between">
+              <span className="pr-1">{item.productName}</span>
+              <span>({idx + 1})</span>
+            </div>
+            <div className="flex justify-between text-[11px]">
+              <span>
+                ({item.unitPrice.toFixed(2)} * {qtyFormatted}{unitLabel})
+              </span>
+              <span>{item.total.toFixed(2)}</span>
+            </div>
           </div>
-          <div className="flex justify-between">
-            <span>
-              ({item.unitPrice.toFixed(2)} * {item.quantity.toFixed(3)})
-            </span>
-            <span>{item.total.toFixed(2)}</span>
-          </div>
-        </div>
-      ))}
+        );
+      })}
 
       <Dots />
 

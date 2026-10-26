@@ -236,7 +236,11 @@
     "stockQty": "Stock Qty",
     "minStock": "Min Stock",
     "expiryDate": "Expiry Date (optional)",
-    "expiryDateHint": "Leave blank for products that don’t expire."
+    "expiryDateHint": "Leave blank for products that don’t expire.",
+    "isWeighable": "Weighed Goods (Sold by weight on scale)",
+    "unitOfMeasure": "Unit of Measure",
+    "scaleWeight": "Scale Weight",
+    "weighProduct": "Weigh Item"
   },
   "promotions": {
     "title": "Promotions",

@@ -268,7 +268,7 @@ export default function CustomerDisplayPage() {
                         <div>
                           <h4 className="text-sm font-bold text-ink-900">{item.name}</h4>
                           <p className="text-xs text-ink-500 mt-0.5 font-mono">
-                            Rs. {item.unitPrice.toFixed(2)} × {item.quantity}
+                            Rs. {item.unitPrice.toFixed(2)} × {Number.isInteger(item.quantity) ? item.quantity : item.quantity.toFixed(3)}{item.unitOfMeasure && item.unitOfMeasure !== 'pcs' ? ` ${item.unitOfMeasure}` : ''}
                             {item.discount > 0 && (
                               <span className="ml-2 text-emerald-600 font-semibold font-sans">
                                 (-Rs. {item.discount.toFixed(2)} off)
