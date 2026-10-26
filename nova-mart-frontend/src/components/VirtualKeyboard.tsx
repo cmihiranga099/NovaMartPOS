@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Delete, CornerDownLeft, ChevronDown, Space, Sparkles, Volume2, VolumeX } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   isOpen: boolean;
@@ -51,8 +52,10 @@ export default function VirtualKeyboard({
   value,
   onChange,
   onEnter,
-  title = 'Touch Keyboard',
+  title,
 }: Props) {
+  const { t } = useTranslation();
+  const displayTitle = title || t('virtualKeyboard.touchKeyboard', 'Touch Keyboard');
   const [capsLock, setCapsLock] = useState(false);
   const [symbolMode, setSymbolMode] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -99,10 +102,10 @@ export default function VirtualKeyboard({
           <div className="flex items-center gap-2 min-w-0">
             <span className="text-xs font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded-md flex items-center gap-1 shrink-0">
               <Sparkles size={12} />
-              {title}
+              {displayTitle}
             </span>
             <div className="text-xs font-mono truncate px-2.5 py-1 bg-surface rounded-md border border-line text-ink-900 max-w-xs sm:max-w-md">
-              {value ? value : <span className="text-ink-400 italic">Empty</span>}
+              {value ? value : <span className="text-ink-400 italic">{t('virtualKeyboard.empty', 'Empty')}</span>}
               <span className="inline-block w-1.5 h-3.5 bg-brand-600 ml-1 animate-pulse align-middle" />
             </div>
           </div>
@@ -112,7 +115,7 @@ export default function VirtualKeyboard({
               type="button"
               onClick={() => setSoundEnabled((prev) => !prev)}
               title={soundEnabled ? 'Mute click sound' : 'Enable click sound'}
-              className="p-1.5 rounded-lg text-ink-500 hover:text-ink-900 hover:bg-surface transition-colors"
+              className="p-1.5 rounded-lg text-ink-500 hover:text-ink-900 hover:bg-surface transition-colors cursor-pointer"
             >
               {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
             </button>
@@ -120,10 +123,10 @@ export default function VirtualKeyboard({
               type="button"
               onClick={onClose}
               title="Close keyboard"
-              className="flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-ink-600 hover:text-ink-900 bg-surface hover:bg-ink-500/10 rounded-lg border border-line transition-colors"
+              className="flex items-center gap-1 px-2.5 py-1 text-xs font-semibold text-ink-600 hover:text-ink-900 bg-surface hover:bg-ink-500/10 rounded-lg border border-line transition-colors cursor-pointer"
             >
               <ChevronDown size={14} />
-              <span>Hide</span>
+              <span>{t('virtualKeyboard.hide', 'Hide')}</span>
             </button>
           </div>
         </div>
@@ -194,7 +197,7 @@ export default function VirtualKeyboard({
                   : 'bg-surface border-line text-ink-700 hover:bg-ink-500/10'
               }`}
             >
-              CAPS
+              {t('virtualKeyboard.caps', 'CAPS')}
             </button>
 
             {rows[3].map((char) => (
@@ -214,7 +217,7 @@ export default function VirtualKeyboard({
               title="Clear text"
               className="flex-1 max-w-[70px] h-11 sm:h-12 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-800 font-semibold text-xs flex items-center justify-center shadow-2xs active:scale-95 transition-all"
             >
-              CLR
+              {t('virtualKeyboard.clr', 'CLR')}
             </button>
           </div>
 
@@ -226,7 +229,7 @@ export default function VirtualKeyboard({
                 if (soundEnabled) playKeyClick();
                 setSymbolMode((prev) => !prev);
               }}
-              className="w-16 sm:w-20 h-11 sm:h-12 rounded-xl bg-surface border border-line font-bold text-xs sm:text-sm text-ink-700 hover:bg-ink-500/10 shadow-2xs active:scale-95 transition-all"
+              className="w-16 sm:w-20 h-11 sm:h-12 rounded-xl bg-surface border border-line font-bold text-xs sm:text-sm text-ink-700 hover:bg-ink-500/10 shadow-2xs active:scale-95 transition-all cursor-pointer"
             >
               {symbolMode ? 'ABC' : '?123'}
             </button>
@@ -234,10 +237,10 @@ export default function VirtualKeyboard({
             <button
               type="button"
               onClick={handleSpace}
-              className="flex-1 max-w-[320px] h-11 sm:h-12 rounded-xl bg-surface border border-line text-ink-600 font-medium text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-2xs hover:bg-ink-500/10 active:scale-95 active:bg-brand-600 active:text-white transition-all"
+              className="flex-1 max-w-[320px] h-11 sm:h-12 rounded-xl bg-surface border border-line text-ink-600 font-medium text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-2xs hover:bg-ink-500/10 active:scale-95 active:bg-brand-600 active:text-white transition-all cursor-pointer"
             >
               <Space size={18} />
-              <span>Space</span>
+              <span>{t('virtualKeyboard.space', 'Space')}</span>
             </button>
 
             <button

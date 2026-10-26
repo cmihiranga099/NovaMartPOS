@@ -49,7 +49,8 @@
     "items": "අයිතම",
     "allCategories": "සියලුම කාණ්ඩ",
     "selectAll": "සියල්ල තෝරන්න",
-    "clearSelection": "තේරීම ඉවත් කරන්න"
+    "clearSelection": "තේරීම ඉවත් කරන්න",
+    "confirm": "තහවුරු කරන්න"
   },
   "nav": {
     "dashboard": "උපකරණ පුවරුව",
@@ -341,7 +342,10 @@
     "expiredDaysAgo_other": "දින {{count}}කට පෙර කල් ඉකුත් විය",
     "noneExpiring": "ළඟදී කල් ඉකුත් වන දෙයක් නැත",
     "expiringToastTitle": "කල් ඉකුත්වීමේ අනතුරු ඇඟවීම",
-    "expiringToastBody": "{{name}} {{date}} දින කල් ඉකුත් වේ"
+    "expiringToastBody": "{{name}} {{date}} දින කල් ඉකුත් වේ",
+    "count": "අයිතම {{count}}ක්",
+    "expiredDaysAgo": "දින {{count}}කට පෙර කල් ඉකුත් විය",
+    "expiresInDays": "දින {{count}}ක් ඉතිරියි"
   },
   "splitPayment": {
     "title": "බෙදුණු ගෙවීම් (Multi-Tender)",

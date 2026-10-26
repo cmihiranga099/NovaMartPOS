@@ -49,7 +49,8 @@
     "items": "items",
     "allCategories": "All Categories",
     "selectAll": "Select All",
-    "clearSelection": "Clear Selection"
+    "clearSelection": "Clear Selection",
+    "confirm": "Confirm"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -341,7 +342,10 @@
     "expiredDaysAgo_other": "Expired {{count}} days ago",
     "noneExpiring": "Nothing expiring soon",
     "expiringToastTitle": "Expiry alert",
-    "expiringToastBody": "{{name}} expires on {{date}}"
+    "expiringToastBody": "{{name}} expires on {{date}}",
+    "count": "{{count}} items",
+    "expiredDaysAgo": "Expired {{count}} days ago",
+    "expiresInDays": "{{count}} days left"
   },
   "splitPayment": {
     "title": "Split Payment (Multi-Tender)",
