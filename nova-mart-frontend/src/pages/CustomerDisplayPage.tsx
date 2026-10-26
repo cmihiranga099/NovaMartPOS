@@ -351,13 +351,13 @@ export default function CustomerDisplayPage() {
           <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-card rounded-3xl border border-line shadow-sm animate-in fade-in zoom-in-95 duration-200">
             {/* Celebration Icon */}
             <div className="relative mb-4">
-              <div className="w-22 h-22 rounded-full bg-emerald-50 border-3 border-emerald-500 flex items-center justify-center text-emerald-600 shadow-md">
+              <div className="w-22 h-22 rounded-full bg-emerald-500/15 border-3 border-emerald-500 flex items-center justify-center text-emerald-400 shadow-md">
                 <CheckCircle2 size={52} className="animate-in zoom-in duration-300" />
               </div>
-              <Sparkles size={24} className="text-amber-500 absolute -top-1 -right-1 animate-bounce" />
+              <Sparkles size={24} className="text-amber-400 absolute -top-1 -right-1 animate-bounce" />
             </div>
 
-            <span className="text-xs font-extrabold text-emerald-600 uppercase tracking-widest mb-1 px-3 py-1 bg-emerald-50 rounded-full border border-emerald-200">
+            <span className="text-xs font-extrabold text-emerald-400 uppercase tracking-widest mb-1 px-3 py-1 bg-emerald-500/10 rounded-full border border-emerald-500/30">
               {t('customerDisplay.paymentSuccessful', 'Payment Successful & Verified')}
             </span>
             <h2 className="text-3xl lg:text-4xl font-black text-ink-900 mt-2 text-center">
@@ -394,24 +394,24 @@ export default function CustomerDisplayPage() {
                     Rs. {completedSale.amountPaid.toFixed(2)}
                   </span>
                 </div>
-                <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 shadow-2xs">
-                  <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider block">
+                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 shadow-2xs">
+                  <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider block">
                     {t('customerDisplay.changeReturned', 'Change Returned')}
                   </span>
-                  <span className="text-2xl font-black text-emerald-600 font-mono mt-1 block">
+                  <span className="text-2xl font-black text-emerald-400 font-mono mt-1 block">
                     Rs. {completedSale.change.toFixed(2)}
                   </span>
                 </div>
               </div>
 
               {/* Loyalty Points Banner */}
-              <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 text-amber-900 text-xs">
-                <Award size={20} className="text-amber-600 shrink-0" />
+              <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 text-amber-300 text-xs">
+                <Award size={20} className="text-amber-400 shrink-0" />
                 <div>
-                  <span className="font-bold block">
+                  <span className="font-bold block text-amber-300">
                     {t('customerDisplay.novaClubPointsCredited', 'Nova Club Points Credited!')}
                   </span>
-                  <span className="text-amber-700">
+                  <span className="text-amber-400/90">
                     {t('customerDisplay.pointsEarnedDesc', {
                       count: Math.max(1, Math.floor(completedSale.grandTotal / 100)),
                       defaultValue: `Earned +${Math.max(1, Math.floor(completedSale.grandTotal / 100))} reward points on this purchase.`
@@ -422,7 +422,7 @@ export default function CustomerDisplayPage() {
 
               {/* Simulated Barcode */}
               <div className="pt-2 text-center">
-                <div className="inline-flex items-center gap-0.5 h-10 px-4 bg-white border border-line rounded-lg">
+                <div className="inline-flex items-center gap-0.5 h-10 px-4 bg-card border border-line rounded-lg">
                   {[4, 2, 6, 2, 3, 5, 2, 4, 3, 6, 2, 4, 3, 5, 2, 4, 6, 3, 2, 5, 4, 2, 3, 6, 4].map((w, idx) => (
                     <div
                       key={idx}
@@ -467,12 +467,12 @@ export default function CustomerDisplayPage() {
 
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-wide">
-                        <Sparkles size={11} className="text-emerald-600" />
+                      <span className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 uppercase tracking-wide">
+                        <Sparkles size={11} className="text-emerald-500" />
                         {t('customerDisplay.justScanned', 'Just Scanned')}
                       </span>
                       {cartState.lastScannedItem.isWeighable && (
-                        <span className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 uppercase tracking-wide">
+                        <span className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 uppercase tracking-wide">
                           <Scale size={11} />
                           {t('customerDisplay.weighedProduce', 'Weighed Produce')}
                         </span>
@@ -492,7 +492,7 @@ export default function CustomerDisplayPage() {
                           : ' pcs'}
                       </span>
                       {cartState.lastScannedItem.discount > 0 && (
-                        <span className="ml-2 text-emerald-600 font-semibold font-sans">
+                        <span className="ml-2 text-emerald-400 font-semibold font-sans">
                           (-Rs. {cartState.lastScannedItem.discount.toFixed(2)})
                         </span>
                       )}
@@ -512,13 +512,13 @@ export default function CustomerDisplayPage() {
             )}
 
             {/* Split Screen: Left (Cart Items Table) / Right (Totals & Payment) */}
-            <div className="flex-1 grid grid-cols-12 gap-5 overflow-hidden">
+            <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5 overflow-y-auto lg:overflow-hidden">
               {/* Left 7 Columns: Items List */}
-              <div className="col-span-7 flex flex-col bg-card rounded-3xl border border-line shadow-xs overflow-hidden">
+              <div className="col-span-1 lg:col-span-7 flex flex-col bg-card rounded-3xl border border-line shadow-xs overflow-hidden min-h-[300px]">
                 {/* Header */}
                 <div className="px-6 py-3.5 border-b border-line flex items-center justify-between bg-surface/60">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold border border-brand-200 shadow-2xs">
+                    <div className="w-8 h-8 rounded-xl bg-brand-500/15 text-brand-400 flex items-center justify-center font-bold border border-brand-500/30 shadow-2xs">
                       <ShoppingBag size={17} />
                     </div>
                     <div>
@@ -545,7 +545,7 @@ export default function CustomerDisplayPage() {
                         key={index}
                         className={`p-3.5 rounded-2xl border transition-all flex items-center justify-between ${
                           isLastScanned
-                            ? 'bg-brand-50/60 border-brand-400 ring-2 ring-brand-400/20 shadow-xs'
+                            ? 'bg-brand-500/15 border-brand-500 ring-2 ring-brand-500/30 shadow-xs'
                             : 'bg-surface border-line hover:border-ink-300'
                         }`}
                       >
@@ -579,7 +579,7 @@ export default function CustomerDisplayPage() {
                                 {item.unitOfMeasure && item.unitOfMeasure !== 'pcs' ? ` ${item.unitOfMeasure}` : ' pcs'}
                               </span>
                               {item.discount > 0 && (
-                                <span className="ml-2 text-emerald-600 font-semibold font-sans">
+                                <span className="ml-2 text-emerald-400 font-semibold font-sans">
                                   (-Rs. {item.discount.toFixed(2)})
                                 </span>
                               )}
@@ -600,7 +600,7 @@ export default function CustomerDisplayPage() {
                 {/* Footer bar */}
                 <div className="px-5 py-2.5 bg-surface border-t border-line text-[11px] text-ink-500 flex items-center justify-between">
                   <span className="flex items-center gap-1.5 font-medium">
-                    <ShieldCheck size={14} className="text-emerald-600" />
+                    <ShieldCheck size={14} className="text-emerald-500" />
                     <span>{t('customerDisplay.scaleStandardsNote', 'Weights & barcodes verified by NovaMart scale standards')}</span>
                   </span>
                   <span className="font-mono text-ink-400">{t('customerDisplay.currency', 'Currency: LKR')}</span>
@@ -608,7 +608,7 @@ export default function CustomerDisplayPage() {
               </div>
 
               {/* Right 5 Columns: Billing Summary & Payment Station */}
-              <div className="col-span-5 flex flex-col gap-4 overflow-hidden">
+              <div className="col-span-1 lg:col-span-5 flex flex-col gap-4 overflow-visible lg:overflow-hidden">
                 {/* Summary Totals Card */}
                 <div className="bg-card rounded-3xl border border-line p-5 shadow-xs space-y-3.5">
                   <span className="text-xs font-extrabold text-ink-500 uppercase tracking-wider block">
@@ -622,7 +622,7 @@ export default function CustomerDisplayPage() {
                     </div>
 
                     {cartState.totalDiscount > 0 && (
-                      <div className="flex justify-between text-emerald-700 font-bold bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-200">
+                      <div className="flex justify-between text-emerald-400 font-bold bg-emerald-500/10 px-3 py-2 rounded-xl border border-emerald-500/30">
                         <span className="flex items-center gap-1.5">
                           <Tag size={15} />
                           <span>{t('customerDisplay.savingsAndDiscounts', 'Savings & Discounts')}</span>
@@ -729,15 +729,15 @@ export default function CustomerDisplayPage() {
           /* =====================================================================
               STATE 3: IDLE / DIGITAL SUPERMARKET SIGNAGE CAROUSEL
               ===================================================================== */
-          <div className="w-full h-full flex flex-col justify-between gap-5 overflow-hidden">
+          <div className="w-full h-full flex flex-col justify-between gap-5 overflow-y-auto lg:overflow-hidden">
             {/* Welcoming Top Hero Banner */}
-            <div className="px-6 py-4 rounded-3xl bg-card border border-line flex items-center justify-between shadow-xs">
+            <div className="px-5 sm:px-6 py-4 rounded-3xl bg-card border border-line flex flex-wrap items-center justify-between gap-3 shadow-xs">
               <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center border border-brand-200 shadow-2xs">
+                <div className="w-10 h-10 rounded-2xl bg-brand-500/15 text-brand-400 flex items-center justify-center border border-brand-500/30 shadow-2xs">
                   <Sparkles size={20} />
                 </div>
                 <div>
-                  <h2 className="text-lg font-black text-ink-900 tracking-tight">
+                  <h2 className="text-base sm:text-lg font-black text-ink-900 tracking-tight">
                     {t('customerDisplay.welcomeTitle', 'Welcome to Nova Mart Supermarket')}
                   </h2>
                   <p className="text-xs text-ink-500">
@@ -747,7 +747,7 @@ export default function CustomerDisplayPage() {
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
+                <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/30 flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   {t('customerDisplay.readyForCustomer', 'Ready for Next Customer')}
                 </span>
@@ -755,9 +755,9 @@ export default function CustomerDisplayPage() {
             </div>
 
             {/* Split Content: Left (Featured Products Carousel) / Right (Loyalty & Services) */}
-            <div className="flex-1 grid grid-cols-12 gap-5 overflow-hidden">
+            <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-5 overflow-y-auto lg:overflow-hidden">
               {/* Left 7 Columns: Featured Product Promotional Showcase */}
-              <div className="col-span-7 flex flex-col justify-between bg-card rounded-3xl border border-line p-6 shadow-xs relative overflow-hidden">
+              <div className="col-span-1 lg:col-span-7 flex flex-col justify-between bg-card rounded-3xl border border-line p-5 sm:p-6 shadow-xs relative overflow-hidden min-h-[380px]">
                 {/* Carousel Top Progress Bar */}
                 <div className="absolute top-0 left-0 right-0 h-1 bg-surface">
                   <div
@@ -783,14 +783,14 @@ export default function CustomerDisplayPage() {
                       onClick={() =>
                         setPromoIndex((prev) => (prev - 1 + PROMO_DEALS.length) % PROMO_DEALS.length)
                       }
-                      className="p-1.5 rounded-lg bg-surface hover:bg-ink-100 border border-line text-ink-700 cursor-pointer shadow-2xs transition-colors"
+                      className="p-1.5 rounded-lg bg-surface hover:bg-ink-500/10 border border-line text-ink-700 cursor-pointer shadow-2xs transition-colors"
                       title="Previous Deal"
                     >
                       <ChevronLeft size={16} />
                     </button>
                     <button
                       onClick={() => setPromoIndex((prev) => (prev + 1) % PROMO_DEALS.length)}
-                      className="p-1.5 rounded-lg bg-surface hover:bg-ink-100 border border-line text-ink-700 cursor-pointer shadow-2xs transition-colors"
+                      className="p-1.5 rounded-lg bg-surface hover:bg-ink-500/10 border border-line text-ink-700 cursor-pointer shadow-2xs transition-colors"
                       title="Next Deal"
                     >
                       <ChevronRight size={16} />
@@ -799,9 +799,9 @@ export default function CustomerDisplayPage() {
                 </div>
 
                 {/* Hero Product Body */}
-                <div className="grid grid-cols-12 gap-6 items-center my-auto py-2">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center my-auto py-2">
                   {/* Left Info */}
-                  <div className="col-span-7 space-y-3">
+                  <div className="col-span-1 md:col-span-7 space-y-3">
                     <h3 className="text-2xl lg:text-3xl font-black text-ink-900 tracking-tight leading-snug">
                       {currentPromo.title}
                     </h3>
@@ -811,7 +811,7 @@ export default function CustomerDisplayPage() {
 
                     {/* Price Tag Box */}
                     <div className="pt-2 flex items-baseline gap-3">
-                      <span className="text-3xl font-black text-brand-600 font-mono">
+                      <span className="text-3xl font-black text-brand-500 font-mono">
                         Rs. {currentPromo.price.toFixed(2)}
                       </span>
                       {currentPromo.originalPrice && (
@@ -821,16 +821,16 @@ export default function CustomerDisplayPage() {
                       )}
                     </div>
 
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold">
-                      <BadgePercent size={14} className="text-emerald-600" />
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold">
+                      <BadgePercent size={14} className="text-emerald-500" />
                       <span>{currentPromo.savingsText}</span>
                     </div>
                   </div>
 
                   {/* Right Image Showcase */}
-                  <div className="col-span-5 flex items-center justify-center">
+                  <div className="col-span-1 md:col-span-5 flex items-center justify-center">
                     <div className="relative group">
-                      <div className="w-48 h-48 rounded-3xl bg-surface border border-line p-3 flex items-center justify-center shadow-md">
+                      <div className="w-40 h-40 sm:w-48 sm:h-48 rounded-3xl bg-surface border border-line p-3 flex items-center justify-center shadow-md">
                         <img
                           src={currentPromo.imageUrl}
                           alt={currentPromo.title}
@@ -865,7 +865,7 @@ export default function CustomerDisplayPage() {
               </div>
 
               {/* Right 5 Columns: NovaMart Club Loyalty Card & Guarantees */}
-              <div className="col-span-5 flex flex-col justify-between gap-4">
+              <div className="col-span-1 lg:col-span-5 flex flex-col justify-between gap-4">
                 {/* Nova Club Loyalty Card */}
                 <div className="p-5 rounded-3xl bg-gradient-to-br from-neutral-900 via-zinc-900 to-black text-white border border-neutral-800 shadow-md flex flex-col justify-between relative overflow-hidden">
                   <div className="flex items-center justify-between relative z-10">
@@ -898,7 +898,7 @@ export default function CustomerDisplayPage() {
                 {/* Fresh Produce & Quality Guarantee */}
                 <div className="p-4 rounded-3xl bg-card border border-line shadow-xs space-y-2">
                   <div className="flex items-center gap-2 text-ink-900 font-bold text-sm">
-                    <Scale size={18} className="text-emerald-600" />
+                    <Scale size={18} className="text-emerald-500" />
                     <span>{t('customerDisplay.certifiedScalesTitle', 'Certified Trade Precision Scales')}</span>
                   </div>
                   <p className="text-xs text-ink-500 leading-relaxed">
@@ -908,7 +908,7 @@ export default function CustomerDisplayPage() {
 
                 {/* Digital Receipts & Environment */}
                 <div className="p-4 rounded-3xl bg-card border border-line shadow-xs flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center border border-brand-200 shrink-0">
+                  <div className="w-10 h-10 rounded-2xl bg-brand-500/15 text-brand-400 flex items-center justify-center border border-brand-500/30 shrink-0">
                     <Receipt size={20} />
                   </div>
                   <div className="text-xs text-ink-700">
@@ -924,19 +924,19 @@ export default function CustomerDisplayPage() {
             </div>
 
             {/* Bottom Accepted Payments Banner */}
-            <div className="px-6 py-3 rounded-2xl bg-card border border-line flex items-center justify-between text-xs text-ink-500 shadow-xs">
-              <div className="flex items-center gap-5">
+            <div className="px-4 sm:px-6 py-3 rounded-2xl bg-card border border-line flex flex-wrap items-center justify-between gap-3 text-xs text-ink-500 shadow-xs">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-5">
                 <span className="font-bold text-ink-800">
                   {t('customerDisplay.acceptedAtCounter', 'Accepted At Counter:')}
                 </span>
                 <span className="flex items-center gap-1.5 font-semibold text-ink-900 bg-surface px-2.5 py-1 rounded-lg border border-line">
-                  <Banknote size={14} className="text-emerald-600" /> {t('customerDisplay.cash', 'Cash')} (LKR)
+                  <Banknote size={14} className="text-emerald-500" /> {t('customerDisplay.cash', 'Cash')} (LKR)
                 </span>
                 <span className="flex items-center gap-1.5 font-semibold text-ink-900 bg-surface px-2.5 py-1 rounded-lg border border-line">
-                  <CreditCard size={14} className="text-brand-600" /> {t('customerDisplay.cards', 'Cards')} (Visa / Master)
+                  <CreditCard size={14} className="text-brand-500" /> {t('customerDisplay.cards', 'Cards')} (Visa / Master)
                 </span>
                 <span className="flex items-center gap-1.5 font-semibold text-ink-900 bg-surface px-2.5 py-1 rounded-lg border border-line">
-                  <QrCode size={14} className="text-blue-600" /> {t('customerDisplay.lankaQr', 'LankaQR')}
+                  <QrCode size={14} className="text-blue-500" /> {t('customerDisplay.lankaQr', 'LankaQR')}
                 </span>
               </div>
 

@@ -155,9 +155,9 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
           </div>
 
           {/* Weighed Produce / Bulk Goods Setting */}
-          <div className="p-3 bg-emerald-50/60 border border-emerald-200/80 rounded-lg space-y-2.5">
+          <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-lg space-y-2.5">
             <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2 text-sm font-medium text-emerald-950 cursor-pointer">
+              <label className="flex items-center gap-2 text-sm font-medium text-emerald-300 cursor-pointer">
                 <input
                   type="checkbox"
                   {...register('isWeighable')}
@@ -169,19 +169,19 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
                   }}
                   className="rounded text-brand-600 focus:ring-brand-500 h-4 w-4"
                 />
-                <Scale size={16} className="text-emerald-700" />
+                <Scale size={16} className="text-emerald-400" />
                 <span>{t('products.isWeighable', 'Weighed Goods (Sold by weight on scale)')}</span>
               </label>
             </div>
 
             <div className="grid grid-cols-2 gap-3 pt-1">
               <div>
-                <label className="block text-xs font-medium text-emerald-900 mb-1">
+                <label className="block text-xs font-medium text-emerald-300 mb-1">
                   {t('products.unitOfMeasure', 'Unit of Measure')}
                 </label>
                 <select
                   {...register('unitOfMeasure')}
-                  className="w-full px-2.5 py-1.5 text-sm bg-white border border-emerald-300 rounded-md focus:ring-emerald-500"
+                  className="w-full px-2.5 py-1.5 text-sm bg-card text-ink-900 border border-emerald-500/30 rounded-md focus:ring-emerald-500"
                 >
                   <option value="pcs">Pieces (pcs)</option>
                   <option value="kg">Kilogram (kg)</option>
@@ -191,7 +191,7 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
                   <option value="ml">Milliliter (ml)</option>
                 </select>
               </div>
-              <div className="text-xs text-emerald-800 flex items-center leading-relaxed">
+              <div className="text-xs text-emerald-400/90 flex items-center leading-relaxed">
                 {isWeighable
                   ? 'Cashier will be prompted with the scale weight modal or scale barcode parser.'
                   : 'Sold as standard single integer quantity.'}
