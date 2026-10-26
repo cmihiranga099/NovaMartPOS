@@ -114,6 +114,9 @@ namespace NovaMartPOS.API
             builder.Services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
             builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
 
+            builder.Services.AddScoped<IShiftRepository, ShiftRepository>();
+            builder.Services.AddScoped<IShiftService, ShiftService>();
+
             builder.Services.AddScoped<INotificationService, SignalRNotificationService>();
 
             builder.Services.AddAuthentication(options =>
