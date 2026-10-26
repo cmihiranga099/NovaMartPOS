@@ -38,18 +38,13 @@ const navItems = [
 export default function MainLayout() {
   const { user, logout, hasRole } = useAuth();
   const location = useLocation();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const visibleNavItems = navItems.filter((item) => !('roles' in item) || hasRole(...item.roles));
 
   const initials = user?.fullName
     ? user.fullName.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()
     : '';
-
-  const cycleLanguage = () => {
-    const nextLang = i18n.language === 'en' ? 'si' : i18n.language === 'si' ? 'ta' : 'en';
-    i18n.changeLanguage(nextLang);
-  };
 
   return (
     <div className="min-h-screen flex bg-surface">
@@ -63,17 +58,6 @@ export default function MainLayout() {
             </div>
           </div>
           <div className="mt-3 flex items-center gap-2">
-            <button
-              onClick={cycleLanguage}
-              className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg border border-line text-xs font-semibold text-ink-700 hover:bg-surface transition-colors cursor-pointer"
-              title="Cycle language (EN / සිං / தமிழ்)"
-            >
-              <span className={i18n.language === 'en' ? 'text-brand-600 font-bold' : ''}>EN</span>
-              <span className="text-ink-400">/</span>
-              <span className={i18n.language === 'si' ? 'text-brand-600 font-bold' : ''}>සිං</span>
-              <span className="text-ink-400">/</span>
-              <span className={i18n.language === 'ta' ? 'text-brand-600 font-bold' : ''}>தம</span>
-            </button>
             <LanguageDropdown />
             <LowStockAlert />
           </div>
