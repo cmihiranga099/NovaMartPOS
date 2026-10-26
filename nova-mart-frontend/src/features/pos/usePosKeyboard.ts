@@ -7,6 +7,7 @@ export interface UsePosKeyboardOptions {
   onDiscountOpen: () => void;
   onSetExactAmount: () => void;
   onSelectPaymentMethod: (method: string) => void;
+  onSplitPaymentOpen?: () => void;
   onCheckout: () => void;
   onClearOrCancel: () => void;
   onIncreaseLastItemQty?: () => void;
@@ -59,6 +60,7 @@ export function usePosKeyboard({
   onDiscountOpen,
   onSetExactAmount,
   onSelectPaymentMethod,
+  onSplitPaymentOpen,
   onCheckout,
   onClearOrCancel,
   onIncreaseLastItemQty,
@@ -74,48 +76,50 @@ export function usePosKeyboard({
 }: UsePosKeyboardOptions) {
   const scannerBufferRef = useRef<string>('');
   const lastTimeRef = useRef<number>(0);
-  const firstTimeRef = useRef<number>(0);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const now = performance.now();
-      const activeEl = document.activeElement;
+      const target = e.target as HTMLElement | null;
       const isInsideInput =
-        activeEl instanceof HTMLInputElement ||
-        activeEl instanceof HTMLTextAreaElement ||
-        activeEl instanceof HTMLSelectElement;
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT' ||
+          target.isContentEditable);
 
-      // Handle Sale Completed modal: Enter or Space triggers New Sale
+      // When the completed sale modal is visible, pressing Enter starts a new sale
       if (isCompletedSaleOpen) {
-        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape') {
+        if (e.key === 'Enter') {
           e.preventDefault();
           onNewSale?.();
           return;
         }
-      }
-
-      // 1. Hardware Barcode Scanner auto-capture logic:
-      // Scanners send keystrokes with < 50ms interval ending with Enter.
-      if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
-        const interval = now - lastTimeRef.current;
-        if (interval > 100) {
-          // Fresh burst started
-          scannerBufferRef.current = e.key;
-          firstTimeRef.current = now;
-        } else {
-          scannerBufferRef.current += e.key;
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          onClearOrCancel();
+          return;
         }
-        lastTimeRef.current = now;
       }
 
-      if (e.key === 'Enter') {
-        const buffer = scannerBufferRef.current.trim();
-        const count = buffer.length;
-        const totalDuration = now - firstTimeRef.current;
-        const avgCharInterval = count > 1 ? totalDuration / count : 999;
+      // 1. Hardware Barcode Scanner Fast-Burst Detection
+      // Standard barcode scanners emulate a rapid sequence of keystrokes ending with "Enter".
+      // Average human typing is > 100ms per char; scanners burst at < 50-65ms per character.
+      const now = Date.now();
+      const timeDiff = now - lastTimeRef.current;
+      lastTimeRef.current = now;
 
-        // If buffer has at least 3 chars AND (was typed at scanner speed < 65ms/char OR focus wasn't in an input)
-        if (count >= 3 && (avgCharInterval < 65 || !isInsideInput)) {
+      // Printable single characters
+      if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
+        if (timeDiff < 65 || scannerBufferRef.current.length === 0) {
+          scannerBufferRef.current += e.key;
+        } else {
+          // Reset buffer if delay is too long
+          scannerBufferRef.current = e.key;
+        }
+      } else if (e.key === 'Enter') {
+        const buffer = scannerBufferRef.current;
+        // If buffer has at least 3 characters and arrived in rapid burst, treat as barcode
+        if (buffer.length >= 3 && timeDiff < 65) {
           scannerBufferRef.current = '';
           lastTimeRef.current = 0;
           e.preventDefault();
@@ -197,6 +201,12 @@ export function usePosKeyboard({
         return;
       }
 
+      if (e.key === 'F11') {
+        e.preventDefault();
+        onSplitPaymentOpen?.();
+        return;
+      }
+
       if (e.key === 'F12' || (e.ctrlKey && e.key === 'Enter')) {
         e.preventDefault();
         onCheckout();
@@ -229,7 +239,7 @@ export function usePosKeyboard({
           return;
         }
 
-        if (e.key === 'Delete') {
+        if (e.key === 'Delete' || e.key === 'Backspace') {
           e.preventDefault();
           onRemoveLastItem?.();
           return;
@@ -237,8 +247,10 @@ export function usePosKeyboard({
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown, true);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown, true);
+    };
   }, [
     onSearchFocus,
     onCustomerFocus,
@@ -246,6 +258,7 @@ export function usePosKeyboard({
     onDiscountOpen,
     onSetExactAmount,
     onSelectPaymentMethod,
+    onSplitPaymentOpen,
     onCheckout,
     onClearOrCancel,
     onIncreaseLastItemQty,

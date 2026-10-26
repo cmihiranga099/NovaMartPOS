@@ -43,7 +43,7 @@ export default function Receipt({ sale }: { sale: SaleResult }) {
         <p className="text-[10px]">Tel: {shopInfo.phone}</p>
       </div>
 
-      {/* Meta block: cashier / order no, formatted like the sample */}
+      {/* Meta block: cashier / order no */}
       <div className="mt-2 text-[10px]">
         <div className="flex justify-between">
           <span>CASHIER :{sale.cashierName}</span>
@@ -53,13 +53,13 @@ export default function Receipt({ sale }: { sale: SaleResult }) {
         </div>
         <div className="flex justify-between">
           <span>CUSTOMER :{sale.customerName}</span>
-          <span>{sale.paymentMethod.toUpperCase()}</span>
+          <span>{sale.payments && sale.payments.length > 1 ? 'SPLIT TENDER' : sale.paymentMethod.toUpperCase()}</span>
         </div>
       </div>
 
       <Dots />
 
-      {/* Items, numbered like the sample */}
+      {/* Items */}
       {sale.items.map((item, idx) => (
         <div key={idx} className="mb-1.5">
           <div className="flex justify-between">
@@ -77,7 +77,7 @@ export default function Receipt({ sale }: { sale: SaleResult }) {
 
       <Dots />
 
-      {/* Totals block, bold like SUB TOTAL / CASH */}
+      {/* Totals block */}
       <div className="font-bold text-[12px] space-y-0.5">
         <div className="flex justify-between">
           <span>SUB TOTAL</span>
@@ -105,10 +105,21 @@ export default function Receipt({ sale }: { sale: SaleResult }) {
           <span>TOTAL</span>
           <span>{sale.grandTotal.toFixed(2)}</span>
         </div>
-        <div className="flex justify-between">
-          <span>{sale.paymentMethod.toUpperCase()}</span>
-          <span>{sale.amountPaid.toFixed(2)}</span>
-        </div>
+
+        {/* Payment tenders */}
+        {sale.payments && sale.payments.length > 1 ? (
+          sale.payments.map((p, idx) => (
+            <div key={idx} className="flex justify-between font-normal text-[10px]">
+              <span>TENDER ({p.method.toUpperCase()})</span>
+              <span>{p.amountPaid.toFixed(2)}</span>
+            </div>
+          ))
+        ) : (
+          <div className="flex justify-between">
+            <span>{sale.paymentMethod.toUpperCase()}</span>
+            <span>{sale.amountPaid.toFixed(2)}</span>
+          </div>
+        )}
       </div>
 
       <div className="border-t border-dashed border-black my-1.5" />
@@ -120,7 +131,7 @@ export default function Receipt({ sale }: { sale: SaleResult }) {
 
       <Dots />
 
-      {/* Item / pcs count + date-time, two-column like the sample */}
+      {/* Item / pcs count + date-time */}
       <div className="flex justify-between text-[10px]">
         <span>No of Items: {sale.items.length}</span>
         <span>No of Pcs: {totalPcs.toFixed(3)}</span>

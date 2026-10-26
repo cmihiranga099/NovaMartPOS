@@ -25,6 +25,7 @@ import { useAuth } from '../store/AuthContext';
 import ManagerOverrideModal from '../components/ManagerOverrideModal';
 import KeyboardShortcutsModal from '../features/pos/KeyboardShortcutsModal';
 import HeldCartsModal, { type HeldCart } from '../features/pos/HeldCartsModal';
+import SplitPaymentModal from '../features/pos/SplitPaymentModal';
 import VirtualKeyboard from '../components/VirtualKeyboard';
 import { usePosKeyboard, playScannerBeep } from '../features/pos/usePosKeyboard';
 
@@ -72,6 +73,7 @@ export default function PosPage() {
   const [discountApprovedBy, setDiscountApprovedBy] = useState<string | null>(null);
   const [showShortcutsModal, setShowShortcutsModal] = useState(false);
   const [showHeldCartsModal, setShowHeldCartsModal] = useState(false);
+  const [showSplitModal, setShowSplitModal] = useState(false);
   const [scanFeedback, setScanFeedback] = useState<string | null>(null);
   const [activeKeyboardTarget, setActiveKeyboardTarget] = useState<KeyboardTarget>(null);
 
@@ -369,6 +371,8 @@ export default function PosPage() {
   const handleClearOrCancel = () => {
     if (showHeldCartsModal) {
       setShowHeldCartsModal(false);
+    } else if (showSplitModal) {
+      setShowSplitModal(false);
     } else if (activeKeyboardTarget !== null) {
       setActiveKeyboardTarget(null);
     } else if (showShortcutsModal) {
@@ -412,6 +416,13 @@ export default function PosPage() {
     onSelectPaymentMethod: (method) => {
       setPaymentMethod(method);
     },
+    onSplitPaymentOpen: () => {
+      if (cart.length > 0) {
+        setShowSplitModal(true);
+      } else {
+        setError(t('pos.cartEmptyError'));
+      }
+    },
     onCheckout: () => {
       handleCheckout();
     },
@@ -430,6 +441,7 @@ export default function PosPage() {
     isModalOpen:
       showShortcutsModal ||
       showHeldCartsModal ||
+      showSplitModal ||
       showOverridePrompt ||
       showDiscountEntry ||
       activeKeyboardTarget !== null,
@@ -529,6 +541,27 @@ export default function PosPage() {
   };
 
   const setExactAmount = () => setAmountPaid(grandTotal > 0 ? grandTotal.toFixed(2) : '');
+
+  const handleSplitCheckout = (splits: { method: string; amount: number }[]) => {
+    setError(null);
+    if (cart.length === 0) {
+      setError(t('pos.cartEmptyError'));
+      return;
+    }
+    const totalPaid = splits.reduce((sum, s) => sum + s.amount, 0);
+
+    checkoutMutation.mutate({
+      customerId,
+      items: cart.map((i) => ({ productId: i.productId, quantity: i.quantity, discount: i.discount })),
+      paymentMethod: 'Split',
+      amountPaid: totalPaid,
+      splits,
+      promoCode: appliedPromo?.code ?? null,
+      managerOverridePin: discountApprovedPin ?? undefined,
+    });
+
+    setShowSplitModal(false);
+  };
 
   const handleCheckout = () => {
     setError(null);
@@ -1020,6 +1053,22 @@ export default function PosPage() {
               <kbd className={`text-[10px] font-mono ${paymentMethod === 'BankTransfer' ? 'text-white/80' : 'text-ink-500'}`}>F10</kbd>
             </button>
           </div>
+          <button
+            type="button"
+            onClick={() => {
+              if (cart.length === 0) {
+                setError(t('pos.cartEmptyError'));
+                return;
+              }
+              setShowSplitModal(true);
+            }}
+            className="mt-1.5 w-full py-2 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border border-dashed border-brand-500/50 text-brand-700 bg-brand-50/60 hover:bg-brand-50 transition-colors shadow-2xs"
+          >
+            <span>{t('splitPayment.splitTender', 'Split Tender (Multi-Pay)')}</span>
+            <kbd className="text-[10px] font-mono text-brand-600 px-1 py-0.2 rounded bg-white border border-brand-300">
+              F11
+            </kbd>
+          </button>
         </div>
 
         {/* Amount paid + numeric keypad */}
@@ -1126,6 +1175,14 @@ export default function PosPage() {
         onRecall={handleRecallCart}
         onDiscard={handleDiscardHeldCart}
         isCurrentCartEmpty={cart.length === 0}
+      />
+
+      <SplitPaymentModal
+        isOpen={showSplitModal}
+        onClose={() => setShowSplitModal(false)}
+        grandTotal={grandTotal}
+        onConfirmCheckout={handleSplitCheckout}
+        isProcessing={checkoutMutation.isPending}
       />
 
       {/* Floating Touch Keyboard Quick Toggle Button */}

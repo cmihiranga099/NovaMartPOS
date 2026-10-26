@@ -37,6 +37,7 @@ export default function KeyboardShortcutsModal({ isOpen, onClose }: Props) {
     { keys: ['F8'], description: t('keyboardShortcuts.payCash') },
     { keys: ['F9'], description: t('keyboardShortcuts.payCard') },
     { keys: ['F10'], description: t('keyboardShortcuts.payBank') },
+    { keys: ['F11'], description: t('keyboardShortcuts.splitPayment', 'Split Payment (Multi-Tender)') },
     { keys: ['F12', 'Ctrl+Enter'], description: t('keyboardShortcuts.checkout') },
   ];
 
@@ -61,135 +62,138 @@ export default function KeyboardShortcutsModal({ isOpen, onClose }: Props) {
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-ink-500 hover:text-ink-900 hover:bg-surface transition-colors"
+            className="p-2 rounded-lg text-ink-500 hover:text-ink-900 hover:bg-surface transition-colors"
           >
             <X size={20} />
           </button>
         </div>
 
-        {/* Content body */}
-        <div className="p-6 overflow-y-auto space-y-6 text-sm">
-          {/* Hardware Barcode Scanner Note */}
-          <div className="flex items-start gap-3 p-3.5 bg-emerald-50/70 border border-emerald-200/80 rounded-xl text-emerald-900 text-xs">
-            <Barcode size={22} className="shrink-0 text-emerald-600 mt-0.5" />
+        {/* Content */}
+        <div className="p-6 overflow-y-auto space-y-6">
+          {/* Scanner Highlight Box */}
+          <div className="p-4 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-start gap-3.5">
+            <div className="p-2 bg-brand-600 text-white rounded-lg">
+              <Barcode size={22} />
+            </div>
             <div>
-              <p className="font-semibold text-emerald-800">{t('keyboardShortcuts.scannerAutoCapture')}</p>
-              <p className="text-emerald-700 mt-0.5">{t('keyboardShortcuts.scannerAutoCaptureDesc')}</p>
+              <h3 className="text-sm font-bold text-brand-900">{t('keyboardShortcuts.scannerTitle')}</h3>
+              <p className="text-xs text-brand-700 mt-0.5 leading-relaxed">
+                {t('keyboardShortcuts.scannerDesc')}
+              </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Column 1: Products & Scanning */}
-            <div className="space-y-4">
-              <div>
-                <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-500 mb-2">
-                  <ShoppingCart size={14} className="text-brand-600" />
-                  Cart & Products
-                </h3>
-                <div className="space-y-2">
-                  {productShortcuts.map((sc, idx) => (
-                    <div key={idx} className="flex items-center justify-between py-1.5 px-2.5 rounded-lg bg-surface/60 border border-line/60">
-                      <span className="text-xs text-ink-700">{sc.description}</span>
-                      <div className="flex items-center gap-1 shrink-0">
-                        {sc.keys.map((k, kIdx) => (
-                          <kbd
-                            key={kIdx}
-                            className="px-2 py-0.5 text-xs font-mono font-semibold rounded-md border border-line bg-card shadow-xs text-ink-800"
-                          >
-                            {k}
-                          </kbd>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+            {/* Items & Cart */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold text-ink-500 uppercase tracking-wider">
+                <ShoppingCart size={14} />
+                <span>{t('keyboardShortcuts.cartGroup')}</span>
               </div>
-
-              <div>
-                <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-500 mb-2">
-                  <Sparkles size={14} className="text-brand-600" />
-                  Discounts & Customer
-                </h3>
-                <div className="space-y-2">
-                  {orderShortcuts.map((sc, idx) => (
-                    <div key={idx} className="flex items-center justify-between py-1.5 px-2.5 rounded-lg bg-surface/60 border border-line/60">
-                      <span className="text-xs text-ink-700">{sc.description}</span>
-                      <div className="flex items-center gap-1 shrink-0">
-                        {sc.keys.map((k, kIdx) => (
-                          <kbd
-                            key={kIdx}
-                            className="px-2 py-0.5 text-xs font-mono font-semibold rounded-md border border-line bg-card shadow-xs text-ink-800"
-                          >
-                            {k}
-                          </kbd>
-                        ))}
-                      </div>
+              <div className="space-y-2">
+                {productShortcuts.map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between py-1.5 border-b border-line/60">
+                    <span className="text-sm text-ink-700">{item.description}</span>
+                    <div className="flex items-center gap-1">
+                      {item.keys.map((k) => (
+                        <kbd
+                          key={k}
+                          className="px-2 py-1 text-xs font-mono font-bold rounded-md bg-surface border border-line text-ink-900 shadow-2xs"
+                        >
+                          {k}
+                        </kbd>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Column 2: Payment & Checkout */}
-            <div className="space-y-4">
-              <div>
-                <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-500 mb-2">
-                  <CreditCard size={14} className="text-brand-600" />
-                  Payment & Checkout
-                </h3>
-                <div className="space-y-2">
-                  {paymentShortcuts.map((sc, idx) => (
-                    <div key={idx} className="flex items-center justify-between py-1.5 px-2.5 rounded-lg bg-surface/60 border border-line/60">
-                      <span className="text-xs text-ink-700">{sc.description}</span>
-                      <div className="flex items-center gap-1 shrink-0">
-                        {sc.keys.map((k, kIdx) => (
-                          <kbd
-                            key={kIdx}
-                            className="px-2 py-0.5 text-xs font-mono font-semibold rounded-md border border-line bg-card shadow-xs text-ink-800"
-                          >
-                            {k}
-                          </kbd>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+            {/* Order Controls */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold text-ink-500 uppercase tracking-wider">
+                <Sparkles size={14} />
+                <span>{t('keyboardShortcuts.orderGroup')}</span>
               </div>
-
-              <div>
-                <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink-500 mb-2">
-                  <Keyboard size={14} className="text-brand-600" />
-                  Navigation
-                </h3>
-                <div className="space-y-2">
-                  {navigationShortcuts.map((sc, idx) => (
-                    <div key={idx} className="flex items-center justify-between py-1.5 px-2.5 rounded-lg bg-surface/60 border border-line/60">
-                      <span className="text-xs text-ink-700">{sc.description}</span>
-                      <div className="flex items-center gap-1 shrink-0">
-                        {sc.keys.map((k, kIdx) => (
-                          <kbd
-                            key={kIdx}
-                            className="px-2 py-0.5 text-xs font-mono font-semibold rounded-md border border-line bg-card shadow-xs text-ink-800"
-                          >
-                            {k}
-                          </kbd>
-                        ))}
-                      </div>
+              <div className="space-y-2">
+                {orderShortcuts.map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between py-1.5 border-b border-line/60">
+                    <span className="text-sm text-ink-700">{item.description}</span>
+                    <div className="flex items-center gap-1">
+                      {item.keys.map((k) => (
+                        <kbd
+                          key={k}
+                          className="px-2 py-1 text-xs font-mono font-bold rounded-md bg-surface border border-line text-ink-900 shadow-2xs"
+                        >
+                          {k}
+                        </kbd>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Payment & Tender */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold text-ink-500 uppercase tracking-wider">
+                <CreditCard size={14} />
+                <span>{t('keyboardShortcuts.paymentGroup')}</span>
+              </div>
+              <div className="space-y-2">
+                {paymentShortcuts.map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between py-1.5 border-b border-line/60">
+                    <span className="text-sm text-ink-700">{item.description}</span>
+                    <div className="flex items-center gap-1">
+                      {item.keys.map((k) => (
+                        <kbd
+                          key={k}
+                          className="px-2 py-1 text-xs font-mono font-bold rounded-md bg-surface border border-line text-ink-900 shadow-2xs"
+                        >
+                          {k}
+                        </kbd>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* General Navigation */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold text-ink-500 uppercase tracking-wider">
+                <Keyboard size={14} />
+                <span>{t('keyboardShortcuts.generalGroup')}</span>
+              </div>
+              <div className="space-y-2">
+                {navigationShortcuts.map((item, idx) => (
+                  <div key={idx} className="flex items-center justify-between py-1.5 border-b border-line/60">
+                    <span className="text-sm text-ink-700">{item.description}</span>
+                    <div className="flex items-center gap-1">
+                      {item.keys.map((k) => (
+                        <kbd
+                          key={k}
+                          className="px-2 py-1 text-xs font-mono font-bold rounded-md bg-surface border border-line text-ink-900 shadow-2xs"
+                        >
+                          {k}
+                        </kbd>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-line bg-surface/40 flex justify-end">
+        <div className="p-4 border-t border-line bg-surface/50 flex justify-between items-center text-xs text-ink-500">
+          <span>{t('keyboardShortcuts.hint')}</span>
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-brand-600 text-white rounded-xl text-sm font-medium hover:bg-brand-700 transition-colors"
+            className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium transition-colors"
           >
-            Got it (Esc)
+            {t('common.close')}
           </button>
         </div>
       </div>
