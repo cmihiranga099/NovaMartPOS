@@ -378,6 +378,8 @@ export default function PosPage() {
           quantity: i.quantity,
           discount: i.discount,
           total: i.unitPrice * i.quantity - i.discount,
+          unitOfMeasure: i.unitOfMeasure,
+          isWeighable: i.isWeighable,
         })),
         subtotal,
         totalDiscount: totalDiscount + (appliedPromo?.discount ?? 0),
@@ -391,6 +393,8 @@ export default function PosPage() {
               quantity: lastItem.quantity,
               discount: lastItem.discount,
               total: lastItem.unitPrice * lastItem.quantity - lastItem.discount,
+              unitOfMeasure: lastItem.unitOfMeasure,
+              isWeighable: lastItem.isWeighable,
             }
           : null,
       });
@@ -629,6 +633,7 @@ export default function PosPage() {
       showZReportModal ||
       showOverridePrompt ||
       showDiscountEntry ||
+      weighingProduct !== null ||
       activeKeyboardTarget !== null,
     isCompletedSaleOpen: !!completedSale,
     onNewSale: () => setCompletedSale(null),
@@ -1032,17 +1037,29 @@ export default function PosPage() {
                     key={product.id}
                     onClick={() => addToCart(product)}
                     disabled={outOfStock}
-                    className="group flex flex-col items-stretch rounded-2xl border border-line bg-card overflow-hidden text-left hover:shadow-md hover:border-brand-200 transition-all disabled:opacity-40 disabled:hover:shadow-none disabled:hover:border-line"
+                    className="group flex flex-col items-stretch rounded-2xl border border-line bg-card overflow-hidden text-left hover:shadow-md hover:border-brand-200 transition-all disabled:opacity-40 disabled:hover:shadow-none disabled:hover:border-line relative"
                   >
-                    <div className={`h-16 flex items-center justify-center font-bold text-2xl ${tileColor(product.categoryName || product.name)}`}>
+                    <div className={`h-16 flex items-center justify-center font-bold text-2xl ${tileColor(product.categoryName || product.name)} relative`}>
                       {product.name.charAt(0).toUpperCase()}
+                      {product.isWeighable && (
+                        <span className="absolute top-2 right-2 bg-emerald-600 text-white rounded-full p-1 shadow-sm" title="Weighed produce item">
+                          <Scale size={12} />
+                        </span>
+                      )}
                     </div>
                     <div className="p-2.5">
                       <p className="font-medium text-sm leading-tight line-clamp-2 min-h-[2.2em]">{product.name}</p>
                       <div className="flex items-center justify-between mt-1.5">
-                        <span className="font-bold text-sm">Rs. {product.sellingPrice.toFixed(2)}</span>
+                        <span className="font-bold text-sm">
+                          Rs. {product.sellingPrice.toFixed(2)}
+                          <span className="text-[10px] text-ink-500 font-normal">/{product.unitOfMeasure || (product.isWeighable ? 'kg' : 'pcs')}</span>
+                        </span>
                         <span className={`text-[10px] ${outOfStock ? 'text-red-600 font-medium' : 'text-ink-500'}`}>
-                          {outOfStock ? t('pos.outOfStock') : t('pos.stock', { count: product.stockQuantity })}
+                          {outOfStock
+                            ? t('pos.outOfStock')
+                            : product.isWeighable
+                            ? `${Number(product.stockQuantity).toFixed(2)} ${product.unitOfMeasure || 'kg'}`
+                            : t('pos.stock', { count: product.stockQuantity })}
                         </span>
                       </div>
                     </div>
@@ -1103,6 +1120,12 @@ export default function PosPage() {
                 item={item}
                 onQuantityChange={updateQuantity}
                 onRemove={removeFromCart}
+                onWeighClick={(productId) => {
+                  const prod = products.find((p) => p.id === productId);
+                  if (prod) {
+                    setWeighingProduct({ product: prod, initialWeight: item.quantity });
+                  }
+                }}
               />
             ))
           )}
@@ -1110,7 +1133,11 @@ export default function PosPage() {
 
         {cart.length > 0 && (
           <div className="text-[11px] text-ink-500 flex items-center justify-between py-1.5 px-1 border-t border-line/60">
-            <span>{cart.reduce((sum, i) => sum + i.quantity, 0)} items total</span>
+            <span>
+              {cart.length} {cart.length === 1 ? 'line' : 'lines'} (
+              {Number(cart.reduce((sum, i) => sum + i.quantity, 0).toFixed(3))}{' '}
+              qty total)
+            </span>
             <span className="flex items-center gap-1">
               <kbd className="font-mono text-[10px] px-1 bg-surface border border-line rounded">+</kbd>
               <kbd className="font-mono text-[10px] px-1 bg-surface border border-line rounded">-</kbd>
@@ -1484,6 +1511,20 @@ export default function PosPage() {
             return res;
           }}
           isProcessing={closeShiftMutation.isPending}
+        />
+      )}
+
+      {weighingProduct && (
+        <WeighModal
+          product={weighingProduct.product}
+          initialWeight={weighingProduct.initialWeight}
+          onConfirm={(prod, weight) => {
+            addToCart(prod, weight);
+            setWeighingProduct(null);
+            playScannerBeep(true);
+            setScanFeedback(`${prod.name} (${weight.toFixed(3)} ${prod.unitOfMeasure || 'kg'})`);
+          }}
+          onClose={() => setWeighingProduct(null)}
         />
       )}
 
