@@ -130,7 +130,18 @@
       "scanned": "Scanned: {{name}}",
       "productNotFound": "Product not found: {{code}}",
       "touchKeyboard": "Touch Keyboard",
-      "openTouchKeyboard": "Open on-screen touch keyboard"
+      "openTouchKeyboard": "Open on-screen touch keyboard",
+      "holdCart": "Hold Cart",
+      "heldCarts": "Held Carts",
+      "recallCart": "Recall Cart",
+      "cartHeldSuccess": "Cart #{{id}} held. Ready for next customer.",
+      "cartRecalledSuccess": "Cart recalled to checkout.",
+      "noHeldCarts": "No held carts.",
+      "resumeCart": "Resume Cart",
+      "discardCart": "Discard",
+      "holdCurrentAndResume": "Hold current cart and resume this one",
+      "mergeCart": "Merge with current cart",
+      "activeCartNotEmpty": "Current checkout has items. What would you like to do?"
     },
     "keyboardShortcuts": {
       "title": "POS Keyboard Shortcuts",
@@ -139,6 +150,8 @@
       "customer": "Select Customer",
       "discount": "Add Manual Discount",
       "promo": "Focus Promo Code",
+      "holdCart": "Hold / Park Current Cart",
+      "recallCart": "Recall / View Held Carts",
       "exactAmount": "Set Exact Amount",
       "payCash": "Pay with Cash",
       "payCard": "Pay with Card",

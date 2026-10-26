@@ -130,7 +130,18 @@
       "scanned": "කියවන ලදී: {{name}}",
       "productNotFound": "නිෂ්පාදනය හමු නොවීය: {{code}}",
       "touchKeyboard": "ස්පර්ශ යතුරුපුවරුව",
-      "openTouchKeyboard": "තිරයේ යතුරුපුවරුව විවෘත කරන්න"
+      "openTouchKeyboard": "තිරයේ යතුරුපුවරුව විවෘත කරන්න",
+      "holdCart": "කරත්තය රඳවන්න",
+      "heldCarts": "රඳවා ඇති කරත්ත",
+      "recallCart": "කරත්තය ආපසු කැඳවන්න",
+      "cartHeldSuccess": "කරත්තය රඳවන ලදී. ඊළඟ පාරිභෝගිකයා සඳහා සූදානම්.",
+      "cartRecalledSuccess": "කරත්තය නැවත කැඳවන ලදී.",
+      "noHeldCarts": "රඳවා ඇති කරත්ත නොමැත.",
+      "resumeCart": "කරත්තය නැවත ආරම්භ කරන්න",
+      "discardCart": "ඉවත් කරන්න",
+      "holdCurrentAndResume": "වත්මන් කරත්තය රඳවා මෙය ආරම්භ කරන්න",
+      "mergeCart": "වත්මන් කරත්තය සමග එකතු කරන්න",
+      "activeCartNotEmpty": "වත්මන් කරත්තයේ අයිතම ඇත. කුමක් කිරීමට කැමතිද?"
     },
     "keyboardShortcuts": {
       "title": "POS යතුරුපුවරු කෙටිමං",
@@ -139,6 +150,8 @@
       "customer": "පාරිභෝගිකයා තෝරන්න",
       "discount": "අතින් වට්ටමක් එක් කරන්න",
       "promo": "වට්ටම් කේතය වෙත යන්න",
+      "holdCart": "වත්මන් කරත්තය රඳවා තබන්න (F5)",
+      "recallCart": "රඳවා ඇති කරත්ත බලන්න / කැඳවන්න (F6)",
       "exactAmount": "නිශ්චිත මුදල සකසන්න",
       "payCash": "මුදල් මගින් ගෙවන්න",
       "payCard": "කාඩ්පත මගින් ගෙවන්න",
