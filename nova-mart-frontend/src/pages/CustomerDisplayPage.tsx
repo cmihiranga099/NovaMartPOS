@@ -49,9 +49,29 @@ const IDLE_PROMOS = [
 ];
 
 export default function CustomerDisplayPage() {
-  const [cartState, setCartState] = useState<DisplayCartState | null>(null);
-  const [paymentState, setPaymentState] = useState<DisplayPaymentState | null>(null);
-  const [completedSale, setCompletedSale] = useState<DisplaySaleComplete | null>(null);
+  const initialSaved = customerDisplayService.getSavedState();
+
+  const [cartState, setCartState] = useState<DisplayCartState | null>(() => {
+    if (initialSaved?.type === 'CART_UPDATE' && initialSaved.payload?.items?.length > 0) {
+      return initialSaved.payload;
+    }
+    return null;
+  });
+
+  const [paymentState, setPaymentState] = useState<DisplayPaymentState | null>(() => {
+    if (initialSaved?.type === 'PAYMENT_UPDATE') {
+      return initialSaved.payload;
+    }
+    return null;
+  });
+
+  const [completedSale, setCompletedSale] = useState<DisplaySaleComplete | null>(() => {
+    if (initialSaved?.type === 'SALE_COMPLETE') {
+      return initialSaved.payload;
+    }
+    return null;
+  });
+
   const [currentTime, setCurrentTime] = useState(new Date());
   const [promoIndex, setPromoIndex] = useState(0);
 
@@ -69,9 +89,9 @@ export default function CustomerDisplayPage() {
     return () => clearInterval(timer);
   }, []);
 
-  // Subscribe to Customer Display Broadcasts & SignalR
+  // Subscribe to Customer Display Broadcasts, Storage events, & SignalR
   useEffect(() => {
-    const unsubscribe = customerDisplayService.subscribe('default-register', (msg: CustomerDisplayMessage) => {
+    const handleDisplayMessage = (msg: CustomerDisplayMessage) => {
       switch (msg.type) {
         case 'CART_UPDATE':
           setCartState(msg.payload);
@@ -95,9 +115,34 @@ export default function CustomerDisplayPage() {
           setCompletedSale(null);
           break;
       }
-    });
+    };
 
-    return () => unsubscribe();
+    // 1. Storage event listener (syncs across tabs instantaneously)
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === 'novamart_cfd_state') {
+        if (e.newValue) {
+          try {
+            handleDisplayMessage(JSON.parse(e.newValue));
+          } catch {}
+        } else {
+          setCartState(null);
+          setPaymentState(null);
+          setCompletedSale(null);
+        }
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+
+    // 2. BroadcastChannel & SignalR subscription
+    const unsubscribe = customerDisplayService.subscribe('default-register', handleDisplayMessage);
+
+    // 3. Request current state from open POS tab & SignalR hub
+    customerDisplayService.requestCurrentState('default-register');
+
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      unsubscribe();
+    };
   }, []);
 
   const hasItems = cartState && cartState.items.length > 0;

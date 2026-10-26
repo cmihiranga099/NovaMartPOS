@@ -39,4 +39,5 @@ export type CustomerDisplayMessage =
   | { type: 'CART_UPDATE'; payload: DisplayCartState }
   | { type: 'PAYMENT_UPDATE'; payload: DisplayPaymentState }
   | { type: 'SALE_COMPLETE'; payload: DisplaySaleComplete }
-  | { type: 'IDLE'; payload: { registerId?: string } };
+  | { type: 'IDLE'; payload: { registerId?: string } }
+  | { type: 'REQUEST_STATE'; payload?: { registerId?: string } };

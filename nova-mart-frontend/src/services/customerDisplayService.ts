@@ -7,6 +7,7 @@ import type {
 } from '../types/customerDisplay';
 
 const CHANNEL_NAME = 'novamart_cfd_channel';
+const STORAGE_KEY = 'novamart_cfd_state';
 const API_ROOT = 'http://localhost:5026';
 const HUB_URL = `${API_ROOT}/hubs/customer-display`;
 
@@ -38,7 +39,7 @@ class CustomerDisplayService {
       try {
         await this.hubConnection.start();
       } catch {
-        // Fall back gracefully to local BroadcastChannel
+        // Fall back gracefully to local BroadcastChannel and localStorage
       } finally {
         this.isConnecting = false;
       }
@@ -47,29 +48,45 @@ class CustomerDisplayService {
     return this.hubConnection;
   }
 
+  getSavedState(): CustomerDisplayMessage | null {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  }
+
   // --- Broadcast methods (Called by PosPage) ---
 
   async sendCartUpdate(state: DisplayCartState) {
     const registerId = state.registerId || 'default-register';
     const message: CustomerDisplayMessage = { type: 'CART_UPDATE', payload: state };
 
-    // 1. BroadcastChannel (0ms local dual-screen sync)
+    // 1. Save synchronously to localStorage (works across tabs on same origin instantly)
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(message));
+    } catch {}
+
+    // 2. BroadcastChannel (instant in-memory notification across open tabs)
     this.channel?.postMessage(message);
 
-    // 2. SignalR Hub (Wireless tablet sync)
+    // 3. SignalR Hub (Wireless tablet sync)
     try {
       const conn = await this.getHubConnection();
       if (conn.state === signalR.HubConnectionState.Connected) {
         await conn.invoke('BroadcastCartUpdate', registerId, state);
       }
-    } catch {
-      // Local broadcast succeeded
-    }
+    } catch {}
   }
 
   async sendPaymentUpdate(state: DisplayPaymentState) {
     const registerId = state.registerId || 'default-register';
     const message: CustomerDisplayMessage = { type: 'PAYMENT_UPDATE', payload: state };
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(message));
+    } catch {}
 
     this.channel?.postMessage(message);
 
@@ -78,14 +95,16 @@ class CustomerDisplayService {
       if (conn.state === signalR.HubConnectionState.Connected) {
         await conn.invoke('BroadcastPaymentUpdate', registerId, state);
       }
-    } catch {
-      // Ignore network errors
-    }
+    } catch {}
   }
 
   async sendSaleComplete(state: DisplaySaleComplete) {
     const registerId = state.registerId || 'default-register';
     const message: CustomerDisplayMessage = { type: 'SALE_COMPLETE', payload: state };
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(message));
+    } catch {}
 
     this.channel?.postMessage(message);
 
@@ -94,13 +113,15 @@ class CustomerDisplayService {
       if (conn.state === signalR.HubConnectionState.Connected) {
         await conn.invoke('BroadcastSaleCompleted', registerId, state);
       }
-    } catch {
-      // Ignore network errors
-    }
+    } catch {}
   }
 
   async sendIdle(registerId = 'default-register') {
     const message: CustomerDisplayMessage = { type: 'IDLE', payload: { registerId } };
+
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {}
 
     this.channel?.postMessage(message);
 
@@ -109,9 +130,32 @@ class CustomerDisplayService {
       if (conn.state === signalR.HubConnectionState.Connected) {
         await conn.invoke('BroadcastIdle', registerId);
       }
-    } catch {
-      // Ignore network errors
-    }
+    } catch {}
+  }
+
+  requestCurrentState(registerId = 'default-register') {
+    // Ask POS via BroadcastChannel
+    this.channel?.postMessage({ type: 'REQUEST_STATE', payload: { registerId } });
+
+    // Ask SignalR hub
+    this.getHubConnection()
+      .then((conn) => {
+        if (conn.state === signalR.HubConnectionState.Connected) {
+          conn.invoke('RequestCurrentState', registerId).catch(() => {});
+        }
+      })
+      .catch(() => {});
+  }
+
+  // Listen for REQUEST_STATE from newly opened tabs (called by PosPage)
+  onRequestState(callback: () => void): () => void {
+    const handleMsg = (event: MessageEvent<CustomerDisplayMessage>) => {
+      if (event.data?.type === 'REQUEST_STATE') {
+        callback();
+      }
+    };
+    this.channel?.addEventListener('message', handleMsg);
+    return () => this.channel?.removeEventListener('message', handleMsg);
   }
 
   // --- Listener method (Called by CustomerDisplayPage) ---
