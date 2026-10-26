@@ -58,7 +58,7 @@ namespace NovaMartPOS.API
             {
                 options.AddPolicy("AllowFrontend", policy =>
                 {
-                    policy.WithOrigins("http://localhost:5173")
+                    policy.WithOrigins("http://localhost:5173", "http://127.0.0.1:5173")
                           .AllowAnyHeader()
                           .AllowAnyMethod()
                           .AllowCredentials();
@@ -195,7 +195,12 @@ namespace NovaMartPOS.API
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
+
+            app.MapGet("/", () => Results.Redirect("/swagger"));
 
             app.UseCors("AllowFrontend");
 

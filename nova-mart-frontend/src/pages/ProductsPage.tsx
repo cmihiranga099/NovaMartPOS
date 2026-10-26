@@ -41,7 +41,7 @@ export default function ProductsPage() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: ProductFormValues & { isActive: boolean } }) =>
+    mutationFn: ({ id, data }: { id: number; data: Parameters<typeof productService.update>[1] }) =>
       productService.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });

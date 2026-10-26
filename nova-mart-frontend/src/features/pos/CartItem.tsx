@@ -1,5 +1,5 @@
 import { Minus, Plus, X } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+
 
 export interface CartLine {
   productId: number;
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function CartItemRow({ item, onQuantityChange, onRemove }: Props) {
-  const { t } = useTranslation();
+
   const lineTotal = item.unitPrice * item.quantity - item.discount;
 
   return (

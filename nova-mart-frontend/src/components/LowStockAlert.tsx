@@ -144,8 +144,7 @@ export default function LowStockAlert() {
         </button>
 
         {open && (
-          <div className="absolute right-0 top-full mt-2 z-50 w-80 bg-card rounded-lg border border-line shadow-lg overflow-hidden">
-            <div className="px-4 py-3 border-b border-line flex items-center justify-between">
+          <div className="absolute left-0 top-full mt-2 z-50 w-80 bg-card rounded-lg border border-line shadow-lg overflow-hidden">            <div className="px-4 py-3 border-b border-line flex items-center justify-between">
               <h3 className="font-bold text-sm text-ink-900">{t('lowStockAlert.title')}</h3>
               {lowStock.length > 0 && (
                 <span className="text-xs font-semibold text-red-600">
