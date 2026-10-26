@@ -92,6 +92,7 @@ public class InventoryService : IInventoryService
         ProductCode = p.ProductCode,
         Barcode = p.Barcode,
         Name = p.Name,
+        ImageUrl = p.ImageUrl,
         PurchasePrice = p.PurchasePrice,
         SellingPrice = p.SellingPrice,
         TaxRate = p.TaxRate,

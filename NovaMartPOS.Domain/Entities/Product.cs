@@ -5,6 +5,7 @@ public class Product : BaseEntity
     public string ProductCode { get; set; } = string.Empty;
     public string Barcode { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
+    public string? ImageUrl { get; set; }
     public decimal PurchasePrice { get; set; }
     public decimal SellingPrice { get; set; }
     public decimal TaxRate { get; set; }

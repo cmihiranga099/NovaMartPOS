@@ -110,6 +110,8 @@ public class AppDbContext : DbContext
             .Property(p => p.MinimumStockLevel).HasColumnType("decimal(18,3)");
         modelBuilder.Entity<Product>()
             .Property(p => p.UnitOfMeasure).HasMaxLength(20).HasDefaultValue("pcs");
+        modelBuilder.Entity<Product>()
+            .Property(p => p.ImageUrl).HasMaxLength(500);
 
         modelBuilder.Entity<Sale>()
             .Property(s => s.Subtotal).HasColumnType("decimal(18,2)");

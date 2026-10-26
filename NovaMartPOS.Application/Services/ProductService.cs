@@ -44,6 +44,7 @@ public class ProductService : IProductService
             ProductCode = dto.ProductCode,
             Barcode = dto.Barcode,
             Name = dto.Name,
+            ImageUrl = dto.ImageUrl,
             PurchasePrice = dto.PurchasePrice,
             SellingPrice = dto.SellingPrice,
             TaxRate = dto.TaxRate,
@@ -78,6 +79,7 @@ public class ProductService : IProductService
         product.ProductCode = dto.ProductCode;
         product.Barcode = dto.Barcode;
         product.Name = dto.Name;
+        product.ImageUrl = dto.ImageUrl;
         product.PurchasePrice = dto.PurchasePrice;
         product.SellingPrice = dto.SellingPrice;
         product.TaxRate = dto.TaxRate;
@@ -149,6 +151,7 @@ public class ProductService : IProductService
         ProductCode = p.ProductCode,
         Barcode = p.Barcode,
         Name = p.Name,
+        ImageUrl = p.ImageUrl,
         PurchasePrice = p.PurchasePrice,
         SellingPrice = p.SellingPrice,
         TaxRate = p.TaxRate,

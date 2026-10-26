@@ -6,6 +6,7 @@ public class ProductDto
     public string ProductCode { get; set; } = string.Empty;
     public string Barcode { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
+    public string? ImageUrl { get; set; }
     public decimal PurchasePrice { get; set; }
     public decimal SellingPrice { get; set; }
     public decimal TaxRate { get; set; }
@@ -27,6 +28,7 @@ public class CreateProductDto
     public string ProductCode { get; set; } = string.Empty;
     public string Barcode { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
+    public string? ImageUrl { get; set; }
     public decimal PurchasePrice { get; set; }
     public decimal SellingPrice { get; set; }
     public decimal TaxRate { get; set; }
@@ -45,6 +47,7 @@ public class UpdateProductDto
     public string ProductCode { get; set; } = string.Empty;
     public string Barcode { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
+    public string? ImageUrl { get; set; }
     public decimal PurchasePrice { get; set; }
     public decimal SellingPrice { get; set; }
     public decimal TaxRate { get; set; }
