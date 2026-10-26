@@ -354,7 +354,7 @@ export default function BarcodeGeneratorPage() {
                   onChange={(e) => setShowStoreName(e.target.checked)}
                   className="rounded border-line text-brand-600 focus:ring-brand-500"
                 />
-                <span>Include Store Branding (Nova Mart)</span>
+                <span>{t('barcode.includeStoreHeader', 'Include store name in label header')}</span>
               </label>
 
               <div className="flex items-center gap-1.5 text-xs">
@@ -386,7 +386,7 @@ export default function BarcodeGeneratorPage() {
 
             {queueList.length === 0 ? (
               <div className="p-8 text-center text-xs text-ink-400 border border-dashed border-line rounded-xl">
-                Select products from the left panel to generate labels and preview them.
+                {t('barcode.noLabelsDesc', 'Click on products from the catalog on the left to add them to your print batch.')}
               </div>
             ) : (
               <div className="border border-line rounded-xl divide-y divide-line/70 max-h-[220px] overflow-y-auto bg-surface">

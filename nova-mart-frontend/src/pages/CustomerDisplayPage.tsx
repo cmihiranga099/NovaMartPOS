@@ -20,6 +20,7 @@ import {
   BadgePercent,
   Sparkle,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { shopInfo } from '../config/shopInfo';
 import logo from '../assets/logo.png';
 import { customerDisplayService } from '../services/customerDisplayService';
@@ -110,6 +111,7 @@ const PROMO_DEALS = [
 ];
 
 export default function CustomerDisplayPage() {
+  const { t, i18n } = useTranslation();
   const initialSaved = customerDisplayService.getSavedState();
 
   const [cartState, setCartState] = useState<DisplayCartState | null>(() => {
@@ -270,25 +272,49 @@ export default function CustomerDisplayPage() {
             <div className="flex items-center gap-2.5">
               <h1 className="text-xl font-extrabold tracking-tight text-ink-900">{shopInfo.name}</h1>
               <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-brand-500 text-white uppercase tracking-wider shadow-2xs">
-                Lane 01 · Express
+                {t('customerDisplay.lane', 'Lane 01 · Express')}
               </span>
             </div>
             <p className="text-xs text-ink-500 mt-0.5 flex items-center gap-1.5 font-medium">
-              <span>{cartState?.cashierName ? `Serving Cashier: ${cartState.cashierName}` : shopInfo.address}</span>
+              <span>
+                {cartState?.cashierName
+                  ? t('customerDisplay.servingCashier', { name: cartState.cashierName, defaultValue: `Serving Cashier: ${cartState.cashierName}` })
+                  : shopInfo.address}
+              </span>
             </p>
           </div>
         </div>
 
-        {/* Status, Time & Fullscreen Controls */}
-        <div className="flex items-center gap-3.5 text-xs font-semibold">
+        {/* Status, Time, Language Selector & Fullscreen Controls */}
+        <div className="flex items-center gap-3 text-xs font-semibold">
+          {/* Quick Language Selector */}
+          <div className="flex items-center rounded-xl bg-surface border border-line p-0.5 shadow-2xs">
+            {(['en', 'si', 'ta'] as const).map((lang) => (
+              <button
+                key={lang}
+                onClick={() => i18n.changeLanguage(lang)}
+                className={`px-2.5 py-1 rounded-lg text-xs transition-colors cursor-pointer ${
+                  i18n.language === lang
+                    ? 'bg-brand-600 text-white font-bold shadow-2xs'
+                    : 'text-ink-600 hover:text-ink-900'
+                }`}
+                title={lang === 'en' ? 'English' : lang === 'si' ? 'සිංහල' : 'தமிழ்'}
+              >
+                {lang === 'en' ? 'EN' : lang === 'si' ? 'සිං' : 'தம'}
+              </button>
+            ))}
+          </div>
+
           {/* Live System Indicator */}
           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-            <span className="text-[11px] font-bold uppercase tracking-wide">Live Register Sync</span>
+            <span className="text-[11px] font-bold uppercase tracking-wide">
+              {t('customerDisplay.liveRegisterSync', 'Live Register Sync')}
+            </span>
           </div>
 
           {/* Clock */}
-          <div className="flex items-center gap-2.5 font-mono text-sm text-ink-800 px-4 py-2 rounded-xl bg-surface border border-line shadow-2xs">
+          <div className="flex items-center gap-2 font-mono text-sm text-ink-800 px-3.5 py-1.5 rounded-xl bg-surface border border-line shadow-2xs">
             <Clock size={16} className="text-brand-600" />
             <span className="font-bold tracking-tight">
               {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
@@ -328,24 +354,28 @@ export default function CustomerDisplayPage() {
             </div>
 
             <span className="text-xs font-extrabold text-emerald-600 uppercase tracking-widest mb-1 px-3 py-1 bg-emerald-50 rounded-full border border-emerald-200">
-              Payment Successful & Verified
+              {t('customerDisplay.paymentSuccessful', 'Payment Successful & Verified')}
             </span>
             <h2 className="text-3xl lg:text-4xl font-black text-ink-900 mt-2 text-center">
-              Thank You for Shopping at Nova Mart!
+              {t('customerDisplay.thankYou', 'Thank You for Shopping at Nova Mart!')}
             </h2>
             <p className="text-ink-500 text-sm mt-1 mb-6 font-medium">
-              We hope you enjoyed your shopping experience today. Please collect your items.
+              {t('customerDisplay.thankYouSubtitle', 'We hope you enjoyed your shopping experience today. Please collect your items.')}
             </p>
 
             {/* Boarding-Pass / Supermarket Receipt Card */}
             <div className="bg-surface border border-line rounded-3xl p-6 w-full max-w-lg shadow-sm space-y-4">
               <div className="flex justify-between items-center pb-3 border-b border-line text-xs">
                 <div>
-                  <span className="text-ink-500 block">Official Invoice No:</span>
+                  <span className="text-ink-500 block">
+                    {t('customerDisplay.officialInvoice', 'Official Invoice No:')}
+                  </span>
                   <span className="font-mono font-bold text-ink-900 text-sm">{completedSale.invoiceNumber}</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-ink-500 block">Items Purchased:</span>
+                  <span className="text-ink-500 block">
+                    {t('customerDisplay.itemsPurchased', 'Items Purchased:')}
+                  </span>
                   <span className="font-bold text-ink-900 text-sm">{completedSale.itemsCount} Items</span>
                 </div>
               </div>
@@ -353,13 +383,17 @@ export default function CustomerDisplayPage() {
               {/* Amount Paid & Change Returned */}
               <div className="grid grid-cols-2 gap-4 py-2">
                 <div className="p-4 rounded-2xl bg-card border border-line shadow-2xs">
-                  <span className="text-xs font-bold text-ink-500 uppercase tracking-wider block">Total Paid</span>
+                  <span className="text-xs font-bold text-ink-500 uppercase tracking-wider block">
+                    {t('customerDisplay.totalPaid', 'Total Paid')}
+                  </span>
                   <span className="text-xl font-black text-ink-900 font-mono mt-1 block">
                     Rs. {completedSale.amountPaid.toFixed(2)}
                   </span>
                 </div>
                 <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 shadow-2xs">
-                  <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider block">Change Returned</span>
+                  <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider block">
+                    {t('customerDisplay.changeReturned', 'Change Returned')}
+                  </span>
                   <span className="text-2xl font-black text-emerald-600 font-mono mt-1 block">
                     Rs. {completedSale.change.toFixed(2)}
                   </span>
@@ -370,9 +404,14 @@ export default function CustomerDisplayPage() {
               <div className="flex items-center gap-3 p-3.5 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 text-amber-900 text-xs">
                 <Award size={20} className="text-amber-600 shrink-0" />
                 <div>
-                  <span className="font-bold block">Nova Club Points Credited!</span>
+                  <span className="font-bold block">
+                    {t('customerDisplay.novaClubPointsCredited', 'Nova Club Points Credited!')}
+                  </span>
                   <span className="text-amber-700">
-                    Earned +{Math.max(1, Math.floor(completedSale.grandTotal / 100))} reward points on this purchase.
+                    {t('customerDisplay.pointsEarnedDesc', {
+                      count: Math.max(1, Math.floor(completedSale.grandTotal / 100)),
+                      defaultValue: `Earned +${Math.max(1, Math.floor(completedSale.grandTotal / 100))} reward points on this purchase.`
+                    })}
                   </span>
                 </div>
               </div>
@@ -394,7 +433,7 @@ export default function CustomerDisplayPage() {
 
             <p className="text-xs text-ink-500 flex items-center gap-1.5 font-medium mt-6">
               <Heart size={14} className="text-brand-600 fill-brand-600" />
-              <span>Your paper receipt is being printed. Have a wonderful day ahead!</span>
+              <span>{t('customerDisplay.receiptPrinting', 'Your paper receipt is being printed. Have a wonderful day ahead!')}</span>
             </p>
           </div>
         ) : hasItems ? (
@@ -426,12 +465,12 @@ export default function CustomerDisplayPage() {
                     <div className="flex items-center gap-2">
                       <span className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 uppercase tracking-wide">
                         <Sparkles size={11} className="text-emerald-600" />
-                        Just Scanned
+                        {t('customerDisplay.justScanned', 'Just Scanned')}
                       </span>
                       {cartState.lastScannedItem.isWeighable && (
                         <span className="flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 uppercase tracking-wide">
                           <Scale size={11} />
-                          Weighed Produce
+                          {t('customerDisplay.weighedProduce', 'Weighed Produce')}
                         </span>
                       )}
                     </div>
@@ -450,7 +489,7 @@ export default function CustomerDisplayPage() {
                       </span>
                       {cartState.lastScannedItem.discount > 0 && (
                         <span className="ml-2 text-emerald-600 font-semibold font-sans">
-                          (Saved Rs. {cartState.lastScannedItem.discount.toFixed(2)})
+                          (-Rs. {cartState.lastScannedItem.discount.toFixed(2)})
                         </span>
                       )}
                     </p>
@@ -458,7 +497,9 @@ export default function CustomerDisplayPage() {
                 </div>
 
                 <div className="text-right pr-2">
-                  <span className="text-xs font-bold text-ink-500 uppercase tracking-wider block">Item Total</span>
+                  <span className="text-xs font-bold text-ink-500 uppercase tracking-wider block">
+                    {t('customerDisplay.itemTotal', 'Item Total')}
+                  </span>
                   <span className="text-2xl font-black text-ink-900 font-mono">
                     Rs. {cartState.lastScannedItem.total.toFixed(2)}
                   </span>
@@ -477,13 +518,17 @@ export default function CustomerDisplayPage() {
                       <ShoppingBag size={17} />
                     </div>
                     <div>
-                      <span className="font-extrabold text-sm text-ink-900 block leading-tight">Your Cart Items</span>
-                      <span className="text-[11px] text-ink-500 font-medium">Scanned items verified with live database</span>
+                      <span className="font-extrabold text-sm text-ink-900 block leading-tight">
+                        {t('customerDisplay.yourCartItems', 'Your Cart Items')}
+                      </span>
+                      <span className="text-[11px] text-ink-500 font-medium">
+                        {t('customerDisplay.scannedItemsVerified', 'Scanned items verified with live database')}
+                      </span>
                     </div>
                   </div>
 
                   <span className="text-xs font-bold px-3 py-1 rounded-full bg-card border border-line text-ink-700 shadow-2xs">
-                    {totalItemCount} {totalItemCount === 1 ? 'item' : 'items'}
+                    {t('customerDisplay.itemsCount', { count: totalItemCount, defaultValue: `${totalItemCount} items` })}
                   </span>
                 </div>
 
@@ -552,9 +597,9 @@ export default function CustomerDisplayPage() {
                 <div className="px-5 py-2.5 bg-surface border-t border-line text-[11px] text-ink-500 flex items-center justify-between">
                   <span className="flex items-center gap-1.5 font-medium">
                     <ShieldCheck size={14} className="text-emerald-600" />
-                    <span>Weights & barcodes verified by NovaMart scale standards</span>
+                    <span>{t('customerDisplay.scaleStandardsNote', 'Weights & barcodes verified by NovaMart scale standards')}</span>
                   </span>
-                  <span className="font-mono text-ink-400">Currency: LKR</span>
+                  <span className="font-mono text-ink-400">{t('customerDisplay.currency', 'Currency: LKR')}</span>
                 </div>
               </div>
 
@@ -563,12 +608,12 @@ export default function CustomerDisplayPage() {
                 {/* Summary Totals Card */}
                 <div className="bg-card rounded-3xl border border-line p-5 shadow-xs space-y-3.5">
                   <span className="text-xs font-extrabold text-ink-500 uppercase tracking-wider block">
-                    Invoice Summary
+                    {t('customerDisplay.invoiceSummary', 'Invoice Summary')}
                   </span>
 
                   <div className="space-y-2.5 text-sm">
                     <div className="flex justify-between text-ink-600">
-                      <span>Subtotal</span>
+                      <span>{t('customerDisplay.subtotal', 'Subtotal')}</span>
                       <span className="font-mono text-ink-900 font-bold">Rs. {cartState.subtotal.toFixed(2)}</span>
                     </div>
 
@@ -576,7 +621,7 @@ export default function CustomerDisplayPage() {
                       <div className="flex justify-between text-emerald-700 font-bold bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-200">
                         <span className="flex items-center gap-1.5">
                           <Tag size={15} />
-                          <span>Savings & Discounts</span>
+                          <span>{t('customerDisplay.savingsAndDiscounts', 'Savings & Discounts')}</span>
                         </span>
                         <span className="font-mono">-Rs. {cartState.totalDiscount.toFixed(2)}</span>
                       </div>
@@ -584,7 +629,7 @@ export default function CustomerDisplayPage() {
 
                     {cartState.totalTax > 0 && (
                       <div className="flex justify-between text-ink-600">
-                        <span>Tax / VAT</span>
+                        <span>{t('customerDisplay.taxVat', 'Tax / VAT')}</span>
                         <span className="font-mono text-ink-900">Rs. {cartState.totalTax.toFixed(2)}</span>
                       </div>
                     )}
@@ -595,10 +640,10 @@ export default function CustomerDisplayPage() {
                 <div className="bg-gradient-to-br from-neutral-900 via-neutral-900 to-black rounded-3xl p-6 text-white shadow-md border border-neutral-800 flex flex-col justify-between shrink-0">
                   <div className="flex justify-between items-start">
                     <span className="text-xs font-bold text-neutral-400 uppercase tracking-widest block">
-                      Total Amount Due
+                      {t('customerDisplay.totalAmountDue', 'Total Amount Due')}
                     </span>
                     <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/40">
-                      Payable Now
+                      {t('customerDisplay.payableNow', 'Payable Now')}
                     </span>
                   </div>
 
@@ -611,7 +656,7 @@ export default function CustomerDisplayPage() {
                   <div className="pt-3 border-t border-neutral-800 flex items-center justify-between text-xs text-neutral-400">
                     <span className="flex items-center gap-1.5">
                       <Sparkle size={13} className="text-amber-400" />
-                      <span>NovaPoints Reward:</span>
+                      <span>{t('customerDisplay.novaPointsReward', 'NovaPoints Reward:')}</span>
                     </span>
                     <span className="font-bold text-amber-300 font-mono">
                       +{Math.max(1, Math.floor(cartState.grandTotal / 100))} pts
@@ -629,7 +674,7 @@ export default function CustomerDisplayPage() {
                         ) : (
                           <CreditCard size={16} className="text-brand-600" />
                         )}
-                        <span>Tender Received ({paymentState.paymentMethod}):</span>
+                        <span>{t('customerDisplay.tenderReceived', { method: paymentState.paymentMethod, defaultValue: `Tender Received (${paymentState.paymentMethod}):` })}</span>
                       </span>
                       <span className="font-mono font-bold text-ink-900 text-sm">
                         Rs. {paymentState.amountPaid.toFixed(2)}
@@ -637,7 +682,9 @@ export default function CustomerDisplayPage() {
                     </div>
 
                     <div className="flex items-center justify-between pt-2 border-t border-line">
-                      <span className="text-sm font-extrabold text-ink-900">Change Due:</span>
+                      <span className="text-sm font-extrabold text-ink-900">
+                        {t('customerDisplay.changeDue', 'Change Due:')}
+                      </span>
                       <span
                         className={`text-2xl font-black font-mono ${
                           paymentState.change >= 0 ? 'text-emerald-600' : 'text-amber-600'
@@ -649,23 +696,25 @@ export default function CustomerDisplayPage() {
                   </div>
                 ) : (
                   <div className="bg-card rounded-3xl border border-line p-4 text-xs text-ink-600 flex-1 flex flex-col justify-center space-y-2">
-                    <span className="font-bold text-ink-900 block">Accepted Payment Methods:</span>
+                    <span className="font-bold text-ink-900 block">
+                      {t('customerDisplay.acceptedPaymentMethods', 'Accepted Payment Methods:')}
+                    </span>
                     <div className="grid grid-cols-3 gap-2">
                       <div className="flex items-center gap-1.5 p-2 rounded-xl bg-surface border border-line text-ink-800 font-semibold justify-center">
                         <Banknote size={14} className="text-emerald-600" />
-                        <span>Cash</span>
+                        <span>{t('customerDisplay.cash', 'Cash')}</span>
                       </div>
                       <div className="flex items-center gap-1.5 p-2 rounded-xl bg-surface border border-line text-ink-800 font-semibold justify-center">
                         <CreditCard size={14} className="text-brand-600" />
-                        <span>Cards</span>
+                        <span>{t('customerDisplay.cards', 'Cards')}</span>
                       </div>
                       <div className="flex items-center gap-1.5 p-2 rounded-xl bg-surface border border-line text-ink-800 font-semibold justify-center">
                         <QrCode size={14} className="text-blue-600" />
-                        <span>LankaQR</span>
+                        <span>{t('customerDisplay.lankaQr', 'LankaQR')}</span>
                       </div>
                     </div>
                     <p className="text-[11px] text-ink-500 pt-1">
-                      Member? Mention your phone number before paying to redeem points!
+                      {t('customerDisplay.memberPhoneReminder', 'Member? Mention your phone number before paying to redeem points!')}
                     </p>
                   </div>
                 )}
@@ -685,10 +734,10 @@ export default function CustomerDisplayPage() {
                 </div>
                 <div>
                   <h2 className="text-lg font-black text-ink-900 tracking-tight">
-                    Welcome to Nova Mart Supermarket
+                    {t('customerDisplay.welcomeTitle', 'Welcome to Nova Mart Supermarket')}
                   </h2>
                   <p className="text-xs text-ink-500">
-                    Please place your shopping items on the checkout counter · Our cashier is ready to assist you.
+                    {t('customerDisplay.welcomeSubtitle', 'Please place your shopping items on the checkout counter · Our cashier is ready to assist you.')}
                   </p>
                 </div>
               </div>
@@ -696,7 +745,7 @@ export default function CustomerDisplayPage() {
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Ready for Next Customer
+                  {t('customerDisplay.readyForCustomer', 'Ready for Next Customer')}
                 </span>
               </div>
             </div>
@@ -805,7 +854,9 @@ export default function CustomerDisplayPage() {
                       />
                     ))}
                   </div>
-                  <span className="text-xs text-ink-500 font-medium">Weekly Supermarket Specials</span>
+                  <span className="text-xs text-ink-500 font-medium">
+                    {t('customerDisplay.weeklySpecials', 'Weekly Supermarket Specials')}
+                  </span>
                 </div>
               </div>
 
@@ -817,7 +868,7 @@ export default function CustomerDisplayPage() {
                     <div className="flex items-center gap-2">
                       <Award size={20} className="text-amber-400" />
                       <span className="font-extrabold text-sm tracking-wider uppercase text-amber-300">
-                        Nova Club Rewards
+                        {t('customerDisplay.novaClubTitle', 'Nova Club Rewards')}
                       </span>
                     </div>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/10 text-white/80 border border-white/20">
@@ -828,13 +879,15 @@ export default function CustomerDisplayPage() {
                   <div className="my-3 space-y-1 relative z-10">
                     <p className="text-base font-bold text-white">Earn 1 Point on every Rs. 100 spent</p>
                     <p className="text-xs text-neutral-400 leading-relaxed">
-                      Instant cash deductions on your bill. Just give your mobile number to our cashier to collect or redeem points today!
+                      {t('customerDisplay.novaClubDesc', 'Earn 1 Point on every Rs. 100 spent · Instant cash deductions on your bill. Just give your mobile number to our cashier to collect or redeem points today!')}
                     </p>
                   </div>
 
                   <div className="pt-3 border-t border-neutral-800/80 flex items-center justify-between text-xs text-neutral-400 relative z-10">
                     <span>1 Point = Rs. 1.00 Discount</span>
-                    <span className="text-amber-400 font-bold">Free Instant Enrollment</span>
+                    <span className="text-amber-400 font-bold">
+                      {t('customerDisplay.freeEnrollment', 'Free Instant Enrollment')}
+                    </span>
                   </div>
                 </div>
 
@@ -842,10 +895,10 @@ export default function CustomerDisplayPage() {
                 <div className="p-4 rounded-3xl bg-card border border-line shadow-xs space-y-2">
                   <div className="flex items-center gap-2 text-ink-900 font-bold text-sm">
                     <Scale size={18} className="text-emerald-600" />
-                    <span>Certified Trade Precision Scales</span>
+                    <span>{t('customerDisplay.certifiedScalesTitle', 'Certified Trade Precision Scales')}</span>
                   </div>
                   <p className="text-xs text-ink-500 leading-relaxed">
-                    All fresh fruits, vegetables, and seafood are weighed digitally with certified supermarket accuracy.
+                    {t('customerDisplay.certifiedScalesDesc', 'All fresh fruits, vegetables, and seafood are weighed digitally with certified supermarket accuracy.')}
                   </p>
                 </div>
 
@@ -855,8 +908,12 @@ export default function CustomerDisplayPage() {
                     <Receipt size={20} />
                   </div>
                   <div className="text-xs text-ink-700">
-                    <p className="font-bold text-ink-900">Official Digital & Printed Invoices</p>
-                    <p className="text-ink-500">Every receipt carries a verified digital audit barcode</p>
+                    <p className="font-bold text-ink-900">
+                      {t('customerDisplay.digitalReceiptsTitle', 'Official Digital & Printed Invoices')}
+                    </p>
+                    <p className="text-ink-500">
+                      {t('customerDisplay.digitalReceiptsDesc', 'Every receipt carries a verified digital audit barcode')}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -865,21 +922,23 @@ export default function CustomerDisplayPage() {
             {/* Bottom Accepted Payments Banner */}
             <div className="px-6 py-3 rounded-2xl bg-card border border-line flex items-center justify-between text-xs text-ink-500 shadow-xs">
               <div className="flex items-center gap-5">
-                <span className="font-bold text-ink-800">Accepted At Counter:</span>
-                <span className="flex items-center gap-1.5 font-semibold text-ink-900 bg-surface px-2.5 py-1 rounded-lg border border-line">
-                  <Banknote size={14} className="text-emerald-600" /> Cash (LKR)
+                <span className="font-bold text-ink-800">
+                  {t('customerDisplay.acceptedAtCounter', 'Accepted At Counter:')}
                 </span>
                 <span className="flex items-center gap-1.5 font-semibold text-ink-900 bg-surface px-2.5 py-1 rounded-lg border border-line">
-                  <CreditCard size={14} className="text-brand-600" /> Visa & Mastercard
+                  <Banknote size={14} className="text-emerald-600" /> {t('customerDisplay.cash', 'Cash')} (LKR)
                 </span>
                 <span className="flex items-center gap-1.5 font-semibold text-ink-900 bg-surface px-2.5 py-1 rounded-lg border border-line">
-                  <QrCode size={14} className="text-blue-600" /> LankaQR Instant Pay
+                  <CreditCard size={14} className="text-brand-600" /> {t('customerDisplay.cards', 'Cards')} (Visa / Master)
+                </span>
+                <span className="flex items-center gap-1.5 font-semibold text-ink-900 bg-surface px-2.5 py-1 rounded-lg border border-line">
+                  <QrCode size={14} className="text-blue-600" /> {t('customerDisplay.lankaQr', 'LankaQR')}
                 </span>
               </div>
 
               <div className="flex items-center gap-1.5 text-ink-600 font-medium">
                 <Heart size={14} className="text-brand-600 fill-brand-600" />
-                <span>Thank you for choosing {shopInfo.name}</span>
+                <span>{t('customerDisplay.thankYouChoosing', { name: shopInfo.name, defaultValue: `Thank you for choosing ${shopInfo.name}` })}</span>
               </div>
             </div>
           </div>
