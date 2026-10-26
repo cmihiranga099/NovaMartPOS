@@ -213,6 +213,7 @@ namespace NovaMartPOS.API
             app.UseAuthorization();
             app.MapControllers();
             app.MapHub<DashboardHub>("/hubs/dashboard");
+            app.MapHub<CustomerDisplayHub>("/hubs/customer-display");
 
             using (var scope = app.Services.CreateScope())
             {

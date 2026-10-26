@@ -11,6 +11,10 @@ import {
   Barcode,
   ShoppingBag,
   PauseCircle,
+  ArrowDownUp,
+  Lock,
+  AlertCircle,
+  DollarSign,
 } from 'lucide-react';
 import { productService } from '../services/productService';
 import { customerService } from '../services/customerService';
@@ -26,6 +30,10 @@ import ManagerOverrideModal from '../components/ManagerOverrideModal';
 import KeyboardShortcutsModal from '../features/pos/KeyboardShortcutsModal';
 import HeldCartsModal, { type HeldCart } from '../features/pos/HeldCartsModal';
 import SplitPaymentModal from '../features/pos/SplitPaymentModal';
+import { shiftService } from '../services/shiftService';
+import OpenShiftModal from '../features/shifts/OpenShiftModal';
+import CashMovementModal from '../features/shifts/CashMovementModal';
+import ZReportModal from '../features/shifts/ZReportModal';
 import VirtualKeyboard from '../components/VirtualKeyboard';
 import { usePosKeyboard, playScannerBeep } from '../features/pos/usePosKeyboard';
 
@@ -74,6 +82,9 @@ export default function PosPage() {
   const [showShortcutsModal, setShowShortcutsModal] = useState(false);
   const [showHeldCartsModal, setShowHeldCartsModal] = useState(false);
   const [showSplitModal, setShowSplitModal] = useState(false);
+  const [showOpenShiftModal, setShowOpenShiftModal] = useState(false);
+  const [showCashMovementModal, setShowCashMovementModal] = useState(false);
+  const [showZReportModal, setShowZReportModal] = useState(false);
   const [scanFeedback, setScanFeedback] = useState<string | null>(null);
   const [activeKeyboardTarget, setActiveKeyboardTarget] = useState<KeyboardTarget>(null);
 
@@ -94,6 +105,33 @@ export default function PosPage() {
   const { data: products = [] } = useQuery({ queryKey: ['products'], queryFn: productService.getAll });
   const { data: customers = [] } = useQuery({ queryKey: ['customers'], queryFn: customerService.getAll });
   const { data: categories = [] } = useQuery({ queryKey: ['categories'], queryFn: lookupService.getCategories });
+
+  const { data: activeShift, refetch: refetchShift } = useQuery({
+    queryKey: ['activeShift'],
+    queryFn: shiftService.getActive,
+  });
+
+  const openShiftMutation = useMutation({
+    mutationFn: shiftService.openShift,
+    onSuccess: () => refetchShift(),
+  });
+
+  const closeShiftMutation = useMutation({
+    mutationFn: ({ id, data }: { id: number; data: { countedCash: number; notes?: string } }) =>
+      shiftService.closeShift(id, data),
+    onSuccess: () => refetchShift(),
+  });
+
+  const cashMovementMutation = useMutation({
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: number;
+      data: { type: 'CashIn' | 'CashOut'; amount: number; reason: string };
+    }) => shiftService.addCashMovement(id, data),
+    onSuccess: () => refetchShift(),
+  });
 
   useEffect(() => {
     searchInputRef.current?.focus();
@@ -118,6 +156,7 @@ export default function PosPage() {
     mutationFn: saleService.checkout,
     onSuccess: (result) => {
       setCompletedSale(result);
+      refetchShift();
       setCart([]);
       setAmountPaid('');
       setError(null);
@@ -369,7 +408,13 @@ export default function PosPage() {
   };
 
   const handleClearOrCancel = () => {
-    if (showHeldCartsModal) {
+    if (showOpenShiftModal) {
+      setShowOpenShiftModal(false);
+    } else if (showCashMovementModal) {
+      setShowCashMovementModal(false);
+    } else if (showZReportModal) {
+      setShowZReportModal(false);
+    } else if (showHeldCartsModal) {
       setShowHeldCartsModal(false);
     } else if (showSplitModal) {
       setShowSplitModal(false);
@@ -442,6 +487,9 @@ export default function PosPage() {
       showShortcutsModal ||
       showHeldCartsModal ||
       showSplitModal ||
+      showOpenShiftModal ||
+      showCashMovementModal ||
+      showZReportModal ||
       showOverridePrompt ||
       showDiscountEntry ||
       activeKeyboardTarget !== null,
@@ -544,6 +592,11 @@ export default function PosPage() {
 
   const handleSplitCheckout = (splits: { method: string; amount: number }[]) => {
     setError(null);
+    if (!activeShift) {
+      setError(t('shift.shiftRequired'));
+      setShowOpenShiftModal(true);
+      return;
+    }
     if (cart.length === 0) {
       setError(t('pos.cartEmptyError'));
       return;
@@ -565,6 +618,11 @@ export default function PosPage() {
 
   const handleCheckout = () => {
     setError(null);
+    if (!activeShift) {
+      setError(t('shift.shiftRequired'));
+      setShowOpenShiftModal(true);
+      return;
+    }
     if (cart.length === 0) {
       setError(t('pos.cartEmptyError'));
       return;
@@ -663,6 +721,67 @@ export default function PosPage() {
     <div className="grid grid-cols-3 gap-6 h-full pb-10">
       {/* Left: category tabs + product grid */}
       <div className="col-span-2 flex flex-col min-h-0">
+        {/* Till & Register Shift Status Banner */}
+        <div className="mb-3 px-3.5 py-2.5 rounded-xl border border-line flex items-center justify-between text-xs transition-all shadow-2xs bg-card">
+          {activeShift ? (
+            <>
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <span className="flex h-2.5 w-2.5 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span className="font-bold text-ink-900">
+                  {t('shift.shiftActive', { id: activeShift.shiftId })}
+                </span>
+                <span className="text-ink-400">·</span>
+                <span className="text-ink-600">
+                  {t('shift.float')}: <strong className="text-ink-900 font-mono">Rs. {activeShift.startingCash.toFixed(2)}</strong>
+                </span>
+                <span className="text-ink-400">·</span>
+                <span className="text-ink-600">
+                  {t('shift.expected')}: <strong className="text-brand-600 font-mono">Rs. {activeShift.expectedCash.toFixed(2)}</strong>
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setShowCashMovementModal(true)}
+                  className="px-2.5 py-1.5 rounded-lg border border-line bg-surface hover:bg-ink-500/10 font-semibold text-ink-700 flex items-center gap-1.5 transition-colors text-xs"
+                >
+                  <ArrowDownUp size={13} className="text-ink-500" />
+                  <span>{t('shift.cashInOut')}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowZReportModal(true)}
+                  className="px-2.5 py-1.5 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-100 font-semibold text-rose-700 flex items-center gap-1.5 transition-colors text-xs"
+                >
+                  <Lock size={13} />
+                  <span>{t('shift.endShiftZReport')}</span>
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex items-center gap-2 text-amber-700">
+                <AlertCircle size={16} className="text-amber-600 shrink-0" />
+                <span className="font-medium text-xs">
+                  {t('shift.registerClosedNotice')}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowOpenShiftModal(true)}
+                className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg flex items-center gap-1.5 transition-colors shadow-2xs text-xs"
+              >
+                <DollarSign size={14} />
+                <span>{t('shift.openRegister')}</span>
+              </button>
+            </>
+          )}
+        </div>
+
         {/* Search bar & Keyboard Shortcuts Button */}
         <div className="flex items-center gap-2 mb-3">
           <div className="relative flex-1">
@@ -1184,6 +1303,42 @@ export default function PosPage() {
         onConfirmCheckout={handleSplitCheckout}
         isProcessing={checkoutMutation.isPending}
       />
+
+      <OpenShiftModal
+        isOpen={showOpenShiftModal}
+        onClose={() => setShowOpenShiftModal(false)}
+        onConfirmOpen={async (startingCash, notes) => {
+          await openShiftMutation.mutateAsync({ startingCash, notes });
+        }}
+        isProcessing={openShiftMutation.isPending}
+      />
+
+      <CashMovementModal
+        isOpen={showCashMovementModal}
+        onClose={() => setShowCashMovementModal(false)}
+        onConfirm={async (data) => {
+          if (activeShift) {
+            await cashMovementMutation.mutateAsync({ id: activeShift.shiftId, data });
+          }
+        }}
+        isProcessing={cashMovementMutation.isPending}
+      />
+
+      {activeShift && (
+        <ZReportModal
+          isOpen={showZReportModal}
+          onClose={() => setShowZReportModal(false)}
+          summary={activeShift}
+          onConfirmClose={async (countedCash, notes) => {
+            const res = await closeShiftMutation.mutateAsync({
+              id: activeShift.shiftId,
+              data: { countedCash, notes },
+            });
+            return res;
+          }}
+          isProcessing={closeShiftMutation.isPending}
+        />
+      )}
 
       {/* Floating Touch Keyboard Quick Toggle Button */}
       <button
