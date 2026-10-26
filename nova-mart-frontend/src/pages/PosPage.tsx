@@ -1,6 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { Search, CheckCircle2, Tag, X, Delete, Percent, Keyboard, Barcode } from 'lucide-react';
+import {
+  Search,
+  CheckCircle2,
+  Tag,
+  X,
+  Delete,
+  Percent,
+  Keyboard,
+  Barcode,
+  ShoppingBag,
+  PauseCircle,
+} from 'lucide-react';
 import { productService } from '../services/productService';
 import { customerService } from '../services/customerService';
 import { saleService } from '../services/saleService';
@@ -13,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../store/AuthContext';
 import ManagerOverrideModal from '../components/ManagerOverrideModal';
 import KeyboardShortcutsModal from '../features/pos/KeyboardShortcutsModal';
+import HeldCartsModal, { type HeldCart } from '../features/pos/HeldCartsModal';
 import VirtualKeyboard from '../components/VirtualKeyboard';
 import { usePosKeyboard, playScannerBeep } from '../features/pos/usePosKeyboard';
 
@@ -33,6 +45,7 @@ const tileColor = (key: string) => {
 };
 
 const KEYPAD_KEYS = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '.', '0', 'DEL'];
+const HELD_CARTS_STORAGE_KEY = 'novamart_held_carts';
 
 type KeyboardTarget = 'search' | 'promo' | 'discount' | 'amountPaid' | null;
 
@@ -58,8 +71,19 @@ export default function PosPage() {
   const [discountApprovedPin, setDiscountApprovedPin] = useState<string | null>(null);
   const [discountApprovedBy, setDiscountApprovedBy] = useState<string | null>(null);
   const [showShortcutsModal, setShowShortcutsModal] = useState(false);
+  const [showHeldCartsModal, setShowHeldCartsModal] = useState(false);
   const [scanFeedback, setScanFeedback] = useState<string | null>(null);
   const [activeKeyboardTarget, setActiveKeyboardTarget] = useState<KeyboardTarget>(null);
+
+  // Load persistent held carts from localStorage
+  const [heldCarts, setHeldCarts] = useState<HeldCart[]>(() => {
+    try {
+      const saved = localStorage.getItem(HELD_CARTS_STORAGE_KEY);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const customerSelectRef = useRef<HTMLSelectElement>(null);
@@ -72,6 +96,15 @@ export default function PosPage() {
   useEffect(() => {
     searchInputRef.current?.focus();
   }, []);
+
+  // Sync held carts to localStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem(HELD_CARTS_STORAGE_KEY, JSON.stringify(heldCarts));
+    } catch {
+      // Ignore quota errors
+    }
+  }, [heldCarts]);
 
   useEffect(() => {
     if (!scanFeedback) return;
@@ -216,8 +249,127 @@ export default function PosPage() {
     removeFromCart(lastItem.productId);
   };
 
+  const subtotal = cart.reduce((sum, i) => sum + i.unitPrice * i.quantity, 0);
+  const totalDiscount = cart.reduce((sum, i) => sum + i.discount, 0);
+  const totalTax = cart.reduce(
+    (sum, i) => sum + (i.unitPrice * i.quantity - i.discount) * (i.taxRate / 100),
+    0
+  );
+  const netAfterLineDiscounts = subtotal - totalDiscount;
+  const promoDiscount = appliedPromo?.discount ?? 0;
+  const grandTotal = netAfterLineDiscounts - promoDiscount + totalTax;
+  const paidNum = Number(amountPaid) || 0;
+  const change = paidNum - grandTotal;
+
+  // Park / Hold current cart
+  const handleHoldCart = () => {
+    if (cart.length === 0) {
+      setError(t('pos.cartEmptyError'));
+      return;
+    }
+
+    const selectedCustomer = customers.find((c) => c.id === customerId);
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const newHeldCart: HeldCart = {
+      id: `HC-${Date.now().toString().slice(-4)}`,
+      createdAt: now.toISOString(),
+      note: `Cart #${heldCarts.length + 1} (${timeStr})`,
+      items: [...cart],
+      customerId,
+      customerName: selectedCustomer?.name,
+      appliedPromo,
+      discountApprovedPin,
+      discountApprovedBy,
+      total: grandTotal,
+    };
+
+    setHeldCarts((prev) => [newHeldCart, ...prev]);
+
+    // Reset current active cart
+    setCart([]);
+    setAmountPaid('');
+    setAppliedPromo(null);
+    setPromoInput('');
+    setPromoError(null);
+    setDiscountApprovedPin(null);
+    setDiscountApprovedBy(null);
+    setError(null);
+    setActiveKeyboardTarget(null);
+
+    playScannerBeep(true);
+    setScanFeedback(t('pos.cartHeldSuccess', { id: newHeldCart.id }));
+    searchInputRef.current?.focus();
+  };
+
+  // Resume / Recall a held cart
+  const handleRecallCart = (heldCart: HeldCart, mode: 'replace' | 'merge') => {
+    if (mode === 'replace') {
+      // If current cart has items, park current cart first
+      if (cart.length > 0) {
+        const selectedCustomer = customers.find((c) => c.id === customerId);
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const currentParked: HeldCart = {
+          id: `HC-${Date.now().toString().slice(-4)}`,
+          createdAt: now.toISOString(),
+          note: `Cart (${timeStr})`,
+          items: [...cart],
+          customerId,
+          customerName: selectedCustomer?.name,
+          appliedPromo,
+          discountApprovedPin,
+          discountApprovedBy,
+          total: grandTotal,
+        };
+        setHeldCarts((prev) => [currentParked, ...prev.filter((c) => c.id !== heldCart.id)]);
+      } else {
+        setHeldCarts((prev) => prev.filter((c) => c.id !== heldCart.id));
+      }
+
+      setCart(heldCart.items);
+      setCustomerId(heldCart.customerId);
+      setAppliedPromo(heldCart.appliedPromo ?? null);
+      setPromoInput(heldCart.appliedPromo?.code ?? '');
+      setDiscountApprovedPin(heldCart.discountApprovedPin ?? null);
+      setDiscountApprovedBy(heldCart.discountApprovedBy ?? null);
+      setAmountPaid('');
+      setError(null);
+    } else {
+      // Merge mode
+      setCart((prev) => {
+        const merged = [...prev];
+        for (const item of heldCart.items) {
+          const existingIdx = merged.findIndex((i) => i.productId === item.productId);
+          if (existingIdx >= 0) {
+            const newQty = Math.min(
+              merged[existingIdx].availableStock,
+              merged[existingIdx].quantity + item.quantity
+            );
+            merged[existingIdx] = { ...merged[existingIdx], quantity: newQty };
+          } else {
+            merged.push(item);
+          }
+        }
+        return merged;
+      });
+
+      setHeldCarts((prev) => prev.filter((c) => c.id !== heldCart.id));
+    }
+
+    playScannerBeep(true);
+    setScanFeedback(t('pos.cartRecalledSuccess'));
+    searchInputRef.current?.focus();
+  };
+
+  const handleDiscardHeldCart = (id: string) => {
+    setHeldCarts((prev) => prev.filter((c) => c.id !== id));
+  };
+
   const handleClearOrCancel = () => {
-    if (activeKeyboardTarget !== null) {
+    if (showHeldCartsModal) {
+      setShowHeldCartsModal(false);
+    } else if (activeKeyboardTarget !== null) {
       setActiveKeyboardTarget(null);
     } else if (showShortcutsModal) {
       setShowShortcutsModal(false);
@@ -270,8 +422,17 @@ export default function PosPage() {
     onToggleShortcutsModal: () => {
       setShowShortcutsModal((prev) => !prev);
     },
+    onHoldCart: handleHoldCart,
+    onRecallCart: () => {
+      setShowHeldCartsModal((prev) => !prev);
+    },
     onBarcodeScanned: handleBarcodeScanned,
-    isModalOpen: showShortcutsModal || showOverridePrompt || showDiscountEntry || (activeKeyboardTarget !== null),
+    isModalOpen:
+      showShortcutsModal ||
+      showHeldCartsModal ||
+      showOverridePrompt ||
+      showDiscountEntry ||
+      activeKeyboardTarget !== null,
     isCompletedSaleOpen: !!completedSale,
     onNewSale: () => setCompletedSale(null),
   });
@@ -321,18 +482,6 @@ export default function PosPage() {
     setDiscountInput('');
     if (activeKeyboardTarget === 'discount') setActiveKeyboardTarget(null);
   };
-
-  const subtotal = cart.reduce((sum, i) => sum + i.unitPrice * i.quantity, 0);
-  const totalDiscount = cart.reduce((sum, i) => sum + i.discount, 0);
-  const totalTax = cart.reduce(
-    (sum, i) => sum + (i.unitPrice * i.quantity - i.discount) * (i.taxRate / 100),
-    0
-  );
-  const netAfterLineDiscounts = subtotal - totalDiscount;
-  const promoDiscount = appliedPromo?.discount ?? 0;
-  const grandTotal = netAfterLineDiscounts - promoDiscount + totalTax;
-  const paidNum = Number(amountPaid) || 0;
-  const change = paidNum - grandTotal;
 
   const validatePromoMutation = useMutation({
     mutationFn: (code: string) => promotionService.validate(code, netAfterLineDiscounts),
@@ -532,9 +681,11 @@ export default function PosPage() {
           <div className="mb-3 px-3 py-2 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-semibold flex items-center justify-between shadow-xs animate-in fade-in slide-in-from-top-1 duration-150">
             <span className="flex items-center gap-2">
               <Barcode size={16} className="text-emerald-600" />
-              <span>{t('pos.scanned', { name: scanFeedback })}</span>
+              <span>{scanFeedback}</span>
             </span>
-            <span className="text-[10px] font-medium text-emerald-600 bg-emerald-100/70 px-1.5 py-0.5 rounded">+1 in cart</span>
+            <span className="text-[10px] font-medium text-emerald-600 bg-emerald-100/70 px-1.5 py-0.5 rounded">
+              Active
+            </span>
           </div>
         )}
 
@@ -606,14 +757,46 @@ export default function PosPage() {
 
       {/* Right: cart + checkout */}
       <div className="bg-card rounded-xl border border-line shadow flex flex-col p-4 min-h-0">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="font-bold text-lg">{t('pos.cart')}</h2>
-          <span className="text-xs text-ink-500">{cart.length} line{cart.length === 1 ? '' : 's'}</span>
+        {/* Cart Header with Hold Cart / Held Carts buttons */}
+        <div className="flex items-center justify-between mb-2 pb-2 border-b border-line/60">
+          <div className="flex items-center gap-2">
+            <h2 className="font-bold text-lg">{t('pos.cart')}</h2>
+            <span className="text-xs text-ink-500 font-mono bg-surface px-1.5 py-0.5 rounded border border-line">
+              {cart.length}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            {heldCarts.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setShowHeldCartsModal(true)}
+                title="View Held Carts (F6)"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 shadow-2xs transition-all animate-pulse"
+              >
+                <ShoppingBag size={13} />
+                <span>Held ({heldCarts.length})</span>
+                <kbd className="text-[9px] font-mono bg-amber-200 px-1 rounded">F6</kbd>
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={handleHoldCart}
+              disabled={cart.length === 0}
+              title="Park / Hold current cart (F5)"
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-line bg-surface hover:bg-ink-500/10 text-ink-700 disabled:opacity-40 transition-colors shadow-2xs"
+            >
+              <PauseCircle size={13} className="text-amber-600" />
+              <span>{t('pos.holdCart')}</span>
+              <kbd className="text-[9px] font-mono text-ink-500 bg-card border border-line px-1 rounded">F5</kbd>
+            </button>
+          </div>
         </div>
 
         <div className="flex-1 overflow-auto min-h-[80px]">
           {cart.length === 0 ? (
-            <p className="text-ink-500 text-sm">{t('pos.cartEmpty')}</p>
+            <p className="text-ink-500 text-sm py-4 text-center">{t('pos.cartEmpty')}</p>
           ) : (
             cart.map((item) => (
               <CartItemRow
@@ -934,6 +1117,15 @@ export default function PosPage() {
       <KeyboardShortcutsModal
         isOpen={showShortcutsModal}
         onClose={() => setShowShortcutsModal(false)}
+      />
+
+      <HeldCartsModal
+        isOpen={showHeldCartsModal}
+        onClose={() => setShowHeldCartsModal(false)}
+        heldCarts={heldCarts}
+        onRecall={handleRecallCart}
+        onDiscard={handleDiscardHeldCart}
+        isCurrentCartEmpty={cart.length === 0}
       />
 
       {/* Floating Touch Keyboard Quick Toggle Button */}
