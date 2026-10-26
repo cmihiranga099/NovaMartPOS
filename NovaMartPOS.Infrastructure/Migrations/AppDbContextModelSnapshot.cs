@@ -216,8 +216,11 @@ namespace NovaMartPOS.Infrastructure.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("MinimumStockLevel")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsWeighable")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<decimal>("MinimumStockLevel")
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -234,14 +237,21 @@ namespace NovaMartPOS.Infrastructure.Migrations
                     b.Property<decimal>("SellingPrice")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("StockQuantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("StockQuantity")
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<int?>("SupplierId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("TaxRate")
                         .HasColumnType("decimal(5,2)");
+
+                    b.Property<string>("UnitOfMeasure")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)")
+                        .HasDefaultValue("pcs");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime(6)");
@@ -371,8 +381,8 @@ namespace NovaMartPOS.Infrastructure.Migrations
                     b.Property<int>("PurchaseOrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
@@ -430,8 +440,8 @@ namespace NovaMartPOS.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<string>("Reason")
                         .HasColumnType("longtext");
@@ -529,8 +539,8 @@ namespace NovaMartPOS.Infrastructure.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<int>("SaleId")
                         .HasColumnType("int");
@@ -618,8 +628,8 @@ namespace NovaMartPOS.Infrastructure.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");

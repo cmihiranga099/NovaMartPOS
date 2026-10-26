@@ -5,6 +5,8 @@ export interface DisplayCartItem {
   quantity: number;
   discount: number;
   total: number;
+  unitOfMeasure?: string;
+  isWeighable?: boolean;
 }
 
 export interface DisplayCartState {

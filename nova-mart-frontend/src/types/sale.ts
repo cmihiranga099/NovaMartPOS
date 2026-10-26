@@ -26,6 +26,8 @@ export interface SaleItemResult {
   unitPrice: number;
   discount: number;
   total: number;
+  unitOfMeasure?: string;
+  isWeighable?: boolean;
 }
 
 export interface PaymentDetailResult {

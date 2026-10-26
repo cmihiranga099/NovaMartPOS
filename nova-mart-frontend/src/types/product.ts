@@ -8,6 +8,8 @@ export interface Product {
   taxRate: number;
   stockQuantity: number;
   minimumStockLevel: number;
+  isWeighable?: boolean;
+  unitOfMeasure?: string;
   isActive: boolean;
   categoryId: number;
   categoryName: string;
@@ -26,6 +28,8 @@ export interface CreateProductRequest {
   taxRate: number;
   stockQuantity: number;
   minimumStockLevel: number;
+  isWeighable?: boolean;
+  unitOfMeasure?: string;
   categoryId: number;
   brandId: number;
   supplierId?: number | null;
