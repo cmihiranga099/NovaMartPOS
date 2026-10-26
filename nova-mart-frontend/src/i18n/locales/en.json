@@ -56,7 +56,8 @@
     "suppliers": "Suppliers",
     "purchaseOrders": "Purchase Orders",
     "reports": "Reports",
-    "tagline": "Point of Sale"
+    "tagline": "Point of Sale",
+    "barcodeGenerator": "Barcode & Shelf Tags"
   },
   "login": {
     "title": "Sign in",
@@ -377,5 +378,18 @@
     "closedSuccess": "Shift Successfully Closed & Reconciled",
     "printZReport": "Print Z-Report Slip",
     "closeAndLock": "Lock & Close Shift"
+  },
+  "barcode": {
+    "title": "Shelf-Edge Price Tag & Barcode Generator",
+    "subtitle": "Design, preview and batch-print scannable retail shelf talkers and product barcode stickers",
+    "printNow": "Print Labels",
+    "selectProducts": "Select Products",
+    "searchPlaceholder": "Search by name, code, barcode...",
+    "formatSettings": "Label Format & Options",
+    "printQueue": "Selected Print Queue",
+    "batchPrintTags": "Shelf Tags & Barcodes",
+    "shelfEdgeTag": "Shelf-Edge Tag (60×40mm)",
+    "compactSticker": "Item Sticker (38×25mm)",
+    "a4Sheet": "A4 Sheet Grid (3×8)"
   }
 }

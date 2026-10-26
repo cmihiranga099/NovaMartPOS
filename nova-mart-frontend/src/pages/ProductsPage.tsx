@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus, Pencil, Trash2, Search } from 'lucide-react';
+import { Plus, Pencil, Trash2, Search, Barcode } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { productService } from '../services/productService';
 import ProductFormModal, { type ProductFormValues } from '../features/products/ProductFormModal';
@@ -109,15 +110,24 @@ export default function ProductsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold">{t('products.title')}</h1>
-        {canManage && (
-          <button
-            onClick={openAddModal}
-            className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium transition-colors"
+        <h1 className="text-2xl font-bold text-ink-900">{t('products.title')}</h1>
+        <div className="flex items-center gap-2.5">
+          <Link
+            to="/barcode-generator"
+            className="flex items-center gap-2 px-3.5 py-2 bg-surface border border-line text-ink-800 rounded-lg hover:bg-card font-medium transition-colors text-sm shadow-2xs"
           >
-            <Plus size={18} /> {t('products.addProduct')}
-          </button>
-        )}
+            <Barcode size={17} className="text-brand-600" />
+            <span>{t('barcode.batchPrintTags', 'Shelf Tags & Barcodes')}</span>
+          </Link>
+          {canManage && (
+            <button
+              onClick={openAddModal}
+              className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium transition-colors text-sm shadow-2xs"
+            >
+              <Plus size={18} /> {t('products.addProduct')}
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="relative mb-4 max-w-sm">
