@@ -4,12 +4,12 @@ import {
   Sparkles,
   CheckCircle2,
   Clock,
-  Wifi,
   CreditCard,
   Banknote,
   Receipt,
   Heart,
   Tag,
+  ShieldCheck,
 } from 'lucide-react';
 import { shopInfo } from '../config/shopInfo';
 import logo from '../assets/logo.png';
@@ -24,27 +24,31 @@ import type {
 const IDLE_PROMOS = [
   {
     title: 'Welcome to Nova Mart',
-    subtitle: 'Your one-stop destination for fresh groceries & daily essentials',
+    subtitle: 'Your neighborhood destination for fresh groceries, dairy & daily household essentials.',
     badge: 'Fresh Daily',
-    color: 'from-brand-600 to-indigo-700',
+    accent: 'bg-brand-50 border-brand-200 text-brand-900',
+    badgeColor: 'bg-brand-600 text-white',
   },
   {
     title: 'Super Saver Deals This Week',
-    subtitle: 'Check out special discounts across fresh produce, dairy & bakery items',
+    subtitle: 'Exclusive discounts on fresh vegetables, imported fruits, and dairy products across all aisles.',
     badge: 'Special Offers',
-    color: 'from-emerald-600 to-teal-700',
+    accent: 'bg-emerald-50 border-emerald-200 text-emerald-950',
+    badgeColor: 'bg-emerald-600 text-white',
   },
   {
-    title: 'Flexible Payment Options',
-    subtitle: 'We gladly accept Cash, Visa, Mastercard, and Bank Transfers',
+    title: 'Multiple Payment Options',
+    subtitle: 'We gladly accept Cash, Visa, Mastercard, and Instant Bank Transfers for your convenience.',
     badge: 'Fast Checkout',
-    color: 'from-amber-600 to-orange-700',
+    accent: 'bg-amber-50 border-amber-200 text-amber-950',
+    badgeColor: 'bg-amber-600 text-white',
   },
   {
-    title: 'Member Loyalty Program',
-    subtitle: 'Ask our cashier about signing up for exclusive member savings & rewards',
+    title: 'Loyalty Rewards Program',
+    subtitle: 'Ask our cashier to earn loyalty reward points on today’s shopping invoice.',
     badge: 'Save More',
-    color: 'from-violet-600 to-purple-800',
+    accent: 'bg-violet-50 border-violet-200 text-violet-950',
+    badgeColor: 'bg-violet-600 text-white',
   },
 ];
 
@@ -75,13 +79,13 @@ export default function CustomerDisplayPage() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [promoIndex, setPromoIndex] = useState(0);
 
-  // Clock timer
+  // Clock
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // Promo carousel timer in Idle mode
+  // Idle promo carousel
   useEffect(() => {
     const timer = setInterval(() => {
       setPromoIndex((prev) => (prev + 1) % IDLE_PROMOS.length);
@@ -89,7 +93,7 @@ export default function CustomerDisplayPage() {
     return () => clearInterval(timer);
   }, []);
 
-  // Subscribe to Customer Display Broadcasts, Storage events, & SignalR
+  // Multi-window sync (localStorage, BroadcastChannel, SignalR)
   useEffect(() => {
     const handleDisplayMessage = (msg: CustomerDisplayMessage) => {
       switch (msg.type) {
@@ -104,7 +108,6 @@ export default function CustomerDisplayPage() {
           setCompletedSale(msg.payload);
           setCartState(null);
           setPaymentState(null);
-          // Return to idle screen after 8 seconds
           setTimeout(() => {
             setCompletedSale((curr) => (curr?.invoiceNumber === msg.payload.invoiceNumber ? null : curr));
           }, 8000);
@@ -117,7 +120,7 @@ export default function CustomerDisplayPage() {
       }
     };
 
-    // 1. Storage event listener (syncs across tabs instantaneously)
+    // 1. Cross-tab storage listener
     const handleStorage = (e: StorageEvent) => {
       if (e.key === 'novamart_cfd_state') {
         if (e.newValue) {
@@ -133,10 +136,10 @@ export default function CustomerDisplayPage() {
     };
     window.addEventListener('storage', handleStorage);
 
-    // 2. BroadcastChannel & SignalR subscription
+    // 2. BroadcastChannel + SignalR subscription
     const unsubscribe = customerDisplayService.subscribe('default-register', handleDisplayMessage);
 
-    // 3. Request current state from open POS tab & SignalR hub
+    // 3. Handshake request to active POS
     customerDisplayService.requestCurrentState('default-register');
 
     return () => {
@@ -147,34 +150,35 @@ export default function CustomerDisplayPage() {
 
   const hasItems = cartState && cartState.items.length > 0;
   const activePromo = IDLE_PROMOS[promoIndex];
+  const totalItemCount = cartState ? cartState.items.reduce((sum, i) => sum + i.quantity, 0) : 0;
 
   return (
-    <div className="h-screen w-screen bg-slate-900 text-slate-100 flex flex-col overflow-hidden font-sans select-none">
-      {/* Top Header Bar */}
-      <header className="h-20 px-8 bg-slate-950/80 border-b border-slate-800/80 backdrop-blur-md flex items-center justify-between shrink-0">
+    <div className="h-screen w-screen bg-surface text-ink-900 font-sans flex flex-col overflow-hidden select-none">
+      {/* Top Header Bar — Matches NovaMart POS Navbar styling */}
+      <header className="h-20 px-8 bg-card border-b border-line flex items-center justify-between shrink-0 shadow-xs">
         <div className="flex items-center gap-3.5">
-          <img src={logo} alt={shopInfo.name} className="w-12 h-12 rounded-xl object-contain bg-white/5 p-1" />
+          <img src={logo} alt={shopInfo.name} className="w-12 h-12 rounded-xl object-contain border border-line p-1 bg-white" />
           <div>
-            <h1 className="text-xl font-black tracking-wide text-white flex items-center gap-2">
-              <span>{shopInfo.name}</span>
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/30">
+            <div className="flex items-center gap-2">
+              <h1 className="text-xl font-bold tracking-tight text-ink-900">{shopInfo.name}</h1>
+              <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200">
                 Customer View
               </span>
-            </h1>
-            <p className="text-xs text-slate-400">
-              {cartState?.cashierName ? `Cashier: ${cartState.cashierName}` : 'Express Checkout Lane'}
+            </div>
+            <p className="text-xs text-ink-500 mt-0.5">
+              {cartState?.cashierName ? `Cashier: ${cartState.cashierName} · Express Checkout` : shopInfo.address}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-6 text-sm text-slate-400">
-          <div className="flex items-center gap-2 bg-slate-900/90 px-3.5 py-1.5 rounded-xl border border-slate-800">
-            <Wifi size={14} className="text-emerald-400 animate-pulse" />
-            <span className="text-xs font-medium text-emerald-400">Register Online</span>
+        <div className="flex items-center gap-4 text-xs font-semibold">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Register Online</span>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-base text-slate-200">
-            <Clock size={16} className="text-slate-400" />
+          <div className="flex items-center gap-2 font-mono text-sm text-ink-700 px-3.5 py-1.5 rounded-xl bg-surface border border-line">
+            <Clock size={15} className="text-ink-500" />
             <span>
               {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
             </span>
@@ -182,82 +186,91 @@ export default function CustomerDisplayPage() {
         </div>
       </header>
 
-      {/* Main Body */}
+      {/* Main Content Area */}
       <main className="flex-1 overflow-hidden p-6 flex">
-        {/* State 1: Completed Sale Screen */}
+        {/* State 1: Completed Sale / Thank You Screen */}
         {completedSale ? (
-          <div className="w-full h-full flex flex-col items-center justify-center text-center p-8 bg-gradient-to-br from-emerald-950/40 via-slate-900 to-slate-950 rounded-3xl border border-emerald-500/30 animate-in fade-in zoom-in-95 duration-200">
-            <div className="w-24 h-24 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center text-emerald-400 mb-6 shadow-2xl shadow-emerald-500/30">
-              <CheckCircle2 size={56} />
+          <div className="w-full h-full flex flex-col items-center justify-center text-center p-8 bg-card rounded-2xl border border-line shadow-sm animate-in fade-in zoom-in-95 duration-200">
+            <div className="w-20 h-20 rounded-full bg-emerald-50 border-2 border-emerald-500 flex items-center justify-center text-emerald-600 mb-5 shadow-sm">
+              <CheckCircle2 size={46} />
             </div>
 
-            <span className="text-sm font-bold text-emerald-400 uppercase tracking-widest mb-1">
-              Payment Completed
+            <span className="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-1">
+              Payment Approved & Verified
             </span>
-            <h2 className="text-4xl font-black text-white mb-2">Thank You for Shopping!</h2>
-            <p className="text-slate-400 text-base mb-6 font-mono">Invoice #{completedSale.invoiceNumber}</p>
+            <h2 className="text-3xl font-black text-ink-900 mb-1">Thank You for Shopping at Nova Mart!</h2>
+            <p className="text-ink-500 text-sm mb-6 font-mono">Invoice #{completedSale.invoiceNumber}</p>
 
-            <div className="bg-slate-950/70 border border-slate-800 rounded-2xl p-6 w-full max-w-md space-y-3 mb-6 shadow-xl">
-              <div className="flex justify-between text-base">
-                <span className="text-slate-400">Total Paid:</span>
-                <span className="font-bold text-white font-mono">Rs. {completedSale.amountPaid.toFixed(2)}</span>
+            <div className="bg-surface border border-line rounded-2xl p-6 w-full max-w-md space-y-3 mb-6 shadow-2xs">
+              <div className="flex justify-between text-sm">
+                <span className="text-ink-500">Total Paid:</span>
+                <span className="font-bold text-ink-900 font-mono text-base">
+                  Rs. {completedSale.amountPaid.toFixed(2)}
+                </span>
               </div>
-              <div className="flex justify-between text-xl font-black border-t border-slate-800 pt-3">
-                <span className="text-slate-300">Change Return:</span>
-                <span className="text-emerald-400 font-mono">Rs. {completedSale.change.toFixed(2)}</span>
+              <div className="flex justify-between text-xl font-bold border-t border-line pt-3">
+                <span className="text-ink-900">Change Returned:</span>
+                <span className="text-brand-600 font-mono font-black">
+                  Rs. {completedSale.change.toFixed(2)}
+                </span>
               </div>
             </div>
 
-            <p className="text-sm text-slate-400 flex items-center gap-1.5">
-              <Heart size={16} className="text-rose-500 fill-rose-500" />
-              <span>Please collect your receipt and items. Have a wonderful day!</span>
+            <p className="text-xs text-ink-500 flex items-center gap-1.5 font-medium">
+              <Heart size={14} className="text-brand-600 fill-brand-600" />
+              <span>Please collect your printed receipt and change. Have a pleasant day!</span>
             </p>
           </div>
         ) : hasItems ? (
-          /* State 2: Active Cart View */
+          /* State 2: Active Cart View (Matches POS Card Style Exactly) */
           <div className="w-full h-full grid grid-cols-12 gap-6 overflow-hidden">
-            {/* Left 7 Columns: Scanned Items List */}
-            <div className="col-span-7 flex flex-col bg-slate-950/60 rounded-3xl border border-slate-800/80 overflow-hidden shadow-xl">
-              <div className="px-6 py-4 border-b border-slate-800/80 flex items-center justify-between bg-slate-900/60">
+            {/* Left 7 Columns: Items List Card */}
+            <div className="col-span-7 flex flex-col bg-card rounded-2xl border border-line shadow-xs overflow-hidden">
+              {/* Card Header */}
+              <div className="px-6 py-3.5 border-b border-line flex items-center justify-between bg-surface/50">
                 <div className="flex items-center gap-2.5">
-                  <ShoppingBag size={20} className="text-brand-400" />
-                  <span className="font-bold text-base text-white">Your Cart</span>
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-800 text-slate-300">
-                    {cartState.items.reduce((sum, i) => sum + i.quantity, 0)} items
+                  <div className="w-7 h-7 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center font-bold">
+                    <ShoppingBag size={16} />
+                  </div>
+                  <span className="font-bold text-sm text-ink-900">Your Scanned Cart</span>
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-surface border border-line text-ink-600">
+                    {totalItemCount} {totalItemCount === 1 ? 'item' : 'items'}
                   </span>
                 </div>
 
                 {cartState.lastScannedItem && (
-                  <div className="flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 animate-in fade-in slide-in-from-right-2 duration-150">
-                    <Sparkles size={13} />
-                    <span className="truncate max-w-[200px]">Scanned: {cartState.lastScannedItem.name}</span>
+                  <div className="flex items-center gap-1.5 text-xs text-brand-700 bg-brand-50 px-3 py-1 rounded-full border border-brand-200 font-medium animate-in fade-in slide-in-from-right-2 duration-150">
+                    <Sparkles size={13} className="text-brand-600" />
+                    <span className="truncate max-w-[220px]">
+                      Scanned: <strong>{cartState.lastScannedItem.name}</strong>
+                    </span>
                   </div>
                 )}
               </div>
 
-              {/* Items scroll area */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-2.5">
+              {/* Items Scrollable List */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-2">
                 {cartState.items.map((item, index) => {
                   const isLastScanned = cartState.lastScannedItem?.name === item.name;
                   return (
                     <div
                       key={index}
-                      className={`p-4 rounded-2xl border transition-all flex items-center justify-between ${
+                      className={`p-3.5 rounded-xl border transition-all flex items-center justify-between ${
                         isLastScanned
-                          ? 'bg-brand-600/15 border-brand-500/50 ring-1 ring-brand-500/30 shadow-lg'
-                          : 'bg-slate-900/50 border-slate-800 hover:border-slate-700'
+                          ? 'bg-brand-50/50 border-brand-300 ring-1 ring-brand-400/20 shadow-2xs'
+                          : 'bg-surface border-line hover:border-ink-500/30'
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <span className="w-7 h-7 rounded-lg bg-slate-800 text-slate-400 text-xs font-mono font-bold flex items-center justify-center">
+                        <span className="w-6 h-6 rounded-md bg-card border border-line text-ink-600 text-[11px] font-mono font-bold flex items-center justify-center shadow-2xs">
                           {index + 1}
                         </span>
                         <div>
-                          <h4 className="text-base font-bold text-white">{item.name}</h4>
-                          <p className="text-xs text-slate-400 mt-0.5">
+                          <h4 className="text-sm font-bold text-ink-900">{item.name}</h4>
+                          <p className="text-xs text-ink-500 mt-0.5 font-mono">
                             Rs. {item.unitPrice.toFixed(2)} × {item.quantity}
                             {item.discount > 0 && (
-                              <span className="ml-2 text-emerald-400 font-semibold">
+                              <span className="ml-2 text-emerald-600 font-semibold font-sans">
                                 (-Rs. {item.discount.toFixed(2)} off)
                               </span>
                             )}
@@ -266,7 +279,7 @@ export default function CustomerDisplayPage() {
                       </div>
 
                       <div className="text-right">
-                        <span className="text-lg font-black text-white font-mono block">
+                        <span className="text-base font-bold text-ink-900 font-mono">
                           Rs. {item.total.toFixed(2)}
                         </span>
                       </div>
@@ -276,24 +289,27 @@ export default function CustomerDisplayPage() {
               </div>
             </div>
 
-            {/* Right 5 Columns: Big Bill Totals & Payment Status */}
+            {/* Right 5 Columns: Billing & Payment Card */}
             <div className="col-span-5 flex flex-col justify-between space-y-4">
-              <div className="bg-slate-950/60 rounded-3xl border border-slate-800/80 p-6 shadow-xl flex-1 flex flex-col justify-between">
+              {/* Order Totals Card */}
+              <div className="bg-card rounded-2xl border border-line p-6 shadow-xs flex-1 flex flex-col justify-between">
                 <div>
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-4">
-                    Invoice Breakdown
+                  <span className="text-xs font-bold text-ink-500 uppercase tracking-wider block mb-4">
+                    Invoice Summary
                   </span>
 
-                  <div className="space-y-3.5 text-base">
-                    <div className="flex justify-between text-slate-400">
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between text-ink-600">
                       <span>Subtotal</span>
-                      <span className="font-mono text-slate-200">Rs. {cartState.subtotal.toFixed(2)}</span>
+                      <span className="font-mono text-ink-900 font-semibold">
+                        Rs. {cartState.subtotal.toFixed(2)}
+                      </span>
                     </div>
 
                     {cartState.totalDiscount > 0 && (
-                      <div className="flex justify-between text-emerald-400 font-semibold">
+                      <div className="flex justify-between text-emerald-600 font-semibold bg-emerald-50/60 px-3 py-1.5 rounded-lg border border-emerald-200">
                         <span className="flex items-center gap-1.5">
-                          <Tag size={16} />
+                          <Tag size={15} />
                           <span>Savings & Discounts</span>
                         </span>
                         <span className="font-mono">-Rs. {cartState.totalDiscount.toFixed(2)}</span>
@@ -301,108 +317,116 @@ export default function CustomerDisplayPage() {
                     )}
 
                     {cartState.totalTax > 0 && (
-                      <div className="flex justify-between text-slate-400">
+                      <div className="flex justify-between text-ink-600">
                         <span>Tax</span>
-                        <span className="font-mono text-slate-200">Rs. {cartState.totalTax.toFixed(2)}</span>
+                        <span className="font-mono text-ink-900">
+                          Rs. {cartState.totalTax.toFixed(2)}
+                        </span>
                       </div>
                     )}
                   </div>
                 </div>
 
-                {/* Big Grand Total Callout */}
-                <div className="pt-6 border-t border-slate-800">
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-1">
+                {/* Big Grand Total */}
+                <div className="pt-6 border-t border-line">
+                  <span className="text-xs font-bold text-ink-500 uppercase tracking-wider block mb-1">
                     Total Amount Due
                   </span>
-                  <div className="text-5xl font-black text-brand-400 font-mono tracking-tight">
+                  <div className="text-4xl font-black text-brand-600 font-mono tracking-tight">
                     Rs. {cartState.grandTotal.toFixed(2)}
                   </div>
                 </div>
               </div>
 
-              {/* Payment Status Card (if cashier entered amount) */}
-              {paymentState && paymentState.amountPaid > 0 && (
-                <div className="bg-slate-950/80 rounded-3xl border border-brand-500/30 p-5 shadow-xl space-y-2 animate-in fade-in slide-in-from-bottom-2 duration-150">
-                  <div className="flex items-center justify-between text-sm text-slate-400">
-                    <span className="flex items-center gap-1.5">
-                      {paymentState.paymentMethod === 'Cash' ? <Banknote size={16} /> : <CreditCard size={16} />}
+              {/* Payment Tender Callout (when cashier enters paid amount) */}
+              {paymentState && paymentState.amountPaid > 0 ? (
+                <div className="bg-card rounded-2xl border border-brand-500/40 p-5 shadow-xs space-y-2 animate-in fade-in slide-in-from-bottom-2 duration-150">
+                  <div className="flex items-center justify-between text-xs text-ink-600">
+                    <span className="flex items-center gap-1.5 font-semibold">
+                      {paymentState.paymentMethod === 'Cash' ? <Banknote size={15} /> : <CreditCard size={15} />}
                       <span>Tender ({paymentState.paymentMethod}):</span>
                     </span>
-                    <span className="font-mono font-bold text-white text-base">
+                    <span className="font-mono font-bold text-ink-900 text-sm">
                       Rs. {paymentState.amountPaid.toFixed(2)}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-slate-800">
-                    <span className="text-base font-bold text-slate-200">Change Return:</span>
+                  <div className="flex items-center justify-between pt-2 border-t border-line">
+                    <span className="text-sm font-bold text-ink-900">Change Due:</span>
                     <span
                       className={`text-2xl font-black font-mono ${
-                        paymentState.change >= 0 ? 'text-emerald-400' : 'text-amber-400'
+                        paymentState.change >= 0 ? 'text-emerald-600' : 'text-amber-600'
                       }`}
                     >
                       Rs. {Math.max(0, paymentState.change).toFixed(2)}
                     </span>
                   </div>
                 </div>
+              ) : (
+                /* Information footnote */
+                <div className="p-4 bg-card rounded-2xl border border-line text-xs text-ink-500 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <ShieldCheck size={16} className="text-emerald-600" />
+                    <span>Scanned items are verified & price-checked live</span>
+                  </span>
+                </div>
               )}
             </div>
           </div>
         ) : (
-          /* State 3: Idle / Promotional Screen Saver */
-          <div className="w-full h-full flex flex-col justify-between p-8 rounded-3xl border border-slate-800/80 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 shadow-2xl relative overflow-hidden">
-            {/* Ambient background glow */}
-            <div className="absolute -top-32 -right-32 w-96 h-96 bg-brand-600/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="flex justify-between items-start relative z-10">
+          /* State 3: Idle / Promotional Screen Saver (Clean Light NovaMart Theme) */
+          <div className="w-full h-full flex flex-col justify-between p-8 rounded-2xl border border-line bg-card shadow-xs">
+            <div className="flex justify-between items-start">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-brand-400 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-700 bg-brand-50 px-3 py-1 rounded-full border border-brand-200">
                   Ready for Next Customer
                 </span>
-                <h2 className="text-4xl font-black text-white mt-3">Welcome to Nova Mart</h2>
-                <p className="text-slate-400 text-sm mt-1 max-w-md">
-                  Please place your items on the counter. Our cashier is ready to assist you.
+                <h2 className="text-3xl font-black text-ink-900 mt-3">Welcome to {shopInfo.name}</h2>
+                <p className="text-ink-500 text-sm mt-1 max-w-md">
+                  Please place your shopping items on the checkout counter. Our cashier will assist you promptly.
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/5 border border-white/10 flex items-center gap-3">
-                <Receipt size={24} className="text-brand-400" />
-                <div className="text-xs text-slate-300">
-                  <p className="font-bold">Digital & Printed Receipts</p>
-                  <p className="text-slate-400">Scannable barcode included</p>
+              <div className="p-3.5 rounded-xl bg-surface border border-line flex items-center gap-3">
+                <div className="p-2 bg-brand-50 text-brand-600 rounded-lg">
+                  <Receipt size={22} />
+                </div>
+                <div className="text-xs text-ink-700">
+                  <p className="font-bold">Official Digital Receipts</p>
+                  <p className="text-ink-500">Unique invoice barcode on every receipt</p>
                 </div>
               </div>
             </div>
 
             {/* Rotating Promotional Hero Card */}
             <div
-              className={`p-10 rounded-3xl bg-gradient-to-r ${activePromo.color} text-white shadow-2xl relative overflow-hidden transition-all duration-700 transform`}
+              className={`p-8 rounded-2xl border ${activePromo.accent} shadow-2xs transition-all duration-500`}
             >
-              <div className="relative z-10 max-w-xl space-y-3">
-                <span className="text-xs font-bold uppercase tracking-wider bg-white/20 px-3 py-1 rounded-full inline-block backdrop-blur-xs">
+              <div className="max-w-xl space-y-2.5">
+                <span className={`text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full inline-block ${activePromo.badgeColor}`}>
                   {activePromo.badge}
                 </span>
-                <h3 className="text-3xl font-black">{activePromo.title}</h3>
-                <p className="text-white/80 text-base leading-relaxed">{activePromo.subtitle}</p>
+                <h3 className="text-2xl font-bold">{activePromo.title}</h3>
+                <p className="text-sm opacity-90 leading-relaxed">{activePromo.subtitle}</p>
               </div>
             </div>
 
-            {/* Footer marquee / store acceptance info */}
-            <div className="pt-4 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 relative z-10">
+            {/* Accepted Payments Bar */}
+            <div className="pt-4 border-t border-line flex items-center justify-between text-xs text-ink-500">
               <div className="flex items-center gap-6">
-                <span>Accepted Payments:</span>
-                <span className="flex items-center gap-1 font-semibold text-slate-300">
-                  <Banknote size={15} className="text-emerald-400" /> Cash
+                <span className="font-semibold text-ink-700">Accepted Payments:</span>
+                <span className="flex items-center gap-1.5 font-medium text-ink-900 bg-surface px-2.5 py-1 rounded-lg border border-line">
+                  <Banknote size={15} className="text-emerald-600" /> Cash
                 </span>
-                <span className="flex items-center gap-1 font-semibold text-slate-300">
-                  <CreditCard size={15} className="text-blue-400" /> Credit / Debit Cards
+                <span className="flex items-center gap-1.5 font-medium text-ink-900 bg-surface px-2.5 py-1 rounded-lg border border-line">
+                  <CreditCard size={15} className="text-brand-600" /> Credit / Debit Card
                 </span>
-                <span className="flex items-center gap-1 font-semibold text-slate-300">
-                  <Receipt size={15} className="text-amber-400" /> Bank Transfer
+                <span className="flex items-center gap-1.5 font-medium text-ink-900 bg-surface px-2.5 py-1 rounded-lg border border-line">
+                  <Receipt size={15} className="text-blue-600" /> Bank Transfer
                 </span>
               </div>
 
-              <span>Thank you for choosing Nova Mart</span>
+              <span>Thank you for choosing {shopInfo.name}</span>
             </div>
           </div>
         )}

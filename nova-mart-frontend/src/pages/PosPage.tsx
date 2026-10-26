@@ -307,7 +307,7 @@ export default function PosPage() {
   const change = paidNum - grandTotal;
 
   // Broadcast cart updates to Customer-Facing Display
-  useEffect(() => {
+  const broadcastCurrentCart = () => {
     if (cart.length > 0) {
       const lastItem = cart[cart.length - 1];
       customerDisplayService.sendCartUpdate({
@@ -339,6 +339,18 @@ export default function PosPage() {
     } else if (!completedSale) {
       customerDisplayService.sendIdle('default-register');
     }
+  };
+
+  useEffect(() => {
+    broadcastCurrentCart();
+  }, [cart, subtotal, totalDiscount, totalTax, grandTotal, appliedPromo, activeShift, completedSale]);
+
+  // Reply to Customer Display requests when new screen/tab opens
+  useEffect(() => {
+    const unsub = customerDisplayService.onRequestState(() => {
+      broadcastCurrentCart();
+    });
+    return unsub;
   }, [cart, subtotal, totalDiscount, totalTax, grandTotal, appliedPromo, activeShift, completedSale]);
 
   // Broadcast payment progress to Customer-Facing Display
