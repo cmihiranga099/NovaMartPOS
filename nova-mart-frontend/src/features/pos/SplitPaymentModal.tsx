@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, Plus, Trash2, CheckCircle2, AlertCircle, CreditCard, Banknote, Landmark, ArrowRight, Delete } from 'lucide-react';
+import { X, Plus, Trash2, CheckCircle2, AlertCircle, CreditCard, Banknote, Landmark, Delete } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export interface SplitItem {
@@ -101,7 +101,6 @@ export default function SplitPaymentModal({
   };
 
   const handleFillRemaining = (id: string) => {
-    const current = splits.find((s) => s.id === id);
     const otherTotal = splits
       .filter((s) => s.id !== id)
       .reduce((sum, s) => sum + (Number(s.amount) || 0), 0);
