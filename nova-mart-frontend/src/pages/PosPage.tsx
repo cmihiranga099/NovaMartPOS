@@ -90,6 +90,7 @@ export default function PosPage() {
   const [showCashMovementModal, setShowCashMovementModal] = useState(false);
   const [showZReportModal, setShowZReportModal] = useState(false);
   const [scanFeedback, setScanFeedback] = useState<string | null>(null);
+  const [lastScannedProductId, setLastScannedProductId] = useState<number | null>(null);
   const [weighingProduct, setWeighingProduct] = useState<{
     product: (typeof products)[number];
     initialWeight?: number;
@@ -168,6 +169,7 @@ export default function PosPage() {
       setCompletedSale(result);
       refetchShift();
       setCart([]);
+      setLastScannedProductId(null);
       setAmountPaid('');
       setError(null);
       setAppliedPromo(null);
@@ -249,6 +251,7 @@ export default function PosPage() {
     }
 
     const qty = weightQuantity !== undefined ? weightQuantity : 1;
+    setLastScannedProductId(product.id);
 
     setCart((prev) => {
       const existing = prev.find((i) => i.productId === product.id);
@@ -368,7 +371,9 @@ export default function PosPage() {
   // Broadcast cart updates to Customer-Facing Display
   const broadcastCurrentCart = () => {
     if (cart.length > 0) {
-      const lastItem = cart[cart.length - 1];
+      const lastItem =
+        (lastScannedProductId ? cart.find((i) => i.productId === lastScannedProductId) : null) ||
+        cart[cart.length - 1];
       customerDisplayService.sendCartUpdate({
         registerId: 'default-register',
         cashierName: activeShift?.cashierName || 'Cashier',
