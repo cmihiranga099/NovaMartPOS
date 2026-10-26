@@ -35,7 +35,7 @@ public class SaleService : ISaleService
 
         var saleItems = new List<SaleItem>();
         var stockTransactions = new List<StockTransaction>();
-        var productsToDeduct = new List<(Product Product, int Quantity)>();
+        var productsToDeduct = new List<(Product Product, decimal Quantity)>();
 
         // Validate every line BEFORE making any changes
         foreach (var item in dto.Items)
@@ -237,7 +237,9 @@ public class SaleService : ISaleService
                 Quantity = si.Quantity,
                 UnitPrice = si.UnitPrice,
                 Discount = si.Discount,
-                Total = si.Total
+                Total = si.Total,
+                UnitOfMeasure = si.Product?.UnitOfMeasure ?? "pcs",
+                IsWeighable = si.Product?.IsWeighable ?? false
             }).ToList(),
             Payments = s.Payments.Select(p => new PaymentDetailDto
             {

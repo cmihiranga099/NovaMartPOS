@@ -21,10 +21,10 @@ public class ReturnRepository : IReturnRepository
             .AsSplitQuery()
             .FirstOrDefaultAsync(s => s.Id == saleId);
 
-    public async Task<int> GetAlreadyReturnedQuantityAsync(int saleItemId)
+    public async Task<decimal> GetAlreadyReturnedQuantityAsync(int saleItemId)
         => await _context.ReturnItems
             .Where(ri => ri.SaleItemId == saleItemId)
-            .SumAsync(ri => (int?)ri.Quantity) ?? 0;
+            .SumAsync(ri => (decimal?)ri.Quantity) ?? 0m;
 
     public async Task CreateReturnAsync(Return returnRecord, List<StockTransaction> stockTransactions, List<Product> productsToUpdate)
     {

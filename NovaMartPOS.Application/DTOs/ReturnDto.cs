@@ -3,7 +3,7 @@ namespace NovaMartPOS.Application.DTOs;
 public class ReturnItemRequestDto
 {
     public int SaleItemId { get; set; }
-    public int Quantity { get; set; }
+    public decimal Quantity { get; set; }
     public string? Reason { get; set; }
 }
 
@@ -19,7 +19,7 @@ public class ReturnItemDto
 {
     public int ProductId { get; set; }
     public string ProductName { get; set; } = string.Empty;
-    public int Quantity { get; set; }
+    public decimal Quantity { get; set; }
     public decimal UnitPrice { get; set; }
     public decimal RefundAmount { get; set; }
     public string? Reason { get; set; }
