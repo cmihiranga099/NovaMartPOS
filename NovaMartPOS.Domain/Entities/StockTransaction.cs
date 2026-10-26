@@ -8,6 +8,6 @@ public class StockTransaction : BaseEntity
     public Product Product { get; set; } = null!;
 
     public StockTransactionType Type { get; set; }
-    public int Quantity { get; set; }
+    public decimal Quantity { get; set; }
     public string? Notes { get; set; }
 }

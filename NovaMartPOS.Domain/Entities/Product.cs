@@ -8,8 +8,10 @@ public class Product : BaseEntity
     public decimal PurchasePrice { get; set; }
     public decimal SellingPrice { get; set; }
     public decimal TaxRate { get; set; }
-    public int StockQuantity { get; set; }
-    public int MinimumStockLevel { get; set; }
+    public decimal StockQuantity { get; set; }
+    public decimal MinimumStockLevel { get; set; }
+    public bool IsWeighable { get; set; } = false;
+    public string UnitOfMeasure { get; set; } = "pcs"; // kg, g, pcs, pack, l
     public bool IsActive { get; set; } = true;
 
     // Null for products that don't expire (hardware, non-perishables, etc).
