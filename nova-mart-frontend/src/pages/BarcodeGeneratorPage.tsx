@@ -165,7 +165,7 @@ export default function BarcodeGeneratorPage() {
               <span>{t('barcode.selectProducts', 'Select Products')}</span>
             </h2>
             <span className="text-xs font-semibold text-ink-500 font-mono">
-              {filteredProducts.length} items found
+              {t('barcode.itemsFound', { count: filteredProducts.length, defaultValue: `${filteredProducts.length} items found` })}
             </span>
           </div>
 
@@ -191,7 +191,7 @@ export default function BarcodeGeneratorPage() {
                   : 'bg-surface text-ink-700 border border-line hover:bg-card'
               }`}
             >
-              All Categories
+              {t('barcode.allCategories', 'All Categories')}
             </button>
             {categories.map((c) => (
               <button
@@ -212,27 +212,29 @@ export default function BarcodeGeneratorPage() {
           <div className="flex items-center justify-between pt-1 text-xs">
             <button
               onClick={selectAllFiltered}
-              className="text-brand-600 hover:text-brand-700 font-semibold flex items-center gap-1"
+              className="text-brand-600 hover:text-brand-700 font-semibold flex items-center gap-1 cursor-pointer"
             >
               <CheckSquare size={14} />
-              <span>Select All in Filter</span>
+              <span>{t('barcode.selectAll', 'Select All in Filter')}</span>
             </button>
             <button
               onClick={clearQueue}
-              className="text-ink-500 hover:text-rose-600 font-semibold flex items-center gap-1"
+              className="text-ink-500 hover:text-rose-600 font-semibold flex items-center gap-1 cursor-pointer"
             >
               <Trash2 size={14} />
-              <span>Clear Selection</span>
+              <span>{t('barcode.clearSelection', 'Clear Selection')}</span>
             </button>
           </div>
 
           {/* Product checklist */}
           <div className="border border-line rounded-xl divide-y divide-line/70 max-h-[460px] overflow-y-auto bg-surface">
             {productsLoading ? (
-              <div className="p-8 text-center text-xs text-ink-400">Loading products...</div>
+              <div className="p-8 text-center text-xs text-ink-400">
+                {t('barcode.loadingProducts', 'Loading products...')}
+              </div>
             ) : filteredProducts.length === 0 ? (
               <div className="p-8 text-center text-xs text-ink-500">
-                No matching active products found.
+                {t('barcode.noMatchingProducts', 'No matching active products found.')}
               </div>
             ) : (
               filteredProducts.map((p) => {

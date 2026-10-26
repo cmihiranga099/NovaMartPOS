@@ -13,9 +13,7 @@ interface LanguageOption {
 const LANGUAGES: LanguageOption[] = [
   { code: 'en', label: 'ENGLISH' },
   { code: 'si', label: 'සිංහල' },
-  // Tamil is a placeholder for now — not yet translated, so it's shown
-  // in the menu but isn't selectable.
-  { code: 'ta', label: 'தமிழ்', disabled: true },
+  { code: 'ta', label: 'தமிழ்' },
 ];
 
 export default function LanguageDropdown() {

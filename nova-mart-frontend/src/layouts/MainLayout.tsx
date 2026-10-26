@@ -2,36 +2,37 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   ShoppingCart,
-  Package,
-  Users,
-  LogOut,
+  FolderTree,
   Tag,
-  Layers,
-  History,
-  Percent,
   Truck,
-  PackageCheck,
-  FileBarChart,
+  Users,
+  Package,
+  Sparkles,
+  History,
+  BarChart3,
+  ClipboardList,
+  LogOut,
   Barcode,
 } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 import { useAuth } from '../store/AuthContext';
-import LowStockAlert from '../components/LowStockAlert';
+import { useTranslation } from 'react-i18next';
 import logo from '../assets/logo.png';
+import LowStockAlert from '../components/LowStockAlert';
+import LanguageDropdown from '../components/LanguageDropdown';
 
 const navItems = [
   { path: '/', key: 'dashboard', icon: LayoutDashboard },
   { path: '/pos', key: 'pos', icon: ShoppingCart },
-  { path: '/sales-history', key: 'salesHistory', icon: History },
-  { path: '/products', key: 'products', icon: Package },
-  { path: '/barcode-generator', key: 'barcodeGenerator', icon: Barcode },
-  { path: '/categories', key: 'categories', icon: Layers },
+  { path: '/barcodes', key: 'barcodeGenerator', icon: Barcode },
+  { path: '/categories', key: 'categories', icon: FolderTree },
   { path: '/brands', key: 'brands', icon: Tag },
-  { path: '/promotions', key: 'promotions', icon: Percent },
+  { path: '/suppliers', key: 'suppliers', icon: Truck },
   { path: '/customers', key: 'customers', icon: Users },
-  { path: '/suppliers', key: 'suppliers', icon: Truck, roles: ['Administrator', 'Manager'] },
-  { path: '/purchase-orders', key: 'purchaseOrders', icon: PackageCheck, roles: ['Administrator', 'Manager'] },
-  { path: '/reports', key: 'reports', icon: FileBarChart, roles: ['Administrator', 'Manager'] },
+  { path: '/products', key: 'products', icon: Package },
+  { path: '/promotions', key: 'promotions', icon: Sparkles },
+  { path: '/sales', key: 'salesHistory', icon: History },
+  { path: '/reports', key: 'reports', icon: BarChart3, roles: ['Admin', 'Manager'] },
+  { path: '/purchase-orders', key: 'purchaseOrders', icon: ClipboardList, roles: ['Admin', 'Manager'] },
 ] as const;
 
 export default function MainLayout() {
@@ -45,8 +46,9 @@ export default function MainLayout() {
     ? user.fullName.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()
     : '';
 
-  const toggleLanguage = () => {
-    i18n.changeLanguage(i18n.language === 'si' ? 'en' : 'si');
+  const cycleLanguage = () => {
+    const nextLang = i18n.language === 'en' ? 'si' : i18n.language === 'si' ? 'ta' : 'en';
+    i18n.changeLanguage(nextLang);
   };
 
   return (
@@ -62,14 +64,17 @@ export default function MainLayout() {
           </div>
           <div className="mt-3 flex items-center gap-2">
             <button
-              onClick={toggleLanguage}
-              className="flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg border border-line text-xs font-semibold text-ink-700 hover:bg-surface transition-colors"
-              title="Switch language"
+              onClick={cycleLanguage}
+              className="flex-1 flex items-center justify-center gap-1 py-1.5 rounded-lg border border-line text-xs font-semibold text-ink-700 hover:bg-surface transition-colors cursor-pointer"
+              title="Cycle language (EN / සිං / தமிழ்)"
             >
-              <span className={i18n.language === 'en' ? 'text-brand-600' : ''}>EN</span>
-              <span className="text-ink-500">/</span>
-              <span className={i18n.language === 'si' ? 'text-brand-600' : ''}>සිං</span>
+              <span className={i18n.language === 'en' ? 'text-brand-600 font-bold' : ''}>EN</span>
+              <span className="text-ink-400">/</span>
+              <span className={i18n.language === 'si' ? 'text-brand-600 font-bold' : ''}>සිං</span>
+              <span className="text-ink-400">/</span>
+              <span className={i18n.language === 'ta' ? 'text-brand-600 font-bold' : ''}>தம</span>
             </button>
+            <LanguageDropdown />
             <LowStockAlert />
           </div>
         </div>
@@ -102,7 +107,7 @@ export default function MainLayout() {
             <p className="text-sm font-medium truncate text-ink-900">{user?.fullName}</p>
             <p className="text-xs text-ink-500">{user?.role}</p>
           </div>
-          <button onClick={logout} title={t('common.logout')} className="text-ink-500 hover:text-brand-600">
+          <button onClick={logout} title={t('common.logout')} className="text-ink-500 hover:text-brand-600 cursor-pointer">
             <LogOut size={18} />
           </button>
         </div>

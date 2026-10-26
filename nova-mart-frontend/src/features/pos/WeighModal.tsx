@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Scale, X, Check, RotateCcw, Package } from 'lucide-react';
+import { Scale, Package, RotateCcw, Check, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { Product } from '../../types/product';
 
 interface Props {
   product: Product;
   initialWeight?: number;
-  onConfirm: (product: Product, weight: number) => void;
+  onConfirm: (product: Product, weightKg: number) => void;
   onClose: () => void;
 }
 
@@ -17,57 +17,55 @@ export default function WeighModal({
   onClose,
 }: Props) {
   const { t } = useTranslation();
-  const unit = product.unitOfMeasure || 'kg';
-
-  // State for weight in kg (or unit) as a string for keypad editing
   const [weightStr, setWeightStr] = useState<string>(
     initialWeight > 0 ? initialWeight.toFixed(3) : ''
   );
   const [tareKg, setTareKg] = useState<number>(0);
 
+  const unit = product.unitOfMeasure || 'kg';
+  const unitPrice = product.sellingPrice;
+
   const grossWeight = Math.max(0, parseFloat(weightStr) || 0);
   const netWeight = Math.max(0, Number((grossWeight - tareKg).toFixed(3)));
-  const unitPrice = product.sellingPrice;
-  const lineTotal = Number((netWeight * unitPrice).toFixed(2));
+  const lineTotal = netWeight * unitPrice;
 
-  // Handle keypad clicks
-  const handleKeyClick = (key: string) => {
-    if (key === 'clear') {
-      setWeightStr('');
-    } else if (key === 'backspace') {
+  // Handle touch keypad input
+  const handleKeyClick = (val: string) => {
+    if (val === 'backspace') {
       setWeightStr((prev) => prev.slice(0, -1));
-    } else if (key === '.') {
-      if (!weightStr.includes('.')) {
-        setWeightStr((prev) => (prev === '' ? '0.' : prev + '.'));
-      }
-    } else {
-      // digit
-      if (weightStr === '0') {
-        setWeightStr(key);
-      } else {
-        // limit to 3 decimal places
-        const parts = weightStr.split('.');
-        if (parts.length === 2 && parts[1].length >= 3) {
-          return;
-        }
-        setWeightStr((prev) => prev + key);
-      }
+      return;
     }
+
+    if (val === '.') {
+      if (weightStr.includes('.')) return;
+      setWeightStr((prev) => (prev === '' ? '0.' : prev + '.'));
+      return;
+    }
+
+    // Limit decimal precision to 3 places
+    if (weightStr.includes('.')) {
+      const parts = weightStr.split('.');
+      if (parts[1] && parts[1].length >= 3) return;
+    }
+
+    // Max 99.999 kg per line
+    const nextVal = weightStr + val;
+    if (parseFloat(nextVal) > 99.999) return;
+
+    setWeightStr(nextVal);
   };
 
-  // Preset weight buttons
   const setPresetWeight = (kg: number) => {
     setWeightStr(kg.toFixed(3));
   };
 
-  // Quick addition buttons
-  const addWeight = (deltaKg: number) => {
+  const addWeight = (delta: number) => {
     const current = parseFloat(weightStr) || 0;
-    const next = Math.max(0, current + deltaKg);
+    const next = Math.max(0, Math.min(99.999, current + delta));
     setWeightStr(next.toFixed(3));
   };
 
-  // Keyboard support (Enter, Esc, 0-9, dot, backspace)
+  // Keyboard shortcut support
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -81,32 +79,27 @@ export default function WeighModal({
       } else if (e.key >= '0' && e.key <= '9') {
         e.preventDefault();
         handleKeyClick(e.key);
-      } else if (e.key === '.' || e.key === ',') {
+      } else if (e.key === '.') {
         e.preventDefault();
         handleKeyClick('.');
       } else if (e.key === 'Backspace') {
         e.preventDefault();
         handleKeyClick('backspace');
-      } else if (e.key.toLowerCase() === 't') {
+      } else if (e.key === 't' || e.key === 'T') {
         e.preventDefault();
-        // Toggle 20g tare
         setTareKg((prev) => (prev > 0 ? 0 : 0.02));
-      } else if (e.key.toLowerCase() === 'z') {
-        e.preventDefault();
-        setWeightStr('');
-        setTareKg(0);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [weightStr, netWeight, product, onClose, onConfirm, tareKg]);
+  }, [netWeight, product, onConfirm, onClose, weightStr, tareKg]);
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center z-50 p-4 animate-in fade-in duration-150">
-      <div className="bg-card rounded-2xl shadow-2xl w-full max-w-lg border border-line overflow-hidden flex flex-col">
-        {/* Modal Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 bg-surface border-b border-line">
+    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
+      <div className="w-full max-w-lg bg-card rounded-2xl border border-line shadow-2xl overflow-hidden flex flex-col animate-in zoom-in-95 duration-150">
+        {/* Header */}
+        <div className="p-4 bg-surface border-b border-line flex items-center justify-between">
           <div className="flex items-center gap-3">
             {product.imageUrl ? (
               <img
@@ -146,32 +139,38 @@ export default function WeighModal({
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1 font-semibold text-emerald-400">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                SCALE STABLE
+                {t('weigh.scaleStable', 'SCALE STABLE')}
               </span>
               {tareKg > 0 && (
                 <span className="px-1.5 py-0.2 bg-amber-500/20 text-amber-400 rounded text-[10px] font-bold">
-                  TARE ACTIVE (-{(tareKg * 1000).toFixed(0)}g)
+                  {t('weigh.tareActive', { grams: (tareKg * 1000).toFixed(0), defaultValue: `TARE ACTIVE (-${(tareKg * 1000).toFixed(0)}g)` })}
                 </span>
               )}
             </div>
-            <span className="text-ink-400">UNIT: {unit.toUpperCase()}</span>
+            <span className="text-ink-400">
+              {t('weigh.unit', { unit: unit.toUpperCase(), defaultValue: `UNIT: ${unit.toUpperCase()}` })}
+            </span>
           </div>
 
           {/* Main Weight Readout */}
           <div className="grid grid-cols-2 gap-3 py-1">
             <div className="bg-black/60 rounded-xl p-3 border border-ink-800">
-              <span className="text-[11px] text-ink-400 block mb-0.5">NET WEIGHT</span>
+              <span className="text-[11px] text-ink-400 block mb-0.5">
+                {t('weigh.netWeight', 'NET WEIGHT')}
+              </span>
               <div className="text-3xl font-extrabold text-emerald-400 tracking-tight flex items-baseline justify-between">
                 <span>{netWeight.toFixed(3)}</span>
                 <span className="text-sm font-normal text-emerald-600">{unit}</span>
               </div>
               <div className="text-[11px] text-ink-500 mt-1">
-                Gross: {grossWeight.toFixed(3)} {unit} · Tare: {tareKg.toFixed(3)} {unit}
+                {t('weigh.gross', 'Gross')}: {grossWeight.toFixed(3)} {unit} · {t('weigh.tare', 'Tare')}: {tareKg.toFixed(3)} {unit}
               </div>
             </div>
 
             <div className="bg-black/60 rounded-xl p-3 border border-ink-800">
-              <span className="text-[11px] text-ink-400 block mb-0.5">LINE AMOUNT</span>
+              <span className="text-[11px] text-ink-400 block mb-0.5">
+                {t('weigh.lineAmount', 'LINE AMOUNT')}
+              </span>
               <div className="text-3xl font-extrabold text-amber-400 tracking-tight flex items-baseline justify-between">
                 <span>Rs. {lineTotal.toFixed(2)}</span>
               </div>
@@ -186,7 +185,9 @@ export default function WeighModal({
         <div className="p-4 space-y-3 bg-surface border-b border-line">
           {/* Tare Controls */}
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-ink-600 w-16">Tare / Zero:</span>
+            <span className="text-xs font-semibold text-ink-600 w-16">
+              {t('weigh.tareZero', 'Tare / Zero:')}
+            </span>
             <button
               type="button"
               onClick={() => setTareKg(0.02)}
@@ -197,7 +198,7 @@ export default function WeighModal({
               }`}
             >
               <Package size={13} />
-              Bag Tare (-20g)
+              {t('weigh.bagTare', 'Bag Tare (-20g)')}
             </button>
             <button
               type="button"
@@ -208,7 +209,8 @@ export default function WeighModal({
                   : 'bg-card border-line text-ink-700 hover:bg-card/80'
               }`}
             >
-              Tray Tare (-50g)
+              <Package size={13} />
+              {t('weigh.trayTare', 'Tray Tare (-50g)')}
             </button>
             <button
               type="button"
@@ -219,13 +221,15 @@ export default function WeighModal({
               className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card border border-line text-ink-700 hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-all flex items-center gap-1 ml-auto"
             >
               <RotateCcw size={13} />
-              Zero / Reset
+              {t('weigh.zeroReset', 'Zero / Reset')}
             </button>
           </div>
 
           {/* Quick Weight Presets */}
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-xs font-semibold text-ink-600 w-16">Quick:</span>
+            <span className="text-xs font-semibold text-ink-600 w-16">
+              {t('weigh.quick', 'Quick:')}
+            </span>
             {[
               { label: '250g', kg: 0.25 },
               { label: '500g', kg: 0.5 },
@@ -269,7 +273,7 @@ export default function WeighModal({
               key={digit}
               type="button"
               onClick={() => handleKeyClick(digit)}
-              className="h-12 bg-surface hover:bg-card border border-line rounded-xl text-xl font-bold text-ink-800 active:scale-95 transition-all shadow-2xs"
+              className="h-12 bg-surface hover:bg-card border border-line rounded-xl text-xl font-bold text-ink-800 active:scale-95 transition-all shadow-2xs cursor-pointer"
             >
               {digit}
             </button>
@@ -277,23 +281,23 @@ export default function WeighModal({
           <button
             type="button"
             onClick={() => handleKeyClick('.')}
-            className="h-12 bg-surface hover:bg-card border border-line rounded-xl text-xl font-bold text-ink-800 active:scale-95 transition-all shadow-2xs"
+            className="h-12 bg-surface hover:bg-card border border-line rounded-xl text-xl font-bold text-ink-800 active:scale-95 transition-all shadow-2xs cursor-pointer"
           >
             .
           </button>
           <button
             type="button"
             onClick={() => handleKeyClick('0')}
-            className="h-12 bg-surface hover:bg-card border border-line rounded-xl text-xl font-bold text-ink-800 active:scale-95 transition-all shadow-2xs"
+            className="h-12 bg-surface hover:bg-card border border-line rounded-xl text-xl font-bold text-ink-800 active:scale-95 transition-all shadow-2xs cursor-pointer"
           >
             0
           </button>
           <button
             type="button"
             onClick={() => handleKeyClick('backspace')}
-            className="h-12 bg-surface hover:bg-card border border-line rounded-xl text-sm font-semibold text-ink-600 active:scale-95 transition-all shadow-2xs flex items-center justify-center"
+            className="h-12 bg-surface hover:bg-card border border-line rounded-xl text-sm font-semibold text-ink-600 active:scale-95 transition-all shadow-2xs flex items-center justify-center cursor-pointer"
           >
-            ⌫ Back
+            ⌫
           </button>
         </div>
 
@@ -302,7 +306,7 @@ export default function WeighModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-sm font-semibold text-ink-600 hover:text-ink-900 hover:bg-card rounded-xl transition-colors"
+            className="px-4 py-2 text-sm font-semibold text-ink-600 hover:text-ink-900 hover:bg-card rounded-xl transition-colors cursor-pointer"
           >
             {t('common.cancel')} (Esc)
           </button>
@@ -311,11 +315,11 @@ export default function WeighModal({
             type="button"
             disabled={netWeight <= 0}
             onClick={() => onConfirm(product, netWeight)}
-            className="px-6 py-2.5 bg-brand-600 text-white rounded-xl hover:bg-brand-700 font-bold text-sm shadow-md transition-all flex items-center gap-2 disabled:opacity-40 disabled:pointer-events-none active:scale-95"
+            className="px-6 py-2.5 bg-brand-600 text-white rounded-xl hover:bg-brand-700 font-bold text-sm shadow-md transition-all flex items-center gap-2 disabled:opacity-40 disabled:pointer-events-none active:scale-95 cursor-pointer"
           >
             <Check size={18} />
             <span>
-              {initialWeight > 0 ? 'Update Cart Line' : 'Add to Cart'} (Rs. {lineTotal.toFixed(2)})
+              {initialWeight > 0 ? t('pos.resumeCart', 'Update') : t('common.confirm', 'Add')} (Rs. {lineTotal.toFixed(2)})
             </span>
           </button>
         </div>
