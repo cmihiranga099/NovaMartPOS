@@ -13,6 +13,8 @@ export interface UsePosKeyboardOptions {
   onDecreaseLastItemQty?: () => void;
   onRemoveLastItem?: () => void;
   onToggleShortcutsModal: () => void;
+  onHoldCart?: () => void;
+  onRecallCart?: () => void;
   onBarcodeScanned: (barcode: string) => void;
   isModalOpen?: boolean;
   isCompletedSaleOpen?: boolean;
@@ -63,6 +65,8 @@ export function usePosKeyboard({
   onDecreaseLastItemQty,
   onRemoveLastItem,
   onToggleShortcutsModal,
+  onHoldCart,
+  onRecallCart,
   onBarcodeScanned,
   isModalOpen = false,
   isCompletedSaleOpen = false,
@@ -157,6 +161,18 @@ export function usePosKeyboard({
         return;
       }
 
+      if (e.key === 'F5') {
+        e.preventDefault();
+        onHoldCart?.();
+        return;
+      }
+
+      if (e.key === 'F6') {
+        e.preventDefault();
+        onRecallCart?.();
+        return;
+      }
+
       if (e.key === 'F7') {
         e.preventDefault();
         onSetExactAmount();
@@ -236,6 +252,8 @@ export function usePosKeyboard({
     onDecreaseLastItemQty,
     onRemoveLastItem,
     onToggleShortcutsModal,
+    onHoldCart,
+    onRecallCart,
     onBarcodeScanned,
     isModalOpen,
     isCompletedSaleOpen,

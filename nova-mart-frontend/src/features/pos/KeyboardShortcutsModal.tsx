@@ -28,6 +28,8 @@ export default function KeyboardShortcutsModal({ isOpen, onClose }: Props) {
     { keys: ['F2'], description: t('keyboardShortcuts.customer') },
     { keys: ['F3'], description: t('keyboardShortcuts.discount') },
     { keys: ['F4'], description: t('keyboardShortcuts.promo') },
+    { keys: ['F5'], description: t('keyboardShortcuts.holdCart') },
+    { keys: ['F6'], description: t('keyboardShortcuts.recallCart') },
   ];
 
   const paymentShortcuts: ShortcutItem[] = [
