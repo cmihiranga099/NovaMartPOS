@@ -9,8 +9,10 @@ public class ProductDto
     public decimal PurchasePrice { get; set; }
     public decimal SellingPrice { get; set; }
     public decimal TaxRate { get; set; }
-    public int StockQuantity { get; set; }
-    public int MinimumStockLevel { get; set; }
+    public decimal StockQuantity { get; set; }
+    public decimal MinimumStockLevel { get; set; }
+    public bool IsWeighable { get; set; }
+    public string UnitOfMeasure { get; set; } = "pcs";
     public bool IsActive { get; set; }
     public int CategoryId { get; set; }
     public string CategoryName { get; set; } = string.Empty;
@@ -28,8 +30,10 @@ public class CreateProductDto
     public decimal PurchasePrice { get; set; }
     public decimal SellingPrice { get; set; }
     public decimal TaxRate { get; set; }
-    public int StockQuantity { get; set; }
-    public int MinimumStockLevel { get; set; }
+    public decimal StockQuantity { get; set; }
+    public decimal MinimumStockLevel { get; set; }
+    public bool IsWeighable { get; set; } = false;
+    public string UnitOfMeasure { get; set; } = "pcs";
     public int CategoryId { get; set; }
     public int BrandId { get; set; }
     public int? SupplierId { get; set; }
@@ -44,8 +48,10 @@ public class UpdateProductDto
     public decimal PurchasePrice { get; set; }
     public decimal SellingPrice { get; set; }
     public decimal TaxRate { get; set; }
-    public int StockQuantity { get; set; }
-    public int MinimumStockLevel { get; set; }
+    public decimal StockQuantity { get; set; }
+    public decimal MinimumStockLevel { get; set; }
+    public bool IsWeighable { get; set; }
+    public string UnitOfMeasure { get; set; } = "pcs";
     public bool IsActive { get; set; }
     public int CategoryId { get; set; }
     public int BrandId { get; set; }

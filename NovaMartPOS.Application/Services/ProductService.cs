@@ -49,6 +49,8 @@ public class ProductService : IProductService
             TaxRate = dto.TaxRate,
             StockQuantity = dto.StockQuantity,
             MinimumStockLevel = dto.MinimumStockLevel,
+            IsWeighable = dto.IsWeighable,
+            UnitOfMeasure = string.IsNullOrWhiteSpace(dto.UnitOfMeasure) ? "pcs" : dto.UnitOfMeasure,
             CategoryId = dto.CategoryId,
             BrandId = dto.BrandId,
             SupplierId = dto.SupplierId,
@@ -81,6 +83,8 @@ public class ProductService : IProductService
         product.TaxRate = dto.TaxRate;
         product.StockQuantity = dto.StockQuantity;
         product.MinimumStockLevel = dto.MinimumStockLevel;
+        product.IsWeighable = dto.IsWeighable;
+        product.UnitOfMeasure = string.IsNullOrWhiteSpace(dto.UnitOfMeasure) ? "pcs" : dto.UnitOfMeasure;
         product.IsActive = dto.IsActive;
         product.CategoryId = dto.CategoryId;
         product.BrandId = dto.BrandId;
@@ -107,7 +111,7 @@ public class ProductService : IProductService
 
     private async Task<string?> ValidateAsync(
         string barcode, string productCode, int categoryId, int brandId,
-        decimal purchasePrice, decimal sellingPrice, int stockQuantity, int? excludeId)
+        decimal purchasePrice, decimal sellingPrice, decimal stockQuantity, int? excludeId)
     {
         if (string.IsNullOrWhiteSpace(barcode))
             return "Barcode is required.";
@@ -150,6 +154,8 @@ public class ProductService : IProductService
         TaxRate = p.TaxRate,
         StockQuantity = p.StockQuantity,
         MinimumStockLevel = p.MinimumStockLevel,
+        IsWeighable = p.IsWeighable,
+        UnitOfMeasure = p.UnitOfMeasure,
         IsActive = p.IsActive,
         CategoryId = p.CategoryId,
         CategoryName = p.Category?.Name ?? string.Empty,

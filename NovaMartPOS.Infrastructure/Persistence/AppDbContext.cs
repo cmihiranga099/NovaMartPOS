@@ -104,6 +104,12 @@ public class AppDbContext : DbContext
             .Property(p => p.SellingPrice).HasColumnType("decimal(18,2)");
         modelBuilder.Entity<Product>()
             .Property(p => p.TaxRate).HasColumnType("decimal(5,2)");
+        modelBuilder.Entity<Product>()
+            .Property(p => p.StockQuantity).HasColumnType("decimal(18,3)");
+        modelBuilder.Entity<Product>()
+            .Property(p => p.MinimumStockLevel).HasColumnType("decimal(18,3)");
+        modelBuilder.Entity<Product>()
+            .Property(p => p.UnitOfMeasure).HasMaxLength(20).HasDefaultValue("pcs");
 
         modelBuilder.Entity<Sale>()
             .Property(s => s.Subtotal).HasColumnType("decimal(18,2)");
@@ -122,6 +128,17 @@ public class AppDbContext : DbContext
             .Property(si => si.Discount).HasColumnType("decimal(18,2)");
         modelBuilder.Entity<SaleItem>()
             .Property(si => si.Total).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<SaleItem>()
+            .Property(si => si.Quantity).HasColumnType("decimal(18,3)");
+
+        modelBuilder.Entity<StockTransaction>()
+            .Property(st => st.Quantity).HasColumnType("decimal(18,3)");
+
+        modelBuilder.Entity<ReturnItem>()
+            .Property(ri => ri.Quantity).HasColumnType("decimal(18,3)");
+
+        modelBuilder.Entity<PurchaseOrderItem>()
+            .Property(poi => poi.Quantity).HasColumnType("decimal(18,3)");
 
         modelBuilder.Entity<Payment>()
             .Property(p => p.AmountPaid).HasColumnType("decimal(18,2)");
