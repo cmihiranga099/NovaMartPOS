@@ -7,14 +7,25 @@ public class SaleItemRequestDto
     public decimal Discount { get; set; } = 0;
 }
 
+public class PaymentSplitDto
+{
+    public string Method { get; set; } = "Cash";
+    public decimal Amount { get; set; }
+}
+
 public class CreateSaleDto
 {
     public int CustomerId { get; set; }
     public List<SaleItemRequestDto> Items { get; set; } = new();
+    
+    // For single payment (or primary tender summary):
     public string PaymentMethod { get; set; } = "Cash";
     public decimal AmountPaid { get; set; }
+
+    // For multi-tender split payments (e.g. Cash: 2000, Card: 3000):
+    public List<PaymentSplitDto>? Splits { get; set; }
+
     public string? PromoCode { get; set; }
-  
     public string? ManagerOverridePin { get; set; }
 }
 
@@ -26,6 +37,13 @@ public class SaleItemDto
     public decimal UnitPrice { get; set; }
     public decimal Discount { get; set; }
     public decimal Total { get; set; }
+}
+
+public class PaymentDetailDto
+{
+    public string Method { get; set; } = string.Empty;
+    public decimal AmountPaid { get; set; }
+    public decimal Change { get; set; }
 }
 
 public class SaleDto
@@ -47,4 +65,5 @@ public class SaleDto
     public string CashierName { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public List<SaleItemDto> Items { get; set; } = new();
+    public List<PaymentDetailDto> Payments { get; set; } = new();
 }

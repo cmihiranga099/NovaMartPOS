@@ -43,7 +43,7 @@ public class SaleRepository : ISaleRepository
     => await _context.Sales
         .Include(s => s.Customer)
         .Include(s => s.Cashier)
-        .Include(s => s.Payment)
+        .Include(s => s.Payments)
         .Include(s => s.SaleItems)
             .ThenInclude(si => si.Product)
         .OrderByDescending(s => s.CreatedAt)
@@ -55,7 +55,7 @@ public class SaleRepository : ISaleRepository
         => await _context.Sales
             .Include(s => s.Customer)
             .Include(s => s.Cashier)
-            .Include(s => s.Payment)
+            .Include(s => s.Payments)
             .Include(s => s.SaleItems)
                 .ThenInclude(si => si.Product)
             .AsSplitQuery()

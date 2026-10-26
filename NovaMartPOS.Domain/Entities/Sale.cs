@@ -18,5 +18,5 @@ public class Sale : BaseEntity
     public User Cashier { get; set; } = null!;
 
     public ICollection<SaleItem> SaleItems { get; set; } = new List<SaleItem>();
-    public Payment? Payment { get; set; }
+    public ICollection<Payment> Payments { get; set; } = new List<Payment>();
 }
