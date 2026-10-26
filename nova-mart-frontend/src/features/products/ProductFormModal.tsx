@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useQuery } from '@tanstack/react-query';
-import { X } from 'lucide-react';
+import { Scale, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { lookupService } from '../../services/lookupService';
 import type { Product } from '../../types/product';
@@ -15,8 +15,10 @@ const schema = z.object({
   purchasePrice: z.coerce.number().min(0, 'Cannot be negative'),
   sellingPrice: z.coerce.number().min(0, 'Cannot be negative'),
   taxRate: z.coerce.number().min(0, 'Cannot be negative'),
-  stockQuantity: z.coerce.number().int().min(0, 'Cannot be negative'),
-  minimumStockLevel: z.coerce.number().int().min(0, 'Cannot be negative'),
+  stockQuantity: z.coerce.number().min(0, 'Cannot be negative'),
+  minimumStockLevel: z.coerce.number().min(0, 'Cannot be negative'),
+  isWeighable: z.boolean().default(false),
+  unitOfMeasure: z.string().default('pcs'),
   categoryId: z.coerce.number().min(1, 'Select a category'),
   brandId: z.coerce.number().min(1, 'Select a brand'),
   expiryDate: z.string().optional().or(z.literal('')),
@@ -37,7 +39,7 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
   const { data: categories = [] } = useQuery({ queryKey: ['categories'], queryFn: lookupService.getCategories });
   const { data: brands = [] } = useQuery({ queryKey: ['brands'], queryFn: lookupService.getBrands });
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<z.input<typeof schema>, unknown, z.output<typeof schema>>({
+  const { register, handleSubmit, reset, watch, setValue, formState: { errors } } = useForm<z.input<typeof schema>, unknown, z.output<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
       productCode: '',
@@ -48,11 +50,15 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
       taxRate: 0,
       stockQuantity: 0,
       minimumStockLevel: 0,
+      isWeighable: false,
+      unitOfMeasure: 'pcs',
       categoryId: 0,
       brandId: 0,
       expiryDate: '',
     },
   });
+
+  const isWeighable = watch('isWeighable');
 
   useEffect(() => {
     if (product) {
@@ -65,6 +71,8 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
         taxRate: product.taxRate,
         stockQuantity: product.stockQuantity,
         minimumStockLevel: product.minimumStockLevel,
+        isWeighable: product.isWeighable ?? false,
+        unitOfMeasure: product.unitOfMeasure || (product.isWeighable ? 'kg' : 'pcs'),
         categoryId: product.categoryId,
         brandId: product.brandId,
         expiryDate: product.expiryDate ? product.expiryDate.slice(0, 10) : '',
@@ -114,6 +122,51 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
           </div>
 
+          {/* Weighed Produce / Bulk Goods Setting */}
+          <div className="p-3 bg-emerald-50/60 border border-emerald-200/80 rounded-lg space-y-2.5">
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-2 text-sm font-medium text-emerald-950 cursor-pointer">
+                <input
+                  type="checkbox"
+                  {...register('isWeighable')}
+                  onChange={(e) => {
+                    setValue('isWeighable', e.target.checked);
+                    if (e.target.checked && watch('unitOfMeasure') === 'pcs') {
+                      setValue('unitOfMeasure', 'kg');
+                    }
+                  }}
+                  className="rounded text-brand-600 focus:ring-brand-500 h-4 w-4"
+                />
+                <Scale size={16} className="text-emerald-700" />
+                <span>{t('products.isWeighable', 'Weighed Goods (Sold by weight on scale)')}</span>
+              </label>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              <div>
+                <label className="block text-xs font-medium text-emerald-900 mb-1">
+                  {t('products.unitOfMeasure', 'Unit of Measure')}
+                </label>
+                <select
+                  {...register('unitOfMeasure')}
+                  className="w-full px-2.5 py-1.5 text-sm bg-white border border-emerald-300 rounded-md focus:ring-emerald-500"
+                >
+                  <option value="pcs">Pieces (pcs)</option>
+                  <option value="kg">Kilogram (kg)</option>
+                  <option value="g">Gram (g)</option>
+                  <option value="pack">Pack (pk)</option>
+                  <option value="l">Liter (L)</option>
+                  <option value="ml">Milliliter (ml)</option>
+                </select>
+              </div>
+              <div className="text-xs text-emerald-800 flex items-center leading-relaxed">
+                {isWeighable
+                  ? 'Cashier will be prompted with the scale weight modal or scale barcode parser.'
+                  : 'Sold as standard single integer quantity.'}
+              </div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-sm font-medium mb-1">{t('products.category')}</label>
@@ -153,12 +206,22 @@ export default function ProductFormModal({ product, onClose, onSubmit, isSubmitt
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">{t('products.stockQuantity')}</label>
-              <input type="number" {...register('stockQuantity')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg" />
+              <input
+                type="number"
+                step="0.001"
+                {...register('stockQuantity')}
+                className="w-full px-3 py-2 border border-ink-500/20 rounded-lg"
+              />
               {errors.stockQuantity && <p className="text-red-500 text-xs mt-1">{errors.stockQuantity.message}</p>}
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Min Stock</label>
-              <input type="number" {...register('minimumStockLevel')} className="w-full px-3 py-2 border border-ink-500/20 rounded-lg" />
+              <input
+                type="number"
+                step="0.001"
+                {...register('minimumStockLevel')}
+                className="w-full px-3 py-2 border border-ink-500/20 rounded-lg"
+              />
             </div>
           </div>
 

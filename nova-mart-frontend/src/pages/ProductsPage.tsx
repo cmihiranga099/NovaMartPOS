@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus, Pencil, Trash2, Search, Barcode } from 'lucide-react';
+import { Plus, Pencil, Trash2, Search, Barcode, Scale } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { productService } from '../services/productService';
 import ProductFormModal, { type ProductFormValues } from '../features/products/ProductFormModal';
@@ -160,15 +160,26 @@ export default function ProductsPage() {
             {filtered.map((product) => (
               <tr key={product.id} className="hover:bg-surface">
                 <td className="px-4 py-3">
-                  <div className="font-medium">{product.name}</div>
+                  <div className="font-medium flex items-center gap-1.5">
+                    <span>{product.name}</span>
+                    {product.isWeighable && (
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200" title="Weighed produce item">
+                        <Scale size={11} />
+                        {product.unitOfMeasure || 'kg'}
+                      </span>
+                    )}
+                  </div>
                   <div className="text-xs text-ink-500">{product.productCode} · {product.barcode}</div>
                 </td>
                 <td className="px-4 py-3">{product.categoryName}</td>
                 <td className="px-4 py-3">{product.brandName}</td>
-                <td className="px-4 py-3 text-right">Rs. {product.sellingPrice.toFixed(2)}</td>
+                <td className="px-4 py-3 text-right">
+                  Rs. {product.sellingPrice.toFixed(2)}
+                  <span className="text-[11px] text-ink-500">/{product.unitOfMeasure || 'pcs'}</span>
+                </td>
                 <td className="px-4 py-3 text-right">
                   <span className={product.stockQuantity <= product.minimumStockLevel ? 'text-red-600 font-medium' : ''}>
-                    {product.stockQuantity}
+                    {product.isWeighable ? Number(product.stockQuantity).toFixed(3) : product.stockQuantity} {product.unitOfMeasure || 'pcs'}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right space-x-2">
