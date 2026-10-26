@@ -6,9 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { productService } from '../services/productService';
 import ProductFormModal, { type ProductFormValues } from '../features/products/ProductFormModal';
 import type { Product } from '../types/product';
-import { Tag as TagIcon } from 'lucide-react';
-import BarcodeLabelModal from '../features/products/BarcodeLabelModal';
-import BarcodeLabelSheet from '../features/products/BarcodeLabelSheet';
 import { useAuth } from '../store/AuthContext';
 
 export default function ProductsPage() {
@@ -19,8 +16,6 @@ export default function ProductsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
-  const [labelProduct, setLabelProduct] = useState<Product | null>(null);
-  const [printJob, setPrintJob] = useState<{ product: Product; quantity: number } | null>(null);
 
   const queryClient = useQueryClient();
 
@@ -93,13 +88,6 @@ export default function ProductsPage() {
     }
   };
 
-  const handlePrintLabels = (quantity: number) => {
-    if (!labelProduct) return;
-    setPrintJob({ product: labelProduct, quantity });
-    setLabelProduct(null);
-    setTimeout(() => window.print(), 50);
-  };
-
   const filtered = products.filter(
     (p) =>
       p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -130,43 +118,33 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      <div className="relative mb-4 max-w-sm">
-        <Search size={18} className="absolute left-3 top-2.5 text-ink-500" />
+      <div className="relative mb-4">
+        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-500" />
         <input
           type="text"
           placeholder={t('products.searchPlaceholder')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              const exact = products.find((p) => p.barcode === search);
-              if (exact && canManage) {
-                e.preventDefault();
-                openEditModal(exact);
-                setSearch('');
-              }
-            }
-          }}
-          className="w-full pl-10 pr-3 py-2 border border-ink-500/20 rounded-lg"
+          className="w-full pl-10 pr-4 py-2 border border-ink-500/20 rounded-lg bg-card"
         />
       </div>
 
-      <div className="bg-card rounded-lg shadow overflow-hidden">
+      <div className="bg-card rounded-lg border border-line overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-surface text-left text-ink-500">
-            <tr>
-              <th className="px-4 py-3">{t('products.title')}</th>
-              <th className="px-4 py-3">{t('products.category')}</th>
-              <th className="px-4 py-3">{t('products.brand')}</th>
-              <th className="px-4 py-3 text-right">{t('common.total')}</th>
-              <th className="px-4 py-3 text-right">Stock</th>
-              <th className="px-4 py-3 text-right">{t('common.actions')}</th>
+          <thead>
+            <tr className="border-b border-line text-left text-ink-500">
+              <th className="px-4 py-3 font-medium">{t('products.tableHeader')}</th>
+              <th className="px-4 py-3 font-medium">{t('products.category')}</th>
+              <th className="px-4 py-3 font-medium">{t('products.brand')}</th>
+              <th className="px-4 py-3 font-medium text-right">{t('products.totalPrice')}</th>
+              <th className="px-4 py-3 font-medium text-right">{t('products.stock')}</th>
+              <th className="px-4 py-3 font-medium text-right">{t('common.actions')}</th>
             </tr>
           </thead>
-          <tbody className="divide-y">
-            {isLoading && [...Array(6)].map((_, i) => (
+          <tbody className="divide-y divide-line">
+            {isLoading && Array.from({ length: 5 }).map((_, i) => (
               <tr key={i}>
-                {[...Array(6)].map((__, j) => (
+                {Array.from({ length: 6 }).map((_, j) => (
                   <td key={j} className="px-4 py-3">
                     <div
                       className="h-4 rounded bg-ink-100 animate-pulse"
@@ -194,15 +172,20 @@ export default function ProductsPage() {
                   </span>
                 </td>
                 <td className="px-4 py-3 text-right space-x-2">
-                  <button onClick={() => setLabelProduct(product)} className="text-ink-500 hover:text-brand-600" title="Print barcode label">
-                    <TagIcon size={16} className="inline" />
-                  </button>
                   {canManage && (
                     <>
-                      <button onClick={() => openEditModal(product)} className="text-brand-600 hover:text-brand-700">
+                      <button
+                        onClick={() => openEditModal(product)}
+                        className="text-brand-600 hover:text-brand-700"
+                        title={t('common.edit')}
+                      >
                         <Pencil size={16} className="inline" />
                       </button>
-                      <button onClick={() => handleDelete(product)} className="text-red-600 hover:text-red-800">
+                      <button
+                        onClick={() => handleDelete(product)}
+                        className="text-red-600 hover:text-red-800"
+                        title={t('common.delete')}
+                      >
                         <Trash2 size={16} className="inline" />
                       </button>
                     </>
@@ -223,16 +206,6 @@ export default function ProductsPage() {
           serverError={serverError}
         />
       )}
-
-      {labelProduct && (
-        <BarcodeLabelModal
-          product={labelProduct}
-          onClose={() => setLabelProduct(null)}
-          onPrint={handlePrintLabels}
-        />
-      )}
-
-      {printJob && <BarcodeLabelSheet product={printJob.product} quantity={printJob.quantity} />}
     </div>
   );
 }

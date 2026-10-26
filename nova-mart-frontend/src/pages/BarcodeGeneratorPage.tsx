@@ -13,7 +13,6 @@ import {
   Sparkles,
   Eye,
   Sliders,
-  RotateCcw,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { productService } from '../services/productService';
@@ -107,7 +106,7 @@ export default function BarcodeGeneratorPage() {
       const updated = { ...prev };
       for (const p of filteredProducts) {
         if (!updated[p.id]) {
-          updated[p.id] = { product, copies: format === 'shelf-edge' ? 1 : 2 };
+          updated[p.id] = { product: p, copies: format === 'shelf-edge' ? 1 : 2 };
         }
       }
       return updated;
