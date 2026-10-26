@@ -144,7 +144,7 @@ export default function LowStockAlert() {
         </button>
 
         {open && (
-          <div className="absolute left-0 top-full mt-2 z-50 w-80 bg-card rounded-lg border border-line shadow-lg overflow-hidden">            <div className="px-4 py-3 border-b border-line flex items-center justify-between">
+          <div className="absolute right-0 sm:left-0 top-full mt-2 z-50 w-72 sm:w-80 bg-card rounded-xl border border-line shadow-lg overflow-hidden">            <div className="px-4 py-3 border-b border-line flex items-center justify-between">
               <h3 className="font-bold text-sm text-ink-900">{t('lowStockAlert.title')}</h3>
               {lowStock.length > 0 && (
                 <span className="text-xs font-semibold text-red-600">
@@ -207,7 +207,7 @@ export default function LowStockAlert() {
               <Link
                 to="/products"
                 onClick={() => setOpen(false)}
-                className="block px-4 py-2.5 text-center text-sm font-semibold text-brand-600 hover:bg-brand-50 border-t border-line"
+                className="block px-4 py-2.5 text-center text-sm font-semibold text-brand-600 hover:bg-surface border-t border-line"
               >
                 {t('lowStockAlert.viewAll')}
               </Link>
@@ -217,13 +217,13 @@ export default function LowStockAlert() {
       </div>
 
       {/* Toasts: fixed to the viewport so they show up no matter which page is open */}
-      <div className="fixed bottom-5 right-5 z-[100] flex flex-col gap-2 w-80">
+      <div className="fixed bottom-5 right-4 left-4 sm:left-auto sm:right-5 z-[100] flex flex-col gap-2 sm:w-80">
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className="bg-card border border-red-200 shadow-lg rounded-lg p-3.5 flex items-start gap-3 animate-[fadeIn_0.2s_ease-out]"
+            className="bg-card border border-red-500/30 shadow-lg rounded-xl p-3.5 flex items-start gap-3 animate-[fadeIn_0.2s_ease-out]"
           >
-            <div className="w-8 h-8 rounded-lg bg-red-50 text-red-600 flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-lg bg-red-500/15 text-red-400 flex items-center justify-center shrink-0">
               {toast.kind === 'low-stock' ? <AlertTriangle size={16} /> : <CalendarClock size={16} />}
             </div>
             <div className="min-w-0 flex-1">
