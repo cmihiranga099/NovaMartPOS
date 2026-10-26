@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { shopInfo } from '../config/shopInfo';
 import logo from '../assets/logo.png';
 import { customerDisplayService } from '../services/customerDisplayService';
+import ThemeToggle from '../components/ThemeToggle';
 import type {
   DisplayCartState,
   DisplayPaymentState,
@@ -253,25 +254,25 @@ export default function CustomerDisplayPage() {
   const totalItemCount = cartState ? cartState.items.reduce((sum, i) => sum + i.quantity, 0) : 0;
 
   return (
-    <div className="h-screen w-screen bg-[#F8F9FA] text-ink-900 font-sans flex flex-col overflow-hidden select-none">
+    <div className="min-h-screen w-full bg-surface text-ink-900 font-sans flex flex-col select-none">
       {/* =========================================================================
           TOP HEADER BAR — Crisp, Premium Retail Dual-Screen Navbar
           ========================================================================= */}
-      <header className="h-20 px-8 bg-card border-b border-line flex items-center justify-between shrink-0 shadow-xs z-10">
+      <header className="py-3 px-4 sm:px-8 bg-card border-b border-line flex flex-wrap items-center justify-between gap-3 shrink-0 shadow-xs z-10">
         {/* Brand identity */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           <div className="relative">
             <img
               src={logo}
               alt={shopInfo.name}
-              className="w-13 h-13 rounded-2xl object-contain border border-line p-1 bg-white shadow-2xs"
+              className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl object-contain border border-line p-1 bg-card shadow-2xs"
             />
-            <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white animate-pulse" />
+            <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-card animate-pulse" />
           </div>
           <div>
-            <div className="flex items-center gap-2.5">
-              <h1 className="text-xl font-extrabold tracking-tight text-ink-900">{shopInfo.name}</h1>
-              <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-brand-500 text-white uppercase tracking-wider shadow-2xs">
+            <div className="flex items-center gap-2">
+              <h1 className="text-lg sm:text-xl font-extrabold tracking-tight text-ink-900">{shopInfo.name}</h1>
+              <span className="text-[10px] sm:text-[11px] font-bold px-2 py-0.5 rounded-full bg-brand-500 text-white uppercase tracking-wider shadow-2xs">
                 {t('customerDisplay.lane', 'Lane 01 · Express')}
               </span>
             </div>
@@ -285,15 +286,15 @@ export default function CustomerDisplayPage() {
           </div>
         </div>
 
-        {/* Status, Time, Language Selector & Fullscreen Controls */}
-        <div className="flex items-center gap-3 text-xs font-semibold">
+        {/* Status, Time, Language Selector, Theme & Fullscreen Controls */}
+        <div className="flex items-center gap-2 sm:gap-3 text-xs font-semibold">
           {/* Quick Language Selector */}
           <div className="flex items-center rounded-xl bg-surface border border-line p-0.5 shadow-2xs">
             {(['en', 'si', 'ta'] as const).map((lang) => (
               <button
                 key={lang}
                 onClick={() => i18n.changeLanguage(lang)}
-                className={`px-2.5 py-1 rounded-lg text-xs transition-colors cursor-pointer ${
+                className={`px-2 sm:px-2.5 py-1 rounded-lg text-xs transition-colors cursor-pointer ${
                   i18n.language === lang
                     ? 'bg-brand-600 text-white font-bold shadow-2xs'
                     : 'text-ink-600 hover:text-ink-900'
@@ -305,8 +306,11 @@ export default function CustomerDisplayPage() {
             ))}
           </div>
 
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
           {/* Live System Indicator */}
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/80 shadow-2xs">
+          <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 shadow-2xs">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
             <span className="text-[11px] font-bold uppercase tracking-wide">
               {t('customerDisplay.liveRegisterSync', 'Live Register Sync')}
@@ -314,8 +318,8 @@ export default function CustomerDisplayPage() {
           </div>
 
           {/* Clock */}
-          <div className="flex items-center gap-2 font-mono text-sm text-ink-800 px-3.5 py-1.5 rounded-xl bg-surface border border-line shadow-2xs">
-            <Clock size={16} className="text-brand-600" />
+          <div className="hidden sm:flex items-center gap-2 font-mono text-xs sm:text-sm text-ink-800 px-3 py-1.5 rounded-xl bg-surface border border-line shadow-2xs">
+            <Clock size={15} className="text-brand-600" />
             <span className="font-bold tracking-tight">
               {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
             </span>
@@ -329,7 +333,7 @@ export default function CustomerDisplayPage() {
           <button
             onClick={toggleFullscreen}
             title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
-            className="p-2.5 rounded-xl bg-surface hover:bg-ink-100 text-ink-600 hover:text-ink-900 border border-line transition-colors cursor-pointer shadow-2xs"
+            className="p-2 sm:p-2.5 rounded-xl bg-surface hover:bg-ink-500/10 text-ink-600 hover:text-ink-900 border border-line transition-colors cursor-pointer shadow-2xs"
           >
             {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
           </button>

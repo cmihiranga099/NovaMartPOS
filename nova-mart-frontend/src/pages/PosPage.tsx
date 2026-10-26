@@ -17,6 +17,8 @@ import {
   AlertCircle,
   DollarSign,
   Scale,
+  Package,
+  ShoppingCart,
 } from 'lucide-react';
 import { productService } from '../services/productService';
 import { customerService } from '../services/customerService';
@@ -96,6 +98,7 @@ export default function PosPage() {
     initialWeight?: number;
   } | null>(null);
   const [activeKeyboardTarget, setActiveKeyboardTarget] = useState<KeyboardTarget>(null);
+  const [mobileTab, setMobileTab] = useState<'catalog' | 'cart'>('catalog');
 
   // Load persistent held carts from localStorage
   const [heldCarts, setHeldCarts] = useState<HeldCart[]>(() => {
@@ -868,9 +871,38 @@ export default function PosPage() {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-6 h-full pb-10">
-      {/* Left: category tabs + product grid */}
-      <div className="col-span-2 flex flex-col min-h-0">
+    <div className="flex flex-col h-full pb-10">
+      {/* Mobile Tab Switcher (< lg screens) */}
+      <div className="lg:hidden flex rounded-xl bg-card border border-line p-1 mb-3 text-xs font-bold shrink-0 shadow-2xs">
+        <button
+          type="button"
+          onClick={() => setMobileTab('catalog')}
+          className={`flex-1 py-2 rounded-lg text-center transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
+            mobileTab === 'catalog'
+              ? 'bg-brand-600 text-white shadow-2xs font-extrabold'
+              : 'text-ink-600 hover:text-ink-900'
+          }`}
+        >
+          <Package size={14} />
+          <span>{t('nav.products')}</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab('cart')}
+          className={`flex-1 py-2 rounded-lg text-center transition-colors cursor-pointer flex items-center justify-center gap-1.5 ${
+            mobileTab === 'cart'
+              ? 'bg-brand-600 text-white shadow-2xs font-extrabold'
+              : 'text-ink-600 hover:text-ink-900'
+          }`}
+        >
+          <ShoppingCart size={14} />
+          <span>{t('pos.cart')} ({cart.length}) · Rs. {grandTotal.toFixed(2)}</span>
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-0">
+        {/* Left: category tabs + product grid */}
+        <div className={`${mobileTab === 'catalog' ? 'flex' : 'hidden lg:flex'} lg:col-span-2 flex-col min-h-0`}>
         {/* Till & Register Shift Status Banner */}
         <div className="mb-3 px-3.5 py-2.5 rounded-xl border border-line flex items-center justify-between text-xs transition-all shadow-2xs bg-card">
           {activeShift ? (
@@ -905,7 +937,7 @@ export default function PosPage() {
                 <button
                   type="button"
                   onClick={() => setShowZReportModal(true)}
-                  className="px-2.5 py-1.5 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-100 font-semibold text-rose-700 flex items-center gap-1.5 transition-colors text-xs"
+                  className="px-2.5 py-1.5 rounded-lg border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 font-semibold text-rose-400 flex items-center gap-1.5 transition-colors text-xs"
                 >
                   <Lock size={13} />
                   <span>{t('shift.endShiftZReport')}</span>
@@ -990,12 +1022,12 @@ export default function PosPage() {
 
         {/* Scan feedback alert banner */}
         {scanFeedback && (
-          <div className="mb-3 px-3 py-2 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-semibold flex items-center justify-between shadow-xs animate-in fade-in slide-in-from-top-1 duration-150">
+          <div className="mb-3 px-3 py-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-xl text-xs font-semibold flex items-center justify-between shadow-xs animate-in fade-in slide-in-from-top-1 duration-150">
             <span className="flex items-center gap-2">
-              <Barcode size={16} className="text-emerald-600" />
+              <Barcode size={16} className="text-emerald-500" />
               <span>{scanFeedback}</span>
             </span>
-            <span className="text-[10px] font-medium text-emerald-600 bg-emerald-100/70 px-1.5 py-0.5 rounded">
+            <span className="text-[10px] font-medium text-emerald-400 bg-emerald-500/20 px-1.5 py-0.5 rounded">
               Active
             </span>
           </div>
@@ -1093,7 +1125,7 @@ export default function PosPage() {
       </div>
 
       {/* Right: cart + checkout */}
-      <div className="bg-card rounded-xl border border-line shadow flex flex-col p-4 min-h-0">
+      <div className={`${mobileTab === 'cart' ? 'flex' : 'hidden lg:flex'} lg:col-span-1 bg-card rounded-xl border border-line shadow flex flex-col p-4 min-h-0`}>
         {/* Cart Header with Hold Cart / Held Carts buttons */}
         <div className="flex items-center justify-between mb-2 pb-2 border-b border-line/60">
           <div className="flex items-center gap-2">
@@ -1109,11 +1141,11 @@ export default function PosPage() {
                 type="button"
                 onClick={() => setShowHeldCartsModal(true)}
                 title="View Held Carts (F6)"
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 shadow-2xs transition-all animate-pulse"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 border border-amber-500/40 shadow-2xs transition-all animate-pulse"
               >
                 <ShoppingBag size={13} />
                 <span>Held ({heldCarts.length})</span>
-                <kbd className="text-[9px] font-mono bg-amber-200 px-1 rounded">F6</kbd>
+                <kbd className="text-[9px] font-mono bg-amber-500/30 px-1 rounded text-amber-300">F6</kbd>
               </button>
             )}
 
@@ -1201,17 +1233,17 @@ export default function PosPage() {
               <button
                 onClick={handleApplyPromo}
                 disabled={validatePromoMutation.isPending || !promoInput.trim()}
-                className="px-3 py-1.5 bg-brand-50 text-brand-600 rounded-lg text-xs font-medium hover:bg-brand-100 disabled:opacity-50"
+                className="px-3 py-1.5 bg-brand-500/10 text-brand-400 border border-brand-500/30 rounded-lg text-xs font-medium hover:bg-brand-500/20 disabled:opacity-50"
               >
                 {validatePromoMutation.isPending ? '...' : t('pos.apply')}
               </button>
             </div>
           ) : (
-            <div className="flex items-center justify-between bg-brand-50 px-2.5 py-1.5 rounded-lg">
-              <span className="flex items-center gap-1.5 text-xs font-medium text-brand-700">
+            <div className="flex items-center justify-between bg-brand-500/15 border border-brand-500/30 px-2.5 py-1.5 rounded-lg">
+              <span className="flex items-center gap-1.5 text-xs font-medium text-brand-400">
                 <Tag size={13} /> {appliedPromo.code} {t('pos.applied')}
               </span>
-              <button onClick={removePromo} className="text-ink-500 hover:text-red-600">
+              <button onClick={removePromo} className="text-ink-500 hover:text-red-400">
                 <X size={14} />
               </button>
             </div>
@@ -1269,7 +1301,7 @@ export default function PosPage() {
               <button
                 onClick={submitManualDiscount}
                 disabled={!discountInput || Number(discountInput) <= 0}
-                className="px-3 py-1.5 bg-brand-50 text-brand-600 rounded-lg text-xs font-medium hover:bg-brand-100 disabled:opacity-50"
+                className="px-3 py-1.5 bg-brand-500/10 text-brand-400 border border-brand-500/30 rounded-lg text-xs font-medium hover:bg-brand-500/20 disabled:opacity-50"
               >
                 {t('pos.apply')}
               </button>
@@ -1376,10 +1408,10 @@ export default function PosPage() {
               }
               setShowSplitModal(true);
             }}
-            className="mt-1.5 w-full py-2 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border border-dashed border-brand-500/50 text-brand-700 bg-brand-50/60 hover:bg-brand-50 transition-colors shadow-2xs"
+            className="mt-1.5 w-full py-2 px-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border border-dashed border-brand-500/50 text-brand-400 bg-brand-500/10 hover:bg-brand-500/20 transition-colors shadow-2xs"
           >
             <span>{t('splitPayment.splitTender', 'Split Tender (Multi-Pay)')}</span>
-            <kbd className="text-[10px] font-mono text-brand-600 px-1 py-0.2 rounded bg-white border border-brand-300">
+            <kbd className="text-[10px] font-mono text-brand-400 px-1 py-0.2 rounded bg-card border border-brand-500/30">
               F11
             </kbd>
           </button>
@@ -1418,18 +1450,23 @@ export default function PosPage() {
         {paidNum > 0 && (
           <div className="flex justify-between text-sm font-medium mt-3">
             <span className="text-ink-500">{t('pos.change')}</span>
-            <span className={change < 0 ? 'text-red-600' : 'text-brand-600'}>
+            <span className={change < 0 ? 'text-red-400' : 'text-brand-500'}>
               Rs. {change.toFixed(2)}
             </span>
           </div>
         )}
 
-        {error && <p className="text-red-600 text-sm bg-red-50 p-2 rounded mt-3">{error}</p>}
+        {error && (
+          <p className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 p-2.5 rounded-lg mt-3 flex items-center gap-2">
+            <AlertCircle size={16} className="shrink-0" />
+            <span>{error}</span>
+          </p>
+        )}
 
         <button
           onClick={handleCheckout}
           disabled={checkoutMutation.isPending}
-          className="w-full py-3 mt-3 bg-brand-600 text-white font-bold rounded-xl hover:bg-brand-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-2 shadow-xs"
+          className="w-full py-3 mt-3 bg-brand-600 text-white font-bold rounded-xl hover:bg-brand-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
         >
           <span>{checkoutMutation.isPending ? t('pos.processing') : t('pos.completeSale')}</span>
           <kbd className="px-1.5 py-0.5 text-xs font-mono font-semibold bg-white/20 text-white rounded">
@@ -1437,6 +1474,29 @@ export default function PosPage() {
           </kbd>
         </button>
       </div>
+      </div>
+
+      {/* Mobile Floating Cart Summary Pill when viewing Catalog on mobile */}
+      {cart.length > 0 && mobileTab === 'catalog' && (
+        <div className="lg:hidden fixed bottom-18 left-4 right-4 z-30">
+          <button
+            type="button"
+            onClick={() => setMobileTab('cart')}
+            className="w-full py-3.5 px-5 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-sm shadow-xl flex items-center justify-between border border-brand-500 cursor-pointer animate-in fade-in slide-in-from-bottom-2 duration-200"
+          >
+            <div className="flex items-center gap-2.5">
+              <span className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs font-mono font-bold">
+                {cart.reduce((s, i) => s + i.quantity, 0)}
+              </span>
+              <span>{t('pos.cart')} ({cart.length})</span>
+            </div>
+            <div className="flex items-center gap-2 font-mono text-base font-bold">
+              <span>Rs. {grandTotal.toFixed(2)}</span>
+              <span>→</span>
+            </div>
+          </button>
+        </div>
+      )}
 
       {completedSale && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
