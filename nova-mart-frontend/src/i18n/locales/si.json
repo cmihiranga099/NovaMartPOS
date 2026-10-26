@@ -128,7 +128,9 @@
       "shortcuts": "යතුරුපුවරු කෙටිමං",
       "shortcutsHelp": "කෙටිමං සඳහා ? ඔබන්න",
       "scanned": "කියවන ලදී: {{name}}",
-      "productNotFound": "නිෂ්පාදනය හමු නොවීය: {{code}}"
+      "productNotFound": "නිෂ්පාදනය හමු නොවීය: {{code}}",
+      "touchKeyboard": "ස්පර්ශ යතුරුපුවරුව",
+      "openTouchKeyboard": "තිරයේ යතුරුපුවරුව විවෘත කරන්න"
     },
     "keyboardShortcuts": {
       "title": "POS යතුරුපුවරු කෙටිමං",

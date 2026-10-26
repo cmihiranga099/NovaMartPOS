@@ -128,7 +128,9 @@
       "shortcuts": "Keyboard Shortcuts",
       "shortcutsHelp": "Press ? for shortcuts",
       "scanned": "Scanned: {{name}}",
-      "productNotFound": "Product not found: {{code}}"
+      "productNotFound": "Product not found: {{code}}",
+      "touchKeyboard": "Touch Keyboard",
+      "openTouchKeyboard": "Open on-screen touch keyboard"
     },
     "keyboardShortcuts": {
       "title": "POS Keyboard Shortcuts",

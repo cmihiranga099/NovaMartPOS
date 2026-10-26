@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { Search, CheckCircle2, Tag, X, Delete, Percent } from 'lucide-react';
+import { Search, CheckCircle2, Tag, X, Delete, Percent, Keyboard, Barcode } from 'lucide-react';
 import { productService } from '../services/productService';
 import { customerService } from '../services/customerService';
 import { saleService } from '../services/saleService';
@@ -12,6 +12,8 @@ import Receipt from '../features/pos/Receipt';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../store/AuthContext';
 import ManagerOverrideModal from '../components/ManagerOverrideModal';
+import KeyboardShortcutsModal from '../features/pos/KeyboardShortcutsModal';
+import { usePosKeyboard, playScannerBeep } from '../features/pos/usePosKeyboard';
 
 const TILE_PALETTE = [
   'bg-orange-100 text-orange-700',
@@ -52,7 +54,12 @@ export default function PosPage() {
   const [discountInput, setDiscountInput] = useState('');
   const [discountApprovedPin, setDiscountApprovedPin] = useState<string | null>(null);
   const [discountApprovedBy, setDiscountApprovedBy] = useState<string | null>(null);
+  const [showShortcutsModal, setShowShortcutsModal] = useState(false);
+  const [scanFeedback, setScanFeedback] = useState<string | null>(null);
+
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const customerSelectRef = useRef<HTMLSelectElement>(null);
+  const promoInputRef = useRef<HTMLInputElement>(null);
 
   const { data: products = [] } = useQuery({ queryKey: ['products'], queryFn: productService.getAll });
   const { data: customers = [] } = useQuery({ queryKey: ['customers'], queryFn: customerService.getAll });
@@ -61,6 +68,12 @@ export default function PosPage() {
   useEffect(() => {
     searchInputRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    if (!scanFeedback) return;
+    const timer = setTimeout(() => setScanFeedback(null), 2500);
+    return () => clearTimeout(timer);
+  }, [scanFeedback]);
 
   const checkoutMutation = useMutation({
     mutationFn: saleService.checkout,
@@ -124,14 +137,47 @@ export default function PosPage() {
 
   const handleBarcodeEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const exact = activeProducts.find((p) => p.barcode === search);
+      const trimmed = search.trim();
+      const exact = activeProducts.find(
+        (p) => p.barcode === trimmed || p.productCode.toLowerCase() === trimmed.toLowerCase()
+      );
       if (exact) {
+        if (exact.stockQuantity <= 0) {
+          playScannerBeep(false);
+          setError(`${t('pos.outOfStock')}: ${exact.name}`);
+          return;
+        }
         addToCart(exact);
+        playScannerBeep(true);
+        setScanFeedback(`${exact.name} (Rs. ${exact.sellingPrice.toFixed(2)})`);
         setSearch('');
         setSubmittedSearch('');
+        setError(null);
         return;
       }
       setSubmittedSearch(search);
+    }
+  };
+
+  const handleBarcodeScanned = (barcode: string) => {
+    const trimmed = barcode.trim();
+    if (!trimmed) return;
+    const exact = activeProducts.find(
+      (p) => p.barcode === trimmed || p.productCode.toLowerCase() === trimmed.toLowerCase()
+    );
+    if (exact) {
+      if (exact.stockQuantity <= 0) {
+        playScannerBeep(false);
+        setError(`${t('pos.outOfStock')}: ${exact.name}`);
+        return;
+      }
+      addToCart(exact);
+      playScannerBeep(true);
+      setScanFeedback(`${exact.name} · Rs. ${exact.sellingPrice.toFixed(2)}`);
+      setError(null);
+    } else {
+      playScannerBeep(false);
+      setError(t('pos.productNotFound', { code: trimmed }));
     }
   };
 
@@ -142,6 +188,86 @@ export default function PosPage() {
   const removeFromCart = (productId: number) => {
     setCart((prev) => prev.filter((i) => i.productId !== productId));
   };
+
+  const increaseLastItemQty = () => {
+    if (cart.length === 0) return;
+    const lastItem = cart[cart.length - 1];
+    updateQuantity(lastItem.productId, Math.min(lastItem.availableStock, lastItem.quantity + 1));
+  };
+
+  const decreaseLastItemQty = () => {
+    if (cart.length === 0) return;
+    const lastItem = cart[cart.length - 1];
+    if (lastItem.quantity > 1) {
+      updateQuantity(lastItem.productId, lastItem.quantity - 1);
+    } else {
+      removeFromCart(lastItem.productId);
+    }
+  };
+
+  const removeLastItem = () => {
+    if (cart.length === 0) return;
+    const lastItem = cart[cart.length - 1];
+    removeFromCart(lastItem.productId);
+  };
+
+  const handleClearOrCancel = () => {
+    if (showShortcutsModal) {
+      setShowShortcutsModal(false);
+    } else if (showOverridePrompt) {
+      setShowOverridePrompt(false);
+    } else if (showDiscountEntry) {
+      setShowDiscountEntry(false);
+      setDiscountInput('');
+    } else if (completedSale) {
+      setCompletedSale(null);
+    } else if (search.length > 0 || submittedSearch.length > 0) {
+      setSearch('');
+      setSubmittedSearch('');
+      setError(null);
+      searchInputRef.current?.focus();
+    } else {
+      setError(null);
+      setPromoError(null);
+    }
+  };
+
+  // Register POS keyboard shortcuts and hardware barcode scanner listener
+  usePosKeyboard({
+    onSearchFocus: () => {
+      searchInputRef.current?.focus();
+      searchInputRef.current?.select();
+    },
+    onCustomerFocus: () => {
+      customerSelectRef.current?.focus();
+    },
+    onPromoFocus: () => {
+      promoInputRef.current?.focus();
+    },
+    onDiscountOpen: () => {
+      openDiscountFlow();
+    },
+    onSetExactAmount: () => {
+      setExactAmount();
+    },
+    onSelectPaymentMethod: (method) => {
+      setPaymentMethod(method);
+    },
+    onCheckout: () => {
+      handleCheckout();
+    },
+    onClearOrCancel: handleClearOrCancel,
+    onIncreaseLastItemQty: increaseLastItemQty,
+    onDecreaseLastItemQty: decreaseLastItemQty,
+    onRemoveLastItem: removeLastItem,
+    onToggleShortcutsModal: () => {
+      setShowShortcutsModal((prev) => !prev);
+    },
+    onBarcodeScanned: handleBarcodeScanned,
+    isModalOpen: showShortcutsModal || showOverridePrompt || showDiscountEntry,
+    isCompletedSaleOpen: !!completedSale,
+    onNewSale: () => setCompletedSale(null),
+  });
 
   // Manual, cart-wide discount. Distributed proportionally across line items so it
   // rides the same per-item Discount field (and tax math) the backend already uses.
@@ -271,18 +397,48 @@ export default function PosPage() {
     <div className="grid grid-cols-3 gap-6 h-full">
       {/* Left: category tabs + product grid */}
       <div className="col-span-2 flex flex-col min-h-0">
-        <div className="relative mb-3">
-          <Search size={18} className="absolute left-3 top-3 text-ink-500" />
-          <input
-            ref={searchInputRef}
-            type="text"
-            placeholder={t('pos.scanOrSearch')}
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={handleBarcodeEnter}
-            className="w-full pl-10 pr-3 py-3 border border-ink-500/20 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-brand-500"
-          />
+        {/* Search bar & Keyboard Shortcuts Button */}
+        <div className="flex items-center gap-2 mb-3">
+          <div className="relative flex-1">
+            <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-500" />
+            <input
+              ref={searchInputRef}
+              type="text"
+              placeholder={t('pos.scanOrSearch')}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={handleBarcodeEnter}
+              className="w-full pl-10 pr-12 py-3 border border-ink-500/20 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-brand-500 bg-card shadow-xs"
+            />
+            <kbd className="absolute right-3.5 top-1/2 -translate-y-1/2 px-1.5 py-0.5 text-[11px] font-mono text-ink-500 bg-surface border border-line rounded">
+              F1
+            </kbd>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setShowShortcutsModal(true)}
+            title={t('pos.shortcutsHelp')}
+            className="flex items-center gap-1.5 px-3.5 py-3 border border-line bg-card hover:bg-surface rounded-xl text-xs font-semibold text-ink-700 shadow-xs transition-colors shrink-0"
+          >
+            <Keyboard size={18} className="text-brand-600" />
+            <span className="hidden sm:inline">{t('pos.shortcuts')}</span>
+            <kbd className="px-1.5 py-0.5 text-[10px] font-mono bg-surface border border-line rounded text-ink-600">
+              ?
+            </kbd>
+          </button>
         </div>
+
+        {/* Scan feedback alert banner */}
+        {scanFeedback && (
+          <div className="mb-3 px-3 py-2 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-semibold flex items-center justify-between shadow-xs animate-in fade-in slide-in-from-top-1 duration-150">
+            <span className="flex items-center gap-2">
+              <Barcode size={16} className="text-emerald-600" />
+              <span>{t('pos.scanned', { name: scanFeedback })}</span>
+            </span>
+            <span className="text-[10px] font-medium text-emerald-600 bg-emerald-100/70 px-1.5 py-0.5 rounded">+1 in cart</span>
+          </div>
+        )}
 
         {/* Category tabs */}
         <div className="flex gap-2 overflow-x-auto pb-3 -mx-1 px-1">
@@ -291,7 +447,8 @@ export default function PosPage() {
             className={`shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
               activeCategory === 'all'
                 ? 'bg-brand-600 text-white'
-                : 'bg-card text-ink-700 border border-line hover:bg-surface'            }`}
+                : 'bg-card text-ink-700 border border-line hover:bg-surface'
+            }`}
           >
             {t('pos.all')}
           </button>
@@ -302,7 +459,8 @@ export default function PosPage() {
               className={`shrink-0 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
                 activeCategory === c.id
                   ? 'bg-brand-600 text-white'
-                  : 'bg-card text-ink-700 border border-line hover:bg-surface'              }`}
+                  : 'bg-card text-ink-700 border border-line hover:bg-surface'
+              }`}
             >
               {c.name}
             </button>
@@ -326,7 +484,8 @@ export default function PosPage() {
                     key={product.id}
                     onClick={() => addToCart(product)}
                     disabled={outOfStock}
-                    className="group flex flex-col items-stretch rounded-2xl border border-line bg-card overflow-hidden text-left hover:shadow-md hover:border-brand-200 transition-all disabled:opacity-40 disabled:hover:shadow-none disabled:hover:border-line"                  >
+                    className="group flex flex-col items-stretch rounded-2xl border border-line bg-card overflow-hidden text-left hover:shadow-md hover:border-brand-200 transition-all disabled:opacity-40 disabled:hover:shadow-none disabled:hover:border-line"
+                  >
                     <div className={`h-16 flex items-center justify-center font-bold text-2xl ${tileColor(product.categoryName || product.name)}`}>
                       {product.name.charAt(0).toUpperCase()}
                     </div>
@@ -348,7 +507,11 @@ export default function PosPage() {
       </div>
 
       {/* Right: cart + checkout */}
-      <div className="bg-card rounded-lg shadow flex flex-col p-4 min-h-0">        <h2 className="font-bold text-lg mb-3">{t('pos.cart')}</h2>
+      <div className="bg-card rounded-xl border border-line shadow flex flex-col p-4 min-h-0">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="font-bold text-lg">{t('pos.cart')}</h2>
+          <span className="text-xs text-ink-500">{cart.length} line{cart.length === 1 ? '' : 's'}</span>
+        </div>
 
         <div className="flex-1 overflow-auto min-h-[80px]">
           {cart.length === 0 ? (
@@ -365,19 +528,35 @@ export default function PosPage() {
           )}
         </div>
 
-        <div className="border-t border-ink-500/10 pt-3 mt-3">
+        {cart.length > 0 && (
+          <div className="text-[11px] text-ink-500 flex items-center justify-between py-1.5 px-1 border-t border-line/60">
+            <span>{cart.reduce((sum, i) => sum + i.quantity, 0)} items total</span>
+            <span className="flex items-center gap-1">
+              <kbd className="font-mono text-[10px] px-1 bg-surface border border-line rounded">+</kbd>
+              <kbd className="font-mono text-[10px] px-1 bg-surface border border-line rounded">-</kbd>
+              <span>qty ·</span>
+              <kbd className="font-mono text-[10px] px-1 bg-surface border border-line rounded">Del</kbd>
+            </span>
+          </div>
+        )}
+
+        <div className="border-t border-ink-500/10 pt-3 mt-1">
           {!appliedPromo ? (
             <div className="flex gap-2">
               <div className="relative flex-1">
                 <Tag size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-ink-500" />
                 <input
+                  ref={promoInputRef}
                   type="text"
                   value={promoInput}
                   onChange={(e) => { setPromoInput(e.target.value); setPromoError(null); }}
                   onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleApplyPromo(); } }}
                   placeholder={t('pos.promoCode')}
-                  className="w-full pl-7 pr-2 py-1.5 border border-ink-500/20 rounded-lg text-xs uppercase"
+                  className="w-full pl-7 pr-8 py-1.5 border border-ink-500/20 rounded-lg text-xs uppercase"
                 />
+                <kbd className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-mono text-ink-500 bg-surface border border-line px-1 rounded">
+                  F4
+                </kbd>
               </div>
               <button
                 onClick={handleApplyPromo}
@@ -406,7 +585,11 @@ export default function PosPage() {
                 disabled={cart.length === 0}
                 className="mt-2 w-full flex items-center justify-center gap-1.5 px-3 py-1.5 border border-line rounded-lg text-xs font-medium text-ink-700 hover:bg-surface disabled:opacity-50"
               >
-                <Percent size={13} /> {t('pos.addDiscount')}
+                <Percent size={13} />
+                <span>{t('pos.addDiscount')}</span>
+                <kbd className="text-[10px] font-mono text-ink-500 px-1 rounded bg-surface border border-line ml-1">
+                  F3
+                </kbd>
               </button>
             )
           ) : (
@@ -472,51 +655,98 @@ export default function PosPage() {
           </div>
         </div>
 
-        <div className="mt-3 grid grid-cols-2 gap-2">
+        {/* Customer select with F2 shortcut badge */}
+        <div className="mt-3">
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-xs font-medium text-ink-700">{t('pos.customer')}</span>
+            <kbd className="text-[10px] font-mono text-ink-500 px-1 py-0.2 rounded bg-surface border border-line">
+              F2
+            </kbd>
+          </div>
           <select
+            ref={customerSelectRef}
             value={customerId}
             onChange={(e) => setCustomerId(Number(e.target.value))}
-            className="px-2.5 py-2 border border-ink-500/20 rounded-lg text-sm"
+            className="w-full px-2.5 py-2 border border-ink-500/20 rounded-lg text-sm bg-card"
           >
             {customers.map((c) => (
               <option key={c.id} value={c.id}>{c.name}</option>
             ))}
           </select>
-          <select
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-            className="px-2.5 py-2 border border-ink-500/20 rounded-lg text-sm"
-          >
-            <option value="Cash">{t('pos.cash')}</option>
-            <option value="Card">{t('pos.card')}</option>
-            <option value="BankTransfer">{t('pos.bankTransfer')}</option>
-          </select>
         </div>
 
-        {/* Amount paid + numeric keypad, like a till terminal */}
+        {/* Payment method selector buttons with F8/F9/F10 */}
+        <div className="mt-3">
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-xs font-medium text-ink-700">{t('pos.paymentMethod')}</span>
+          </div>
+          <div className="grid grid-cols-3 gap-1.5">
+            <button
+              type="button"
+              onClick={() => setPaymentMethod('Cash')}
+              className={`py-2 px-1.5 rounded-lg text-xs font-semibold flex flex-col items-center gap-0.5 border transition-all ${
+                paymentMethod === 'Cash'
+                  ? 'bg-brand-600 text-white border-brand-600 shadow-xs'
+                  : 'bg-surface hover:bg-ink-500/10 border-line text-ink-700'
+              }`}
+            >
+              <span>{t('pos.cash')}</span>
+              <kbd className={`text-[10px] font-mono ${paymentMethod === 'Cash' ? 'text-white/80' : 'text-ink-500'}`}>F8</kbd>
+            </button>
+            <button
+              type="button"
+              onClick={() => setPaymentMethod('Card')}
+              className={`py-2 px-1.5 rounded-lg text-xs font-semibold flex flex-col items-center gap-0.5 border transition-all ${
+                paymentMethod === 'Card'
+                  ? 'bg-brand-600 text-white border-brand-600 shadow-xs'
+                  : 'bg-surface hover:bg-ink-500/10 border-line text-ink-700'
+              }`}
+            >
+              <span>{t('pos.card')}</span>
+              <kbd className={`text-[10px] font-mono ${paymentMethod === 'Card' ? 'text-white/80' : 'text-ink-500'}`}>F9</kbd>
+            </button>
+            <button
+              type="button"
+              onClick={() => setPaymentMethod('BankTransfer')}
+              className={`py-2 px-1.5 rounded-lg text-xs font-semibold flex flex-col items-center gap-0.5 border transition-all ${
+                paymentMethod === 'BankTransfer'
+                  ? 'bg-brand-600 text-white border-brand-600 shadow-xs'
+                  : 'bg-surface hover:bg-ink-500/10 border-line text-ink-700'
+              }`}
+            >
+              <span className="truncate">{t('pos.bankTransfer')}</span>
+              <kbd className={`text-[10px] font-mono ${paymentMethod === 'BankTransfer' ? 'text-white/80' : 'text-ink-500'}`}>F10</kbd>
+            </button>
+          </div>
+        </div>
+
+        {/* Amount paid + numeric keypad */}
         <div className="mt-3">
           <div className="flex items-center justify-between mb-1.5">
             <span className="text-xs font-medium text-ink-700">{t('pos.amountPaid')}</span>
             <button
               onClick={setExactAmount}
-              className="text-[11px] font-medium text-brand-600 hover:text-brand-700"
+              className="text-[11px] font-medium text-brand-600 hover:text-brand-700 flex items-center gap-1"
             >
-              {t('pos.exact')}
+              <span>{t('pos.exact')}</span>
+              <kbd className="text-[10px] font-mono text-ink-500 px-1 py-0.2 rounded bg-surface border border-line">
+                F7
+              </kbd>
             </button>
           </div>
           <div className="px-3 py-2.5 border border-ink-500/20 rounded-lg text-right text-xl font-bold mb-2 bg-surface">
             {amountPaid ? `Rs. ${amountPaid}` : <span className="text-ink-500 text-base font-normal">Rs. 0.00</span>}
           </div>
           <div className="grid grid-cols-3 gap-1.5">
-          {KEYPAD_KEYS.map((key) => (
-  <button
-    key={key}
-    onClick={() => handleKeypadPress(key)}
-    className="py-2.5 rounded-lg border border-line bg-surface hover:bg-ink-500/10 font-semibold text-ink-900 flex items-center justify-center transition-colors"
-  >
-    {key === 'DEL' ? <Delete size={16} /> : key}
-  </button>
-))}
+            {KEYPAD_KEYS.map((key) => (
+              <button
+                key={key}
+                onClick={() => handleKeypadPress(key)}
+                className="py-2.5 rounded-lg border border-line bg-surface hover:bg-ink-500/10 font-semibold text-ink-900 flex items-center justify-center transition-colors"
+              >
+                {key === 'DEL' ? <Delete size={16} /> : key}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -532,17 +762,21 @@ export default function PosPage() {
         {error && <p className="text-red-600 text-sm bg-red-50 p-2 rounded mt-3">{error}</p>}
 
         <button
-  onClick={handleCheckout}
-  disabled={checkoutMutation.isPending}
-  className="w-full py-3 mt-3 bg-brand-600 text-white font-bold rounded-none hover:bg-brand-700 disabled:opacity-50 transition-colors"
->
-  {checkoutMutation.isPending ? t('pos.processing') : t('pos.completeSale')}
-</button>
+          onClick={handleCheckout}
+          disabled={checkoutMutation.isPending}
+          className="w-full py-3 mt-3 bg-brand-600 text-white font-bold rounded-xl hover:bg-brand-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-2 shadow-xs"
+        >
+          <span>{checkoutMutation.isPending ? t('pos.processing') : t('pos.completeSale')}</span>
+          <kbd className="px-1.5 py-0.5 text-xs font-mono font-semibold bg-white/20 text-white rounded">
+            F12
+          </kbd>
+        </button>
       </div>
 
       {completedSale && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <div className="bg-card rounded-lg shadow-lg w-full max-w-sm p-6 text-center">            <CheckCircle2 className="mx-auto text-brand-600 mb-3" size={48} />
+          <div className="bg-card rounded-lg shadow-lg w-full max-w-sm p-6 text-center">
+            <CheckCircle2 className="mx-auto text-brand-600 mb-3" size={48} />
             <h2 className="text-xl font-bold mb-1">{t('pos.saleComplete')}</h2>
             <p className="text-ink-500 text-sm mb-4">{completedSale.invoiceNumber}</p>
             <div className="text-left text-sm space-y-1 mb-4 bg-surface p-3 rounded-lg">
@@ -558,9 +792,10 @@ export default function PosPage() {
             </button>
             <button
               onClick={() => setCompletedSale(null)}
-              className="w-full py-2.5 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium"
+              className="w-full py-2.5 bg-brand-600 text-white rounded-lg hover:bg-brand-700 font-medium flex items-center justify-center gap-2"
             >
-              {t('pos.newSale')}
+              <span>{t('pos.newSale')}</span>
+              <kbd className="px-1.5 py-0.5 text-xs font-mono bg-white/20 text-white rounded">Enter</kbd>
             </button>
           </div>
         </div>
@@ -576,6 +811,11 @@ export default function PosPage() {
           onClose={() => setShowOverridePrompt(false)}
         />
       )}
+
+      <KeyboardShortcutsModal
+        isOpen={showShortcutsModal}
+        onClose={() => setShowShortcutsModal(false)}
+      />
     </div>
   );
 }
