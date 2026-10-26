@@ -170,23 +170,26 @@ public class SaleService : ISaleService
             {
                 ProductId = product.Id,
                 Type = StockTransactionType.Sale,
-                Quantity = -quantity,
-                Note = $"Sale {invoiceNumber}",
-                Reference = invoiceNumber
+                Quantity = quantity,
+                Notes = $"Sale {invoiceNumber}"
             });
         }
 
-        await _saleRepository.AddAsync(sale, stockTransactions);
+        await _saleRepository.CreateSaleAsync(sale, stockTransactions);
 
-        foreach (var (product, _) in productsToDeduct)
+        var saved = await _saleRepository.GetByIdWithDetailsAsync(sale.Id);
+        var saleDto = MapToDto(saved!);
+
+        try
         {
-            if (product.StockQuantity <= product.MinimumStockLevel)
-            {
-                await _notificationService.SendLowStockAlertAsync(product.Name, product.StockQuantity);
-            }
+            await _notificationService.NotifySaleCompletedAsync(saleDto);
+        }
+        catch
+        {
+            // A dashboard broadcast failing must never fail the sale itself — the sale is already committed.
         }
 
-        return (MapToDto(sale), null);
+        return (saleDto, null);
     }
 
     public async Task<List<SaleDto>> GetAllAsync()
@@ -198,12 +201,6 @@ public class SaleService : ISaleService
     public async Task<SaleDto?> GetByIdAsync(int id)
     {
         var sale = await _saleRepository.GetByIdWithDetailsAsync(id);
-        return sale is null ? null : MapToDto(sale);
-    }
-
-    public async Task<SaleDto?> GetByInvoiceNumberAsync(string invoiceNumber)
-    {
-        var sale = await _saleRepository.GetByInvoiceNumberAsync(invoiceNumber);
         return sale is null ? null : MapToDto(sale);
     }
 

@@ -143,8 +143,7 @@ namespace NovaMartPOS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SaleId")
-                        .IsUnique();
+                    b.HasIndex("SaleId");
 
                     b.ToTable("Payments");
                 });
@@ -629,8 +628,8 @@ namespace NovaMartPOS.Infrastructure.Migrations
             modelBuilder.Entity("NovaMartPOS.Domain.Entities.Payment", b =>
                 {
                     b.HasOne("NovaMartPOS.Domain.Entities.Sale", "Sale")
-                        .WithOne("Payment")
-                        .HasForeignKey("NovaMartPOS.Domain.Entities.Payment", "SaleId")
+                        .WithMany("Payments")
+                        .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -801,7 +800,7 @@ namespace NovaMartPOS.Infrastructure.Migrations
 
             modelBuilder.Entity("NovaMartPOS.Domain.Entities.Sale", b =>
                 {
-                    b.Navigation("Payment");
+                    b.Navigation("Payments");
 
                     b.Navigation("SaleItems");
                 });
