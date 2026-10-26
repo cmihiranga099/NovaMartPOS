@@ -124,7 +124,31 @@
       "addDiscount": "Add manual discount",
       "manualDiscount": "Manual discount",
       "discountAmount": "Discount amount (Rs.)",
-      "approvedBy": "approved by {{name}}"
+      "approvedBy": "approved by {{name}}",
+      "shortcuts": "Keyboard Shortcuts",
+      "shortcutsHelp": "Press ? for shortcuts",
+      "scanned": "Scanned: {{name}}",
+      "productNotFound": "Product not found: {{code}}"
+    },
+    "keyboardShortcuts": {
+      "title": "POS Keyboard Shortcuts",
+      "subtitle": "Operate the counter hands-free with your keyboard & scanner",
+      "search": "Focus Search / Barcode",
+      "customer": "Select Customer",
+      "discount": "Add Manual Discount",
+      "promo": "Focus Promo Code",
+      "exactAmount": "Set Exact Amount",
+      "payCash": "Pay with Cash",
+      "payCard": "Pay with Card",
+      "payBank": "Pay with Bank Transfer",
+      "checkout": "Complete Sale / Checkout",
+      "cancelClose": "Cancel / Close Modal / Clear Search",
+      "increaseQty": "Increase Quantity (+)",
+      "decreaseQty": "Decrease Quantity (-)",
+      "removeLast": "Remove Last Cart Item",
+      "showShortcuts": "Show Shortcuts Cheat Sheet",
+      "scannerAutoCapture": "Hardware Barcode Scanner",
+      "scannerAutoCaptureDesc": "Scan barcodes anytime — automatically captured without clicking into search."
     },
     "categories": {
       "title": "Categories",
