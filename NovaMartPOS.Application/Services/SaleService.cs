@@ -29,9 +29,6 @@ public class SaleService : ISaleService
         if (dto.Items is null || dto.Items.Count == 0)
             return (null, "Cart is empty.");
 
-        if (!Enum.TryParse<PaymentMethod>(dto.PaymentMethod, true, out var paymentMethod))
-            return (null, "Invalid payment method. Use Cash, Card, or BankTransfer.");
-
         decimal subtotal = 0;
         decimal totalDiscount = 0;
         decimal totalTax = 0;
@@ -93,8 +90,58 @@ public class SaleService : ISaleService
 
         var grandTotal = (netAfterLineDiscounts - promoDiscount) + totalTax;
 
-        if (dto.AmountPaid < grandTotal)
-            return (null, $"Insufficient payment. Grand total is {grandTotal:F2}, amount paid was {dto.AmountPaid:F2}.");
+        // Process payments (Supports both single tender and multi-tender splits)
+        var payments = new List<Payment>();
+        decimal totalTendered = 0;
+
+        if (dto.Splits is not null && dto.Splits.Count > 0)
+        {
+            foreach (var split in dto.Splits)
+            {
+                if (split.Amount <= 0)
+                    return (null, "Split payment amount must be greater than zero.");
+
+                if (!Enum.TryParse<PaymentMethod>(split.Method, true, out _))
+                    return (null, $"Invalid payment method '{split.Method}'.");
+
+                totalTendered += split.Amount;
+            }
+
+            if (totalTendered < grandTotal)
+                return (null, $"Insufficient payment. Grand total is {grandTotal:F2}, total tendered across splits was {totalTendered:F2}.");
+
+            for (int i = 0; i < dto.Splits.Count; i++)
+            {
+                var split = dto.Splits[i];
+                Enum.TryParse<PaymentMethod>(split.Method, true, out var splitMethod);
+                decimal changeForSplit = (i == dto.Splits.Count - 1 && totalTendered > grandTotal)
+                    ? totalTendered - grandTotal
+                    : 0;
+
+                payments.Add(new Payment
+                {
+                    Method = splitMethod,
+                    AmountPaid = split.Amount,
+                    Change = changeForSplit
+                });
+            }
+        }
+        else
+        {
+            if (!Enum.TryParse<PaymentMethod>(dto.PaymentMethod, true, out var paymentMethod))
+                return (null, "Invalid payment method. Use Cash, Card, or BankTransfer.");
+
+            if (dto.AmountPaid < grandTotal)
+                return (null, $"Insufficient payment. Grand total is {grandTotal:F2}, amount paid was {dto.AmountPaid:F2}.");
+
+            totalTendered = dto.AmountPaid;
+            payments.Add(new Payment
+            {
+                Method = paymentMethod,
+                AmountPaid = dto.AmountPaid,
+                Change = dto.AmountPaid - grandTotal
+            });
+        }
 
         var invoiceNumber = await _saleRepository.GenerateInvoiceNumberAsync();
 
@@ -110,12 +157,7 @@ public class SaleService : ISaleService
             CustomerId = dto.CustomerId,
             CashierId = cashierId,
             SaleItems = saleItems,
-            Payment = new Payment
-            {
-                Method = paymentMethod,
-                AmountPaid = dto.AmountPaid,
-                Change = dto.AmountPaid - grandTotal
-            }
+            Payments = payments
         };
 
         // Deduct stock and record stock transactions
@@ -128,26 +170,29 @@ public class SaleService : ISaleService
             {
                 ProductId = product.Id,
                 Type = StockTransactionType.Sale,
-                Quantity = quantity,
-                Notes = $"Sale {invoiceNumber}"
+                Quantity = -quantity,
+                Note = $"Sale {invoiceNumber}",
+                Reference = invoiceNumber
             });
         }
 
-        await _saleRepository.CreateSaleAsync(sale, stockTransactions);
+        await _saleRepository.AddAsync(sale, stockTransactions);
 
-        var saved = await _saleRepository.GetByIdWithDetailsAsync(sale.Id);
-        var saleDto = MapToDto(saved!);
-
-        try
+        foreach (var (product, _) in productsToDeduct)
         {
-            await _notificationService.NotifySaleCompletedAsync(saleDto);
-        }
-        catch
-        {
-            // A dashboard broadcast failing must never fail the sale itself — the sale is already committed.
+            if (product.StockQuantity <= product.MinimumStockLevel)
+            {
+                await _notificationService.SendLowStockAlertAsync(product.Name, product.StockQuantity);
+            }
         }
 
-        return (saleDto, null);
+        return (MapToDto(sale), null);
+    }
+
+    public async Task<List<SaleDto>> GetAllAsync()
+    {
+        var sales = await _saleRepository.GetAllWithDetailsAsync();
+        return sales.Select(MapToDto).ToList();
     }
 
     public async Task<SaleDto?> GetByIdAsync(int id)
@@ -156,38 +201,53 @@ public class SaleService : ISaleService
         return sale is null ? null : MapToDto(sale);
     }
 
-    public async Task<List<SaleDto>> GetAllAsync()
-{
-    var sales = await _saleRepository.GetAllWithDetailsAsync();
-    return sales.Select(MapToDto).ToList();
-}
-
-    private static SaleDto MapToDto(Sale s) => new()
+    public async Task<SaleDto?> GetByInvoiceNumberAsync(string invoiceNumber)
     {
-        Id = s.Id,
-        InvoiceNumber = s.InvoiceNumber,
-        Subtotal = s.Subtotal,
-        Discount = s.Discount,
-        Tax = s.Tax,
-        GrandTotal = s.GrandTotal,
-        PromoCode = s.PromoCode,
-        PromoDiscount = s.PromoDiscount,
-        AmountPaid = s.Payment?.AmountPaid ?? 0,
-        Change = s.Payment?.Change ?? 0,
-        PaymentMethod = s.Payment?.Method.ToString() ?? string.Empty,
-        CustomerId = s.CustomerId,
-        CustomerName = s.Customer?.Name ?? string.Empty,
-        CashierId = s.CashierId,
-        CashierName = s.Cashier?.FullName ?? string.Empty,
-        CreatedAt = s.CreatedAt,
-        Items = s.SaleItems.Select(si => new SaleItemDto
+        var sale = await _saleRepository.GetByInvoiceNumberAsync(invoiceNumber);
+        return sale is null ? null : MapToDto(sale);
+    }
+
+    private static SaleDto MapToDto(Sale s)
+    {
+        var totalPaid = s.Payments.Sum(p => p.AmountPaid);
+        var totalChange = s.Payments.Sum(p => p.Change);
+        var methods = s.Payments.Count > 0
+            ? string.Join(" + ", s.Payments.Select(p => p.Method.ToString()).Distinct())
+            : "Cash";
+
+        return new SaleDto
         {
-            ProductId = si.ProductId,
-            ProductName = si.Product?.Name ?? string.Empty,
-            Quantity = si.Quantity,
-            UnitPrice = si.UnitPrice,
-            Discount = si.Discount,
-            Total = si.Total
-        }).ToList()
-    };
+            Id = s.Id,
+            InvoiceNumber = s.InvoiceNumber,
+            Subtotal = s.Subtotal,
+            Discount = s.Discount,
+            Tax = s.Tax,
+            GrandTotal = s.GrandTotal,
+            PromoCode = s.PromoCode,
+            PromoDiscount = s.PromoDiscount,
+            AmountPaid = totalPaid,
+            Change = totalChange,
+            PaymentMethod = methods,
+            CustomerId = s.CustomerId,
+            CustomerName = s.Customer?.Name ?? string.Empty,
+            CashierId = s.CashierId,
+            CashierName = s.Cashier?.FullName ?? string.Empty,
+            CreatedAt = s.CreatedAt,
+            Items = s.SaleItems.Select(si => new SaleItemDto
+            {
+                ProductId = si.ProductId,
+                ProductName = si.Product?.Name ?? string.Empty,
+                Quantity = si.Quantity,
+                UnitPrice = si.UnitPrice,
+                Discount = si.Discount,
+                Total = si.Total
+            }).ToList(),
+            Payments = s.Payments.Select(p => new PaymentDetailDto
+            {
+                Method = p.Method.ToString(),
+                AmountPaid = p.AmountPaid,
+                Change = p.Change
+            }).ToList()
+        };
+    }
 }

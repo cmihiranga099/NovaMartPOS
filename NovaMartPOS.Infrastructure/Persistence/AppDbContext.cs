@@ -123,6 +123,11 @@ modelBuilder.Entity<ReturnItem>().Property(ri => ri.RefundAmount).HasColumnType(
 
         modelBuilder.Entity<Payment>()
             .Property(p => p.AmountPaid).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Sale>()
+            .HasMany(s => s.Payments)
+            .WithOne(p => p.Sale)
+            .HasForeignKey(p => p.SaleId)
+            .OnDelete(DeleteBehavior.Cascade);
         modelBuilder.Entity<Payment>()
             .Property(p => p.Change).HasColumnType("decimal(18,2)");
 
