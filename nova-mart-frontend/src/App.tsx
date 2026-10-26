@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './store/AuthContext';
 import { ThemeProvider } from './store/ThemeContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -35,8 +35,12 @@ function App() {
           >
             <Route index element={<DashboardPage />} />
             <Route path="pos" element={<PosPage />} />
+            {/* Support both /sales and /sales-history routes */}
+            <Route path="sales" element={<SalesHistoryPage />} />
             <Route path="sales-history" element={<SalesHistoryPage />} />
             <Route path="products" element={<ProductsPage />} />
+            {/* Support both /barcodes and /barcode-generator routes */}
+            <Route path="barcodes" element={<BarcodeGeneratorPage />} />
             <Route path="barcode-generator" element={<BarcodeGeneratorPage />} />
             <Route path="categories" element={<CategoriesPage />} />
             <Route path="brands" element={<BrandsPage />} />
@@ -67,6 +71,8 @@ function App() {
               }
             />
           </Route>
+          {/* Catch-all redirect to Dashboard */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AuthProvider>
     </ThemeProvider>

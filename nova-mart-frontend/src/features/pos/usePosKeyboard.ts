@@ -110,7 +110,7 @@ export function usePosKeyboard({
 
       // Printable single characters
       if (e.key.length === 1 && !e.ctrlKey && !e.altKey && !e.metaKey) {
-        if (timeDiff < 65 || scannerBufferRef.current.length === 0) {
+        if (timeDiff < 100 || scannerBufferRef.current.length === 0) {
           scannerBufferRef.current += e.key;
         } else {
           // Reset buffer if delay is too long
@@ -119,7 +119,7 @@ export function usePosKeyboard({
       } else if (e.key === 'Enter') {
         const buffer = scannerBufferRef.current;
         // If buffer has at least 3 characters and arrived in rapid burst, treat as barcode
-        if (buffer.length >= 3 && timeDiff < 65) {
+        if (buffer.length >= 3 && timeDiff < 150) {
           scannerBufferRef.current = '';
           lastTimeRef.current = 0;
           e.preventDefault();

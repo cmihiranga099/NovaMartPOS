@@ -207,38 +207,53 @@ export default function PosPage() {
 
   // Helper to parse supermarket scale-embedded barcodes (e.g. 20 + 5-digit PLU + 5-digit weight in grams + checksum)
   const parseScaleBarcode = (code: string) => {
-    const match = code.trim().match(/^(20|21|02)(\d{5})(\d{5})\d$/);
+    const match = code.trim().match(/^(20|21|22|28|29|02)(\d{4,5})(\d{5,6})\d?$/);
     if (!match) return null;
+    const prefix = match[1];
     const pluRaw = match[2];
     const pluNum = parseInt(pluRaw, 10).toString();
     const weightGrams = parseInt(match[3], 10);
     const weightKg = Number((weightGrams / 1000).toFixed(3));
-    return { pluRaw, pluNum, weightKg };
+    return { prefix, pluRaw, pluNum, weightKg };
   };
 
   const tryFindProduct = (code: string) => {
     const trimmed = code.trim();
     if (!trimmed) return null;
+    const cleanLower = trimmed.toLowerCase();
+    const trimmedNoLeadingZero = trimmed.replace(/^0+/, '');
 
-    // 1. Direct match by barcode, productCode, or id
-    let product = activeProducts.find(
-      (p) =>
-        p.barcode === trimmed ||
-        p.productCode.toLowerCase() === trimmed.toLowerCase() ||
-        p.id.toString() === trimmed
-    );
+    // 1. Direct match by barcode, productCode, or id (case-insensitive & whitespace trimmed)
+    let product = activeProducts.find((p) => {
+      const pBarcode = (p.barcode || '').trim();
+      const pCode = (p.productCode || '').trim().toLowerCase();
+      const pBarcodeNoLeadingZero = pBarcode.replace(/^0+/, '');
+
+      return (
+        pBarcode.toLowerCase() === cleanLower ||
+        pCode === cleanLower ||
+        p.id.toString() === trimmed ||
+        (trimmedNoLeadingZero.length > 0 && pBarcodeNoLeadingZero === trimmedNoLeadingZero)
+      );
+    });
     if (product) return { product, weightKg: undefined };
 
-    // 2. Check if this is a scale-embedded barcode (e.g. 2000042012503)
+    // 2. Check if this is a scale-embedded barcode (e.g. 2000002003504)
     const scaleData = parseScaleBarcode(trimmed);
     if (scaleData) {
-      product = activeProducts.find(
-        (p) =>
-          p.productCode.toLowerCase() === scaleData.pluRaw.toLowerCase() ||
-          p.productCode.toLowerCase() === scaleData.pluNum.toLowerCase() ||
-          p.barcode === scaleData.pluRaw ||
-          p.id.toString() === scaleData.pluNum
-      );
+      product = activeProducts.find((p) => {
+        const pBarcode = (p.barcode || '').trim();
+        const pCode = (p.productCode || '').trim().toLowerCase();
+        return (
+          p.id.toString() === scaleData.pluNum ||
+          pCode === scaleData.pluRaw.toLowerCase() ||
+          pCode === scaleData.pluNum.toLowerCase() ||
+          pBarcode === scaleData.pluRaw ||
+          pBarcode === scaleData.pluNum ||
+          pBarcode === `${scaleData.prefix}${scaleData.pluRaw}` ||
+          pBarcode.endsWith(scaleData.pluNum)
+        );
+      });
       if (product) {
         return { product, weightKg: scaleData.weightKg };
       }
@@ -828,18 +843,18 @@ export default function PosPage() {
     switch (activeKeyboardTarget) {
       case 'search': {
         const trimmed = search.trim();
-        const exact = activeProducts.find(
-          (p) => p.barcode === trimmed || p.productCode.toLowerCase() === trimmed.toLowerCase()
-        );
-        if (exact) {
-          if (exact.stockQuantity <= 0) {
+        const match = tryFindProduct(trimmed);
+        if (match) {
+          const { product, weightKg } = match;
+          if (product.stockQuantity <= 0) {
             playScannerBeep(false);
-            setError(`${t('pos.outOfStock')}: ${exact.name}`);
+            setError(`${t('pos.outOfStock')}: ${product.name}`);
             return;
           }
-          addToCart(exact);
+          addToCart(product, weightKg);
           playScannerBeep(true);
-          setScanFeedback(`${exact.name} (Rs. ${exact.sellingPrice.toFixed(2)})`);
+          const weightLabel = weightKg !== undefined ? ` (${weightKg.toFixed(3)} ${product.unitOfMeasure || 'kg'})` : '';
+          setScanFeedback(`${product.name}${weightLabel} · Rs. ${product.sellingPrice.toFixed(2)}`);
           setSearch('');
           setSubmittedSearch('');
           setError(null);
