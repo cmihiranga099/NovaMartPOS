@@ -1,6 +1,7 @@
 export interface DisplayCartItem {
   productId: number;
   name: string;
+  imageUrl?: string | null;
   unitPrice: number;
   quantity: number;
   discount: number;

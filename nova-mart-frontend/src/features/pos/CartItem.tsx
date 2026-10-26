@@ -3,6 +3,7 @@ import { Minus, Plus, X, Scale } from 'lucide-react';
 export interface CartLine {
   productId: number;
   name: string;
+  imageUrl?: string | null;
   unitPrice: number;
   taxRate: number;
   quantity: number;
@@ -30,7 +31,24 @@ export default function CartItemRow({
   const unit = item.unitOfMeasure || (isWeighed ? 'kg' : 'pcs');
 
   return (
-    <div className="flex items-center gap-3 py-3 border-b border-ink-500/10">
+    <div className="flex items-center gap-2.5 py-2.5 border-b border-ink-500/10">
+      <div className="w-9 h-9 rounded-lg bg-surface border border-line flex items-center justify-center overflow-hidden shrink-0">
+        {item.imageUrl ? (
+          <img
+            src={item.imageUrl}
+            alt={item.name}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).style.display = 'none';
+            }}
+          />
+        ) : (
+          <span className="text-xs font-bold text-ink-500">
+            {item.name.charAt(0).toUpperCase()}
+          </span>
+        )}
+      </div>
+
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5">
           <p className="font-medium text-sm truncate">{item.name}</p>
