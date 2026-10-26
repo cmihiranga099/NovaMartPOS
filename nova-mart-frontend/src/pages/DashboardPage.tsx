@@ -169,22 +169,22 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white rounded-lg border border-line shadow p-4">
+        <div className="bg-card rounded-lg border border-line shadow p-4">
           <p className="text-xs text-ink-500">{t('dashboard.weekRevenue')}</p>
           <p className="text-lg font-bold mt-1">Rs. {weekRevenue.toFixed(2)}</p>
         </div>
-        <div className="bg-white rounded-lg border border-line shadow p-4">
+        <div className="bg-card rounded-lg border border-line shadow p-4">
           <p className="text-xs text-ink-500">{t('dashboard.monthRevenue')}</p>
           <p className="text-lg font-bold mt-1">Rs. {monthRevenue.toFixed(2)}</p>
         </div>
-        <div className="bg-white rounded-lg border border-line shadow p-4">
+        <div className="bg-card rounded-lg border border-line shadow p-4">
           <p className="text-xs text-ink-500">{t('dashboard.avgOrderValue')}</p>
           <p className="text-lg font-bold mt-1">Rs. {avgOrderValue.toFixed(2)}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div className="lg:col-span-2 bg-white rounded-lg border border-line shadow p-5">
+        <div className="lg:col-span-2 bg-card rounded-lg border border-line shadow p-5">
           <h2 className="font-bold mb-4">{t('dashboard.revenueTrend', { days: TREND_DAYS })}</h2>
           {sales.length === 0 ? (
             <p className="text-ink-500 text-sm">{t('dashboard.noSalesYet')}</p>
@@ -210,7 +210,7 @@ export default function DashboardPage() {
           )}
         </div>
 
-        <div className="bg-white rounded-lg border border-line shadow p-5">
+        <div className="bg-card rounded-lg border border-line shadow p-5">
           <h2 className="font-bold mb-4">{t('dashboard.paymentMethodSplit')}</h2>
           {paymentBreakdown.length === 0 ? (
             <p className="text-ink-500 text-sm">{t('dashboard.noSalesYet')}</p>
@@ -231,7 +231,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-lg border border-line shadow p-5">
+        <div className="bg-card rounded-lg border border-line shadow p-5">
           <h2 className="font-bold mb-4">{t('dashboard.topProducts')}</h2>
           {topProductsChart.length === 0 ? (
             <p className="text-ink-500 text-sm">{t('dashboard.noSalesThisMonth')}</p>
@@ -255,7 +255,7 @@ export default function DashboardPage() {
           )}
         </div>
 
-        <div className="bg-white rounded-lg border border-line shadow p-5">
+        <div className="bg-card rounded-lg border border-line shadow p-5">
           <h2 className="font-bold mb-4">{t('dashboard.lowStockAlerts')}</h2>
           {lowStock.length === 0 ? (
             <p className="text-ink-500 text-sm">{t('dashboard.allStocked')}</p>

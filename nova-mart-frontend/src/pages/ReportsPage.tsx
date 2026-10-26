@@ -17,7 +17,7 @@ function todayISO() {
 
 function StatCard({ icon: Icon, label, value }: { icon: typeof TrendingUp; label: string; value: string }) {
   return (
-    <div className="bg-white rounded-lg border border-line shadow p-4 flex items-center gap-3">
+    <div className="bg-card rounded-lg border border-line shadow p-4 flex items-center gap-3">
       <div className="w-10 h-10 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
         <Icon size={20} />
       </div>
@@ -122,7 +122,7 @@ export default function ReportsPage() {
           <button
             onClick={handleExportExcel}
             disabled={dailyRows.length === 0}
-            className="flex items-center gap-2 px-3 py-2 border border-line bg-white rounded-lg hover:bg-surface disabled:opacity-50 font-medium text-sm"
+            className="flex items-center gap-2 px-3 py-2 border border-line bg-card rounded-lg hover:bg-surface disabled:opacity-50 font-medium text-sm"
           >
             <FileSpreadsheet size={16} /> {t('reports.exportExcel')}
           </button>
@@ -161,7 +161,7 @@ export default function ReportsPage() {
       </div>
 
       {dailyRows.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 bg-white rounded-2xl border border-dashed border-line text-center">
+        <div className="flex flex-col items-center justify-center py-16 bg-card rounded-2xl border border-dashed border-line text-center">
           <p className="font-medium text-ink-900">{t('reports.noData')}</p>
         </div>
       ) : (
@@ -175,7 +175,7 @@ export default function ReportsPage() {
             <StatCard icon={ReceiptIcon} label={t('reports.transactions')} value={String(summary.transactionCount)} />
           </div>
 
-          <div className="bg-white rounded-lg border border-line shadow overflow-hidden">
+          <div className="bg-card rounded-lg border border-line shadow overflow-hidden">
             <div className="px-4 py-3 border-b border-line font-bold text-sm">{t('reports.dailyBreakdown')}</div>
             <table className="w-full text-sm">
               <thead className="bg-surface text-left text-ink-500">

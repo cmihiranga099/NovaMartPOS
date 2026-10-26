@@ -94,20 +94,20 @@ export default function SuppliersPage() {
           placeholder={t('suppliers.searchPlaceholder')}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-9 pr-3 py-2 border border-line rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+          className="w-full pl-9 pr-3 py-2 border border-line rounded-xl text-sm bg-card focus:outline-none focus:ring-2 focus:ring-brand-500"
         />
       </div>
 
       {isLoading && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-28 rounded-2xl bg-white border border-line animate-pulse" />
+            <div key={i} className="h-28 rounded-2xl bg-card border border-line animate-pulse" />
           ))}
         </div>
       )}
 
       {!isLoading && filtered.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-16 bg-white rounded-2xl border border-dashed border-line text-center">
+        <div className="flex flex-col items-center justify-center py-16 bg-card rounded-2xl border border-dashed border-line text-center">
           <div className="w-12 h-12 rounded-full bg-surface flex items-center justify-center mb-3">
             <Truck size={22} className="text-ink-500" />
           </div>
@@ -123,7 +123,7 @@ export default function SuppliersPage() {
           {filtered.map((s) => (
             <div
               key={s.id}
-              className="group relative bg-white rounded-2xl border border-line p-4 hover:shadow-md hover:border-brand-200 transition-all"
+              className="group relative bg-card rounded-2xl border border-line p-4 hover:shadow-md hover:border-brand-200 transition-all"
             >
               <div className="flex items-start gap-3">
                 <div className={`w-11 h-11 shrink-0 rounded-xl flex items-center justify-center font-bold text-lg ${avatarColor(s.name)}`}>
