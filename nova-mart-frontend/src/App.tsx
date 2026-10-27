@@ -33,7 +33,14 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<DashboardPage />} />
+            <Route
+              index
+              element={
+                <ProtectedRoute roles={['Administrator', 'Manager']}>
+                  <DashboardPage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="pos" element={<PosPage />} />
             {/* Support both /sales and /sales-history routes */}
             <Route path="sales" element={<SalesHistoryPage />} />
@@ -71,7 +78,7 @@ function App() {
               }
             />
           </Route>
-          {/* Catch-all redirect to Dashboard */}
+          {/* Catch-all redirect */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AuthProvider>

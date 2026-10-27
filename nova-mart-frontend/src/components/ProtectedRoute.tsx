@@ -10,7 +10,7 @@ export default function ProtectedRoute({ children, roles }: { children: ReactNod
   }
 
   if (roles && !hasRole(...roles)) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={hasRole('Cashier') ? '/pos' : '/'} replace />;
   }
 
   return <>{children}</>;
