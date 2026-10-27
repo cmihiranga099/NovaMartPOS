@@ -24,20 +24,27 @@ import LowStockAlert from '../components/LowStockAlert';
 import LanguageDropdown from '../components/LanguageDropdown';
 import ThemeToggle from '../components/ThemeToggle';
 
-const navItems = [
-  { path: '/', key: 'dashboard', icon: LayoutDashboard },
+interface NavItem {
+  path: string;
+  key: string;
+  icon: typeof LayoutDashboard;
+  roles?: readonly string[];
+}
+
+const navItems: readonly NavItem[] = [
+  { path: '/', key: 'dashboard', icon: LayoutDashboard, roles: ['Administrator', 'Manager'] },
   { path: '/pos', key: 'pos', icon: ShoppingCart },
   { path: '/barcodes', key: 'barcodeGenerator', icon: Barcode },
   { path: '/categories', key: 'categories', icon: FolderTree },
   { path: '/brands', key: 'brands', icon: Tag },
-  { path: '/suppliers', key: 'suppliers', icon: Truck },
+  { path: '/suppliers', key: 'suppliers', icon: Truck, roles: ['Administrator', 'Manager'] },
   { path: '/customers', key: 'customers', icon: Users },
   { path: '/products', key: 'products', icon: Package },
   { path: '/promotions', key: 'promotions', icon: Sparkles },
   { path: '/sales', key: 'salesHistory', icon: History },
-  { path: '/reports', key: 'reports', icon: BarChart3, roles: ['Admin', 'Manager'] },
-  { path: '/purchase-orders', key: 'purchaseOrders', icon: ClipboardList, roles: ['Admin', 'Manager'] },
-] as const;
+  { path: '/reports', key: 'reports', icon: BarChart3, roles: ['Administrator', 'Manager'] },
+  { path: '/purchase-orders', key: 'purchaseOrders', icon: ClipboardList, roles: ['Administrator', 'Manager'] },
+];
 
 export default function MainLayout() {
   const { user, logout, hasRole } = useAuth();
@@ -45,11 +52,13 @@ export default function MainLayout() {
   const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const visibleNavItems = navItems.filter((item) => !('roles' in item) || hasRole(...item.roles));
+  const visibleNavItems = navItems.filter((item) => !item.roles || hasRole(...item.roles));
 
   const initials = user?.fullName
     ? user.fullName.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()
     : '';
+
+  const homePath = hasRole('Cashier') ? '/pos' : '/';
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-surface text-ink-900 transition-colors">
@@ -66,10 +75,10 @@ export default function MainLayout() {
           >
             <Menu size={22} />
           </button>
-          <div className="flex items-center gap-2">
+          <Link to={homePath} className="flex items-center gap-2">
             <img src={logo} alt="Nova Mart" className="w-8 h-8 rounded-lg object-contain border border-line p-0.5 bg-surface" />
             <span className="font-extrabold text-base tracking-tight text-ink-900">Nova Mart</span>
-          </div>
+          </Link>
         </div>
 
         {/* Mobile quick actions */}
@@ -95,18 +104,18 @@ export default function MainLayout() {
           <div className="relative w-72 max-w-[85vw] bg-card border-r border-line shadow-2xl flex flex-col h-full z-10 animate-in slide-in-from-left duration-200">
             {/* Drawer Header */}
             <div className="p-4 border-b border-line flex items-center justify-between bg-surface/40">
-              <div className="flex items-center gap-2.5">
+              <Link to={homePath} onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2.5">
                 <img src={logo} alt="Nova Mart" className="w-9 h-9 rounded-xl object-contain border border-line p-1 bg-surface" />
                 <div>
-                  <div className="font-bold text-sm leading-none text-ink-900">Nova Mart</div>
+                  <div className="font-extrabold text-base leading-none text-ink-900">Nova Mart</div>
                   <div className="text-[11px] text-ink-500 mt-1">{t('nav.tagline')}</div>
                 </div>
-              </div>
+              </Link>
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2 rounded-xl text-ink-500 hover:text-ink-900 hover:bg-surface transition-colors cursor-pointer"
-                aria-label="Close menu"
+                className="p-1.5 rounded-lg text-ink-500 hover:text-ink-900 hover:bg-surface transition-colors cursor-pointer"
+                aria-label="Close navigation menu"
               >
                 <X size={20} />
               </button>
@@ -136,7 +145,7 @@ export default function MainLayout() {
 
             {/* Drawer User Footer */}
             <div className="p-4 border-t border-line flex items-center gap-3 bg-surface/40">
-              <div className="w-9 h-9 rounded-full bg-brand-500/15 text-brand-400 flex items-center justify-center text-sm font-bold border border-brand-500/30 shadow-2xs">
+              <div className="w-9 h-9 rounded-full bg-brand-500/15 text-brand-500 flex items-center justify-center text-sm font-bold border border-brand-500/30 shadow-2xs">
                 {initials}
               </div>
               <div className="flex-1 min-w-0">
@@ -149,7 +158,7 @@ export default function MainLayout() {
                   logout();
                 }}
                 title={t('common.logout')}
-                className="p-2 text-ink-500 hover:text-rose-400 rounded-lg hover:bg-rose-500/15 transition-colors cursor-pointer"
+                className="p-2 text-ink-500 hover:text-rose-500 rounded-lg hover:bg-rose-500/15 transition-colors cursor-pointer"
               >
                 <LogOut size={18} />
               </button>
@@ -163,13 +172,13 @@ export default function MainLayout() {
           ===================================================================== */}
       <aside className="hidden md:flex w-64 bg-card border-r border-line flex-col shrink-0 h-screen sticky top-0">
         <div className="p-5 border-b border-line">
-          <div className="flex items-center gap-2.5">
+          <Link to={homePath} className="flex items-center gap-2.5">
             <img src={logo} alt="Nova Mart" className="w-10 h-10 rounded-xl object-contain border border-line p-1 bg-surface shadow-2xs" />
             <div>
               <div className="font-extrabold text-base leading-none text-ink-900">Nova Mart</div>
               <div className="text-xs text-ink-500 mt-1">{t('nav.tagline')}</div>
             </div>
-          </div>
+          </Link>
           <div className="mt-3.5 flex items-center gap-2">
             <LanguageDropdown />
             <ThemeToggle />
@@ -198,7 +207,7 @@ export default function MainLayout() {
         </nav>
 
         <div className="p-4 border-t border-line flex items-center gap-3 bg-surface/30">
-          <div className="w-9 h-9 rounded-full bg-brand-500/15 text-brand-400 flex items-center justify-center text-sm font-bold border border-brand-500/30 shadow-2xs">
+          <div className="w-9 h-9 rounded-full bg-brand-500/15 text-brand-500 flex items-center justify-center text-sm font-bold border border-brand-500/30 shadow-2xs">
             {initials}
           </div>
           <div className="flex-1 min-w-0">
@@ -208,7 +217,7 @@ export default function MainLayout() {
           <button
             onClick={logout}
             title={t('common.logout')}
-            className="p-1.5 text-ink-500 hover:text-rose-400 rounded-lg hover:bg-rose-500/15 transition-colors cursor-pointer"
+            className="p-1.5 text-ink-500 hover:text-rose-500 rounded-lg hover:bg-rose-500/15 transition-colors cursor-pointer"
           >
             <LogOut size={18} />
           </button>
