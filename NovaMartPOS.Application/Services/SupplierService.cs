@@ -33,6 +33,7 @@ public class SupplierService : ISupplierService
             Phone = dto.Phone,
             Email = dto.Email,
             Address = dto.Address,
+            LogoUrl = dto.LogoUrl,
             IsActive = true
         };
 
@@ -49,6 +50,7 @@ public class SupplierService : ISupplierService
         supplier.Phone = dto.Phone;
         supplier.Email = dto.Email;
         supplier.Address = dto.Address;
+        supplier.LogoUrl = dto.LogoUrl;
         supplier.IsActive = dto.IsActive;
         supplier.UpdatedAt = DateTime.UtcNow;
 
@@ -75,6 +77,7 @@ public class SupplierService : ISupplierService
         Phone = s.Phone,
         Email = s.Email,
         Address = s.Address,
+        LogoUrl = s.LogoUrl,
         IsActive = s.IsActive
     };
 }

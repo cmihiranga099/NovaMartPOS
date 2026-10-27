@@ -113,6 +113,9 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Product>()
             .Property(p => p.ImageUrl).HasMaxLength(500);
 
+        modelBuilder.Entity<Supplier>()
+            .Property(s => s.LogoUrl).HasMaxLength(500);
+
         modelBuilder.Entity<Sale>()
             .Property(s => s.Subtotal).HasColumnType("decimal(18,2)");
         modelBuilder.Entity<Sale>()

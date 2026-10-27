@@ -7,6 +7,7 @@ public class SupplierDto
     public string? Phone { get; set; }
     public string? Email { get; set; }
     public string? Address { get; set; }
+    public string? LogoUrl { get; set; }
     public bool IsActive { get; set; }
 }
 
@@ -16,6 +17,7 @@ public class CreateSupplierDto
     public string? Phone { get; set; }
     public string? Email { get; set; }
     public string? Address { get; set; }
+    public string? LogoUrl { get; set; }
 }
 
 public class UpdateSupplierDto
@@ -24,5 +26,6 @@ public class UpdateSupplierDto
     public string? Phone { get; set; }
     public string? Email { get; set; }
     public string? Address { get; set; }
+    public string? LogoUrl { get; set; }
     public bool IsActive { get; set; }
 }
