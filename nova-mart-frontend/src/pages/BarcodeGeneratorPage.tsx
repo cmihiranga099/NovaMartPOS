@@ -472,6 +472,12 @@ export default function BarcodeGeneratorPage() {
       <div id="print-barcode-sheet" className="hidden print:block text-black">
         <style>{`
           @media print {
+            html, body {
+              background: white !important;
+              color: black !important;
+              overflow: visible !important;
+              height: auto !important;
+            }
             body * {
               visibility: hidden;
             }
@@ -483,14 +489,16 @@ export default function BarcodeGeneratorPage() {
               left: 0;
               top: 0;
               width: 100%;
-              padding: 4mm;
-              display: flex;
-              flex-wrap: wrap;
-              gap: 4mm;
-              background: white;
+              padding: 3mm;
+              display: flex !important;
+              flex-wrap: wrap !important;
+              align-content: flex-start !important;
+              gap: 3mm;
+              background: white !important;
+              box-sizing: border-box;
             }
             @page {
-              margin: 3mm;
+              margin: 4mm;
               size: auto;
             }
           }
