@@ -1,0 +1,3771 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Biscuit & Milk Manufacturers | Maliban Group Sri Lanka</title>
+
+    <meta name="description"
+        content="Maliban is known as the best biscuit manufacturer in Sri Lanka. We have a global reach over more than 35 countries in the world.">
+
+    <meta name="author" content="Biscuit & Milk Manufacturers">
+    <meta name="keywords" content="Biscuit & Milk Manufacturers">
+
+    <meta name="keywords" content="Biscuit & Milk Manufacturers">
+
+
+
+
+
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Gudea&family=Manrope:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,900;1,900&display=swap">
+
+    <link rel="shortcut icon" href="/wp-content/uploads/local-cache/theme/images-min/images/favicon.png">
+    <!-- Performance: connect early to image CDN -->
+
+
+
+    <!-- Performance: preload desktop LCP hero image -->
+
+    <link rel="preload" as="image"
+        href="/wp-content/uploads/local-cache/malibangroup-2024/theme/images-min/media/homepage-banner-mobile.webp"
+        type="image/webp" media="(max-width: 768px)" fetchpriority="high">
+
+    <!-- Performance: preload desktop LCP hero image -->
+    <link rel="preload" as="image" href="/wp-content/uploads/desktop-optimized/homepage-banner-desktop.webp"
+        type="image/webp" media="(min-width: 769px)" fetchpriority="high">
+    <!-- Bootstrap Core CSS -->
+    <link rel="preload" href="/wp-content/themes/maliboon/css/transitions.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="/wp-content/themes/maliboon/css/transitions.css" rel="stylesheet">
+    </noscript>
+
+    <style id="mobile-bootstrap-critical-css">
+        @media (max-width: 768px) {
+            html {
+                font-family: sans-serif;
+                -webkit-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+                font-size: 10px;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            }
+
+            body {
+                margin: 0;
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+                font-size: 14px;
+                line-height: 1.42857143;
+                color: #333;
+                background-color: #fff;
+            }
+
+            *,
+            *:before,
+            *:after {
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+
+            a {
+                background-color: transparent;
+                color: #337ab7;
+                text-decoration: none;
+            }
+
+            a:active,
+            a:hover {
+                outline: 0;
+            }
+
+            img {
+                border: 0;
+                vertical-align: middle;
+            }
+
+            .img-responsive,
+            .thumbnail>img,
+            .thumbnail a>img,
+            .carousel-inner>.item>img,
+            .carousel-inner>.item>a>img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+            }
+
+            p {
+                margin: 0 0 10px;
+            }
+
+            h1,
+            .h1,
+            h2,
+            .h2,
+            h3,
+            .h3 {
+                margin-top: 20px;
+                margin-bottom: 10px;
+            }
+
+            h1,
+            .h1 {
+                font-size: 36px;
+            }
+
+            .container {
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+            .container-fluid {
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+            .row {
+                margin-right: -15px;
+                margin-left: -15px;
+            }
+
+            .col-xs-1,
+            .col-xs-2,
+            .col-xs-3,
+            .col-xs-4,
+            .col-xs-5,
+            .col-xs-6,
+            .col-xs-7,
+            .col-xs-8,
+            .col-xs-9,
+            .col-xs-10,
+            .col-xs-11,
+            .col-xs-12,
+            .col-sm-1,
+            .col-sm-2,
+            .col-sm-3,
+            .col-sm-4,
+            .col-sm-5,
+            .col-sm-6,
+            .col-sm-7,
+            .col-sm-8,
+            .col-sm-9,
+            .col-sm-10,
+            .col-sm-11,
+            .col-sm-12,
+            .col-md-1,
+            .col-md-2,
+            .col-md-3,
+            .col-md-4,
+            .col-md-5,
+            .col-md-6,
+            .col-md-7,
+            .col-md-8,
+            .col-md-9,
+            .col-md-10,
+            .col-md-11,
+            .col-md-12,
+            .col-lg-1,
+            .col-lg-2,
+            .col-lg-3,
+            .col-lg-4,
+            .col-lg-5,
+            .col-lg-6,
+            .col-lg-7,
+            .col-lg-8,
+            .col-lg-9,
+            .col-lg-10,
+            .col-lg-11,
+            .col-lg-12 {
+                position: relative;
+                min-height: 1px;
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+
+            .col-xs-1,
+            .col-xs-2,
+            .col-xs-3,
+            .col-xs-4,
+            .col-xs-5,
+            .col-xs-6,
+            .col-xs-7,
+            .col-xs-8,
+            .col-xs-9,
+            .col-xs-10,
+            .col-xs-11,
+            .col-xs-12 {
+                float: left;
+            }
+
+            .col-xs-12 {
+                width: 100%;
+            }
+
+            .col-xs-6 {
+                width: 50%;
+            }
+
+            .navbar {
+                position: relative;
+                min-height: 50px;
+                margin-bottom: 20px;
+                border: 1px solid transparent;
+            }
+
+            /* Mobile CLS fix: make navbar fixed before full Bootstrap CSS loads */
+            .navbar-fixed-top,
+            .navbar-fixed-bottom {
+                position: fixed;
+                right: 0;
+                left: 0;
+                z-index: 1030;
+            }
+
+            .navbar-fixed-top {
+                top: 0;
+                border-width: 0 0 1px;
+            }
+
+            .navbar-fixed-bottom {
+                bottom: 0;
+                margin-bottom: 0;
+                border-width: 1px 0 0;
+            }
+
+            .navbar-fixed-top .navbar-collapse,
+            .navbar-fixed-bottom .navbar-collapse {
+                max-height: 340px;
+            }
+
+            .navbar-header {
+                min-height: 50px;
+            }
+
+            .navbar-brand {
+                float: left;
+                height: 50px;
+                padding: 15px 15px;
+                font-size: 18px;
+                line-height: 20px;
+            }
+
+            .navbar-brand>img {
+                display: block;
+            }
+
+            .navbar-toggle {
+                position: relative;
+                float: right;
+                padding: 9px 10px;
+                margin-top: 8px;
+                margin-right: 15px;
+                margin-bottom: 8px;
+                background-color: transparent;
+                background-image: none;
+                border: 1px solid transparent;
+                border-radius: 4px;
+            }
+
+            .navbar-toggle .icon-bar {
+                display: block;
+                width: 22px;
+                height: 2px;
+                border-radius: 1px;
+            }
+
+            .navbar-toggle .icon-bar+.icon-bar {
+                margin-top: 4px;
+            }
+
+            .navbar-collapse {
+                padding-right: 15px;
+                padding-left: 15px;
+                overflow-x: visible;
+                -webkit-overflow-scrolling: touch;
+                border-top: 1px solid transparent;
+            }
+
+            .navbar-collapse.in {
+                overflow-y: auto;
+            }
+
+            .collapse {
+                display: none;
+            }
+
+            .collapse.in {
+                display: block;
+            }
+
+            .collapsing {
+                position: relative;
+                height: 0;
+                overflow: hidden;
+                -webkit-transition-timing-function: ease;
+                -o-transition-timing-function: ease;
+                transition-timing-function: ease;
+                -webkit-transition-duration: .35s;
+                -o-transition-duration: .35s;
+                transition-duration: .35s;
+                -webkit-transition-property: height, visibility;
+                -o-transition-property: height, visibility;
+                transition-property: height, visibility;
+            }
+
+            .nav {
+                padding-left: 0;
+                margin-bottom: 0;
+                list-style: none;
+            }
+
+            .nav>li {
+                position: relative;
+                display: block;
+            }
+
+            .nav>li>a {
+                position: relative;
+                display: block;
+                padding: 10px 15px;
+            }
+
+            .navbar-nav {
+                margin: 7.5px -15px;
+            }
+
+            .navbar-nav>li>a {
+                padding-top: 10px;
+                padding-bottom: 10px;
+                line-height: 20px;
+            }
+
+            .navbar-nav .open .dropdown-menu {
+                position: static;
+                float: none;
+                width: auto;
+                margin-top: 0;
+                background-color: transparent;
+                border: 0;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+            }
+
+            .navbar-nav .open .dropdown-menu>li>a,
+            .navbar-nav .open .dropdown-menu .dropdown-header {
+                padding: 5px 15px 5px 25px;
+            }
+
+            .navbar-nav .open .dropdown-menu>li>a {
+                line-height: 20px;
+            }
+
+            .clearfix:before,
+            .clearfix:after,
+            .container:before,
+            .container:after,
+            .container-fluid:before,
+            .container-fluid:after,
+            .row:before,
+            .row:after,
+            .nav:before,
+            .nav:after,
+            .navbar:before,
+            .navbar:after,
+            .navbar-header:before,
+            .navbar-header:after,
+            .navbar-collapse:before,
+            .navbar-collapse:after {
+                display: table;
+                content: " ";
+            }
+
+            .clearfix:after,
+            .container:after,
+            .container-fluid:after,
+            .row:after,
+            .nav:after,
+            .navbar:after,
+            .navbar-header:after,
+            .navbar-collapse:after {
+                clear: both;
+            }
+
+            .pull-right {
+                float: right !important;
+            }
+
+            .pull-left {
+                float: left !important;
+            }
+
+            .hidden {
+                display: none !important;
+            }
+        }
+    </style>
+
+    <link href="/wp-content/themes/maliboon/css/bootstrap.css?v=4" rel="stylesheet" media="(min-width: 769px)">
+
+    <!-- Mobile: load Bootstrap after first render -->
+    <link rel="preload" href="/wp-content/themes/maliboon/css/bootstrap.css?v=4" as="style" media="(max-width: 768px)"
+        onload="this.onload=null;this.rel='stylesheet';this.media='all';">
+
+    <noscript>
+        <link href="/wp-content/themes/maliboon/css/bootstrap.css?v=4" rel="stylesheet">
+    </noscript>
+
+    <!-- Custom CSS -->
+    <link rel="preload" href="/wp-content/themes/maliboon/css/maliban-group-main.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="/wp-content/themes/maliboon/css/maliban-group-main.css" rel="stylesheet">
+    </noscript>
+
+    <link rel="preload" href="/wp-content/themes/maliboon/css/agri.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="/wp-content/themes/maliboon/css/agri.css" rel="stylesheet">
+    </noscript>
+
+    <link rel="preload" href="/wp-content/themes/maliboon/css/milk.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="/wp-content/themes/maliboon/css/milk.css" rel="stylesheet">
+    </noscript>
+
+    <link rel="preload" href="/wp-content/themes/maliboon/css/contact.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="/wp-content/themes/maliboon/css/contact.css" rel="stylesheet">
+    </noscript>
+
+    <link rel="preload" href="/wp-content/themes/maliboon/css/main-media.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="/wp-content/themes/maliboon/css/main-media.css" rel="stylesheet">
+    </noscript>
+
+
+
+
+
+
+
+    <!-- jQuery moved to bottom to reduce render blocking -->
+    <!-- Bootstrap JS moved to bottom to reduce render blocking -->
+    <link rel="preload" href="/wp-content/themes/maliboon/fonts/social-icons/font/flaticon.css" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" type="text/css" href="/wp-content/themes/maliboon/fonts/social-icons/font/flaticon.css">
+    </noscript>
+    <!-- group-main.js moved to bottom to reduce render blocking -->
+    <link rel="preload" as="font" href="/wp-content/themes/maliboon/fonts/fontawesome-webfont.woff2?v=4.6.3"
+        type="font/woff2" crossorigin>
+
+    <link rel="preload" href="/wp-content/themes/maliboon/css/font-awesome-local.css?v=2" as="style"
+        onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link href="/wp-content/themes/maliboon/css/font-awesome-local.css?v=2" rel="stylesheet" type="text/css">
+    </noscript>
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin>
+    <link rel="preconnect" href="https://p.typekit.net" crossorigin>
+
+
+    <!-- Typekit JS moved to after page load to reduce render blocking -->
+    <!-- <script src="https://www.google.com/recaptcha/api.js?render=6LdSGvkUAAAAAFOjH31xXPdsUn7MaQurihuArYpe"></script> -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- Removed GA code --script async src="https://www.googletagmanager.com/gtag/js?id=UA-18528057-17"></script-->
+    <script>window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-18528057-17');</script>
+
+
+
+    <!-- Tele Icon -->
+    <!-- Duplicate jQuery 3.3.1 removed. jQuery 1.12.4 is kept for Bootstrap 3 and existing inline scripts. -->
+    <style id="mobile-lcp-fcp-fix">
+        /* 1. Global Font Swap */
+        /* Restore page background color - desktop + mobile */
+        body,
+        .content-example,
+        #scrollTo {
+            background-color: #f3f0e7 !important;
+        }
+
+        @media (max-width: 768px) {
+
+            /* Restore original mobile page background color */
+            body,
+            .content-example,
+            #scrollTo,
+            .container-cs {
+                background-color: #f3f0e7 !important;
+            }
+
+            .banner-wrapper {
+                min-height: 210px;
+                display: block;
+                overflow: hidden;
+            }
+
+            .banner-wrapper img {
+                aspect-ratio: 1400 / 785;
+                width: 100%;
+                height: auto;
+            }
+
+            /* 3. Mobile Logo Fix */
+            .hidden-sm,
+            .hidden-xs {
+                display: none !important;
+            }
+
+            .navbar-header,
+            .navbar-brand.mini-mobile {
+                min-height: 50px;
+            }
+
+            /* 4. Call Now Button */
+            .call_now_btn {
+                display: inline-block !important;
+                min-height: 45px !important;
+            }
+
+            .call_now_btn img {
+                width: auto !important;
+                height: 45px !important;
+                object-fit: contain;
+            }
+
+            #scrollTo>.row>div:first-child {
+                min-height: 90px !important;
+                contain: layout;
+                display: block;
+            }
+
+            /* 6. Explore Section Text Block Fix */
+            .container-cs:not(#scrollTo)>.row>div:first-child {
+                min-height: 120px !important;
+                contain: layout;
+                display: block;
+            }
+
+            /* 7. Image Grid Fix */
+            .zoomInContainer img {
+                width: 100% !important;
+                height: auto !important;
+                object-fit: contain;
+            }
+
+            a[href="/maliban-biscuit"] img {
+                aspect-ratio: 360 / 433 !important;
+            }
+
+            a[href="/maliban-milk"] img {
+                aspect-ratio: 360 / 434 !important;
+            }
+
+            a[href="/maliban-agri"] img {
+                aspect-ratio: 360 / 433 !important;
+            }
+
+            a[href="/little-lion"] img {
+                aspect-ratio: 407 / 493 !important;
+            }
+
+            /* 8. Popup fix */
+            #gmg-side-popup {
+                min-height: 65px;
+                contain: content;
+            }
+        }
+
+        /* 9. Permanent CLS fix for Home Banner */
+        .banner-wrapper {
+            position: relative !important;
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            aspect-ratio: 1400 / 785 !important;
+            min-height: auto !important;
+            height: auto !important;
+            line-height: 0 !important;
+            overflow: hidden !important;
+        }
+
+        .banner-wrapper picture {
+            display: block !important;
+            width: 100% !important;
+            aspect-ratio: 1400 / 785 !important;
+            line-height: 0 !important;
+        }
+
+        .banner-wrapper img {
+            display: block !important;
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 1400 / 785 !important;
+            object-fit: cover !important;
+        }
+
+        /* Footer color fix - desktop + mobile */
+        body>.col-xs-12[style*="#ae0a09"],
+        body>.col-xs-12[style*="background-color:#ae0a09"] {
+            background-color: #ae0a09 !important;
+        }
+
+        body>.col-xs-12[style*="#ae0a09"] .container-cs,
+        body>.col-xs-12[style*="background-color:#ae0a09"] .container-cs,
+        body>.col-xs-12[style*="#ae0a09"] .row,
+        body>.col-xs-12[style*="background-color:#ae0a09"] .row,
+        body>.col-xs-12[style*="#ae0a09"] .footer-award-logos,
+        body>.col-xs-12[style*="background-color:#ae0a09"] .footer-award-logos {
+            background-color: transparent !important;
+        }
+
+        /* FINAL mobile footer fix */
+        @media (max-width: 768px) {
+
+            div[style*="background-color:#ae0a09"],
+            div[style*="#ae0a09"] {
+                background-color: #ae0a09 !important;
+            }
+
+            div[style*="background-color:#ae0a09"] .container-cs,
+            div[style*="#ae0a09"] .container-cs,
+            div[style*="background-color:#ae0a09"] .row,
+            div[style*="#ae0a09"] .row,
+            div[style*="background-color:#ae0a09"] .footer-award-logos,
+            div[style*="#ae0a09"] .footer-award-logos {
+                background-color: transparent !important;
+            }
+        }
+
+        /* FINAL CLS fix for Explore section - mobile only */
+        @media (max-width: 768px) {
+            .container.container-cs:not(#scrollTo) {
+                min-height: 250px !important;
+            }
+
+            .container.container-cs:not(#scrollTo)>.row {
+                min-height: 230px !important;
+            }
+
+            .container.container-cs:not(#scrollTo)>.row>.col-lg-12.l-mr-top.l-mr-bottom {
+                min-height: 165px !important;
+            }
+
+            .container.container-cs:not(#scrollTo) h1.w-600.text-center {
+                min-height: 92px !important;
+                line-height: 1.12 !important;
+                margin-top: 20px !important;
+                margin-bottom: 10px !important;
+            }
+
+            .container.container-cs:not(#scrollTo) p.para.w-600.text-center {
+                min-height: 22px !important;
+                line-height: 1.35 !important;
+                margin-bottom: 10px !important;
+            }
+
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content-example">
+        <!-- Start Component -->
+
+        <div id="gmg-side-popup" class="gmg-side-popup">
+            <div class="gmg-sp-header">
+                <div class="gmg-sp-ballon icon-ballon">
+                    <img class="img-responsive" style="width:100%; height:auto; aspect-ratio: 120 / 55;"
+                        alt="Contact us" width="120" height="55" loading="lazy" decoding="async"
+                        src="/wp-content/uploads/mobile-optimized/tele-icon-mobile.webp">
+                    <h3 class="title">Contact Us</h3>
+                </div>
+
+                <div class="gmg-sp-content">
+                    <img class="img-responsive" style="width:100%; height:auto; aspect-ratio: 240 / 200;"
+                        alt="Contact Form" width="240" height="200" loading="lazy" decoding="async" fetchpriority="low"
+                        src="/wp-content/uploads/local-cache/theme/images-min/common/new-contact2.jpg">
+                </div>
+
+            </div> <!-- GMG Side Popup -->
+            <!-- GMG Side Popup FORM -->
+            <!-- End Component -->
+        </div>
+
+        <a href="https://ebadge.bestweb.lk/api/v1/clicked/malibangroup.lk/TopWeb/2026-June/Qualified"
+            class="floating-ebadge">
+            <img src="https://ebadge.bestweb.lk/eBadgeSystem/domainNames/malibangroup.lk/TopWeb/2026-June/Qualified/image.png"
+                alt="logo" width="130" height="130" />
+        </a>
+
+        <style>
+            .floating-ebadge {
+                position: fixed;
+                bottom: 100px;
+                left: 20px;
+                z-index: 99999;
+                transition: transform 0.3s ease;
+                display: block;
+            }
+
+            .floating-ebadge:hover {
+                transform: scale(1.05);
+            }
+
+            @media (max-width: 768px) {
+                .floating-ebadge {
+                    bottom: 20px;
+                    /* Adjusting bottom slightly on mobile if needed, though preserving 100px is fine too. Let's keep 100px */
+                    left: 10px;
+                    bottom: 100px;
+                    display: block !important;
+                    visibility: visible !important;
+                    opacity: 1 !important;
+                }
+
+                .floating-ebadge img {
+                    width: 100px !important;
+                    height: 100px !important;
+                    display: block !important;
+                }
+            }
+
+            /* Not neccesary */
+            .content-example {
+                display: block;
+                margin: 0 auto;
+                position: relative;
+                background: #fff;
+            }
+
+            .gmg-side-popup .title {
+                margin: 0;
+            }
+
+            /* Not neccesary */
+
+
+            /*------ GMG Side Popup --------*/
+            .gmg-side-popup {
+                cursor: pointer;
+                width: 172px;
+                height: 65px;
+                position: fixed;
+                right: 0px;
+                bottom: 145px;
+                background: transparent;
+                transition: all 0.8s ease;
+                z-index: 999;
+                overflow: hidden;
+            }
+
+            .gmg-side-popup.open {
+                width: 240px;
+                height: 252px;
+            }
+
+            .gmg-sp-close {
+                font-size: 12px;
+                font-weight: bold;
+                position: absolute;
+                top: 6px;
+                right: 5px;
+                color: #fff;
+                cursor: pointer;
+                -webkit-transition: all 0.3s ease-in-out;
+                -moz-transition: all 0.3s ease-in-out;
+                -ms-transition: all 0.3s ease-in-out;
+                -o-transition: all 0.3s ease-in-out;
+                transition: all 0.3s ease-in-out;
+            }
+
+            .gmg-side-popup.open .gmg-sp-close {
+                -moz-transform: rotate(-135deg);
+                -webkit-transform: rotate(-135deg);
+                -o-transform: rotate(-135deg);
+                -ms-transform: rotate(-135deg);
+                transform: rotate(-135deg);
+            }
+
+            .gmg-sp-ballon {
+                height: 35px;
+                width: 120px;
+                display: block;
+                margin: 0 auto;
+                padding: 13px 0;
+            }
+
+            .gmg-sp-ballon svg {
+                width: 35px;
+                height: 35px;
+                fill: #fff;
+            }
+
+            .gmg-side-popup .title,
+            .gmg-side-popup .gmg-sp-content {
+                float: left;
+                width: 100%;
+                box-sizing: border-box;
+                opacity: 0;
+                visibility: hidden;
+            }
+
+            .gmg-side-popup.open .title,
+            .gmg-side-popup.open .gmg-sp-content {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .gmg-side-popup .title {
+                min-width: 220px;
+                font-size: 14px;
+                font-weight: normal;
+                text-align: center;
+                color: transparent;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+            }
+
+            .gmg-sp-content {
+                padding: 0 8px;
+            }
+
+            .gmg-sp-button {
+                display: flex;
+                float: left;
+                width: 100%;
+                min-width: 220px;
+                min-height: 60px;
+                background: #fff;
+                line-height: 18px;
+                color: #5c6770;
+                align-items: center;
+                border-bottom: 1px solid #ccc;
+            }
+
+            a.gmg-sp-button:hover {
+                background: #fbfbfb;
+                text-decoration: none;
+            }
+
+            .gmg-sp-button.tell {
+                cursor: default;
+            }
+
+            .gmg-side-popup .gmg-sp-button:nth-child(3) {
+                border: 0;
+            }
+
+            .gmg-sp-button .desc {
+                font-size: 14px;
+            }
+
+            .gmg-sp-button .icon {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .gmg-side-popup .title,
+            .gmg-side-popup-form .title {
+                line-height: 40px;
+            }
+
+            /*------ GMG Side Popup FORM --------*/
+            .gmg-side-popup-form {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                z-index: 9999;
+
+            }
+
+            .gmg-spf-container {
+                width: 258px;
+                height: 400px;
+                background: #5c6770;
+                padding: 10px;
+                position: absolute;
+                top: 120px;
+                left: 50%;
+                margin-left: -129px;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                z-index: 999;
+            }
+
+            .gmg-spf-overlay {
+                background: #000;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 99;
+                opacity: 0.4;
+            }
+
+            .gmg-spf-close {
+                position: absolute;
+                top: 0;
+                right: 10px;
+                color: #fff;
+            }
+
+            .gmg-spf-header,
+            .gmg-spf-content,
+            .gmg-spf-header * {
+                float: left;
+                width: 100%;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            .gmg-spf-header .icon {
+                padding: 15px 0 5px;
+                font-size: 26px;
+                color: #fff;
+                text-align: center;
+            }
+
+            .gmg-spf-header .title {
+                text-align: center;
+                color: #fff;
+                font-size: 14px;
+                font-weight: 400;
+                letter-spacing: 1px;
+            }
+
+            .gmg-spf-content {
+                background: #fff;
+                height: calc(100% - 87px);
+
+                color: #000;
+            }
+
+            [class^="icon-"],
+            [class*=" icon-"] {
+                /* use !important to prevent issues with browser extensions that change fonts */
+                font-family: 'gmg-icons' !important;
+                speak: none;
+                font-style: normal;
+                font-weight: normal;
+                font-variant: normal;
+                text-transform: none;
+                line-height: 1;
+
+                /* Better Font Rendering =========== */
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            .icon-plus svg {
+                width: 10px;
+                height: 10px;
+                fill: #fff;
+            }
+
+            .icon-clock svg,
+            .icon-phone svg {
+                fill: #5c6770;
+                width: 16px;
+            }
+        </style>
+
+        <!-- Tele icon click script moved to bottom -->
+        <!-- Tele Icon -->
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+        <!-- Cookie Consent Script -->
+
+        <!-- Cookie Consent Script -->
+
+        <script>
+            window.addEventListener("load", function () {
+                setTimeout(function () {
+                    var cookieScript = document.createElement("script");
+                    cookieScript.src = "https://cdn.websitepolicies.io/lib/cookieconsent/1.0.3/cookieconsent.min.js";
+                    cookieScript.async = true;
+
+                    cookieScript.onload = function () {
+                        if (window.wpcc && typeof window.wpcc.init === "function") {
+                            window.wpcc.init({
+                                "border": "normal",
+                                "corners": "small",
+                                "colors": {
+                                    "popup": {
+                                        "background": "#000000",
+                                        "text": "#ffffff",
+                                        "border": "#000000"
+                                    },
+                                    "button": {
+                                        "background": "#23d700",
+                                        "text": "#000000"
+                                    }
+                                },
+                                "padding": "small",
+                                "margin": "small",
+                                "content": {
+                                    "button": "Allow Cookies"
+                                }
+                            });
+                        }
+                    };
+
+                    document.body.appendChild(cookieScript);
+                }, 3000);
+            });
+        </script>
+
+        <style>
+            .seo-hidden-link-text {
+                position: absolute !important;
+                width: 1px !important;
+                height: 1px !important;
+                padding: 0 !important;
+                margin: -1px !important;
+                overflow: hidden !important;
+                clip: rect(0, 0, 0, 0) !important;
+                white-space: nowrap !important;
+                border: 0 !important;
+            }
+        </style>
+
+        <script>
+            window.addEventListener("load", function () {
+                function fixCookieLearnMoreAccessibility() {
+                    var cookieLinks = document.querySelectorAll('a[href*="internetcookies.com"]');
+
+                    cookieLinks.forEach(function (link) {
+                        link.setAttribute("aria-label", "Learn more about InternetCookies cookie information");
+                        link.setAttribute("title", "Learn more about InternetCookies cookie information");
+
+                        if (!link.querySelector(".seo-hidden-link-text")) {
+                            link.innerHTML = 'Learn more<span class="seo-hidden-link-text"> about InternetCookies cookie information</span>';
+                        }
+                    });
+                }
+
+                fixCookieLearnMoreAccessibility();
+
+                var observer = new MutationObserver(function () {
+                    fixCookieLearnMoreAccessibility();
+                });
+
+                observer.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
+
+                setTimeout(function () {
+                    observer.disconnect();
+                }, 10000);
+            });
+        </script>
+
+        <!-- Custom CSS to center the cookie notice -->
+        <style>
+            .wpcc-container {
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                right: auto !important;
+                bottom: 20px !important;
+                position: fixed !important;
+                z-index: 9999 !important;
+            }
+
+            .wpcc-btn {
+                color: #000000 !important;
+                font-weight: 700 !important;
+            }
+
+            @media (max-width: 768px) {
+                .wpcc-container {
+                    width: 100% !important;
+                    bottom: 70px !important;
+                }
+            }
+        </style>
+
+
+
+        <!-- Back to ,Top Icon -->
+        <a id="button" href="#top" aria-label="Back to top" title="Back to top"></a>
+
+
+        <style>
+            .float {
+                position: fixed;
+                width: 60px;
+                height: 60px;
+                bottom: 40px;
+                right: 40px;
+                background-color: #25d366;
+                color: #FFF;
+                border-radius: 50px !important;
+                text-align: center;
+                font-size: 30px;
+                box-shadow: 2px 2px 3px #999;
+                z-index: 100;
+            }
+
+            .my-float {
+                margin-top: 16px;
+            }
+
+            #button {
+                display: inline-block;
+                background-color: #d8262f;
+                width: 50px;
+                height: 50px;
+                text-align: center;
+                border-radius: 4px;
+                position: fixed;
+                bottom: 50px;
+                right: 20px;
+                transition: background-color .3s,
+                    opacity .5s, visibility .5s;
+                opacity: 0;
+                visibility: hidden;
+                z-index: 1000;
+                text-decoration: none;
+            }
+
+            #button::after {
+                content: "\f077";
+                font-family: FontAwesome;
+                font-weight: normal;
+                font-style: normal;
+                font-size: 2em;
+                line-height: 50px;
+                color: #fff;
+            }
+
+            #button:hover {
+                cursor: pointer;
+                background-color: #333;
+            }
+
+            #button:active {
+                background-color: #555;
+            }
+
+            #button.show {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            /* Styles for the content section */
+
+            .content {
+                width: 77%;
+                margin: 50px auto;
+                font-family: 'Merriweather', serif;
+                font-size: 17px;
+                color: #6c767a;
+                line-height: 1.9;
+            }
+
+            @media (min-width: 500px) {
+                .content {
+                    width: 43%;
+                }
+
+                #button {
+                    margin: 30px;
+                }
+            }
+
+            @media (max-width: 500px) {
+                #button {
+                    right: 50px;
+                    bottom: 80px;
+                }
+            }
+
+            .content h1 {
+                margin-bottom: -10px;
+                color: #03a9f4;
+                line-height: 1.5;
+            }
+
+            .content h3 {
+                font-style: italic;
+                color: #96a2a7;
+            }
+        </style>
+
+        <!-- Back-to-top script moved to bottom -->
+
+
+
+
+
+
+
+
+        <!--social media icons -->
+
+        <a href="https://api.whatsapp.com/send?phone=+94744130330&text=Thank%20you%20for%20contacting%20Maliban%20Exports.%20We%20will%20get%20back%20to%20you%20shortly."
+            class="float whatsapp" target="_blank" style="background-color:#25d366;">
+            <i class="fa fa-whatsapp my-float"></i>
+        </a>
+
+        <a href="https://www.linkedin.com/company/maliban/" class="float linkedin" target="_blank"
+            style="top: 180px; background-color:#0077b7;">
+            <i class="fa fa-linkedin my-float"></i>
+        </a>
+        <a href="https://www.facebook.com/Malibaninternational?mibextid=9R9pXO" class="float" target="_blank"
+            style="top: 250px; background-color:#0266ff;">
+            <i class="fa fa-facebook my-float"></i>
+        </a>
+        <a href="https://instagram.com/maliban_international?igshid=MzRlODBiNWFlZA==" class="float" target="_blank"
+            style="top: 320px;  background: #f09433; 
+background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );">
+            <i class="fa fa-instagram my-float"></i>
+        </a>
+        <style>
+            .my-float {
+                margin-top: 5px;
+                margin-left: 5px;
+                margin-right: 5px;
+                margin-bottom: 78px;
+            }
+
+
+            .float {
+                position: fixed;
+                width: 40px;
+                height: 40px;
+
+                right: 55px;
+
+                color: #FFF;
+                border-radius: 50px;
+                text-align: center;
+                font-size: 30px;
+                box-shadow: 2px 2px 3px #999;
+                z-index: 100;
+            }
+
+            .whatsapp {
+                top: 110px;
+            }
+
+            linkedin {
+                top: 200px;
+            }
+
+            @media (max-width: 600px) {
+                .float {
+                    display: none;
+                }
+            }
+        </style>
+        <!--social media icons -->
+
+
+
+
+
+        <style>
+            /* Apply Manrope font to the entire navbar */
+            .navbar-nav li a,
+            .navbar-brand,
+            .navbar-toggle,
+            .navbar-inverse-white,
+            .social-button,
+            .navbar-nav>li>a.para {
+                font-family: 'Manrope', sans-serif !important;
+                font-size: 16px;
+            }
+        </style>
+
+
+        <nav class="navbar navbar-inverse navbar-fixed-top navbar-inverse-white">
+            <!-- navigation -->
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand hidden-sm hidden-xs" href="/" aria-label="Maliban home"><img
+                            class="img-responsive" alt="Maliban Logo"
+                            src="/wp-content/uploads/local-cache/malibangroup-2024/theme/images-min/common/maliban-logo2.webp"></a>
+                    <a class="navbar-brand mini-mobile visible-sm visible-xs" href="/" aria-label="Maliban home">
+                        <img class="img-responsive" alt="Maliban Logo" width="122" height="27"
+                            style="width: 45%; height: auto; aspect-ratio: 121.56 / 27.36;"
+                            src="/wp-content/uploads/local-cache/malibangroup-2024/theme/images-min/common/maliban-logo2.webp">
+                    </a>
+                </div>
+
+                <!-- <div class="input-group navbar-right nav-searc-top hidden-sm hidden-xs">
+            <input type="text" class="form-control" placeholder="Search ">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+            </span>
+        </div> -->
+                <div class="btn-group pull-right hidden-sm hidden-xs" role="group" aria-label="..."
+                    style="margin-top: 15px;">
+                    <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                        <div>
+                            <a aria-label="Visit Maliban Facebook" href="https://www.facebook.com/malibanbiscuits.lk/"
+                                target="_blank" class="btn btn-default social-button"
+                                style="border:0px solid #f3f0e7;"><i class="fa fa-facebook fa-lg"
+                                    aria-hidden="true"></i></a>
+
+                            <a aria-label="Visit Maliban YouTube"
+                                href="https://www.youtube.com/channel/UCB9vVJw46JNnY4-wQYgrcYQ" target="_blank"
+                                class="btn btn-default social-button" style="border:0px solid #f3f0e7;"><i
+                                    class="fa fa-youtube fa-lg" aria-hidden="true"></i></a>
+                        </div>
+                        <div style="margin-left: 10px;" id="desktop-google-search-wrap">
+                            <div class="gcse-search"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <style>
+                    .gsc-control-cse {
+                        border: none !important;
+                        background: transparent !important;
+                        width: 250px !important;
+                        padding: 0% !important;
+                    }
+
+                    .gsc-input {
+                        font-size: 13px !important;
+                    }
+                </style>
+                <script>
+                    (function () {
+                        /* Google search is hidden on mobile, so do not load it on mobile */
+                        if (!window.matchMedia('(min-width: 769px)').matches) {
+                            return;
+                        }
+
+                        var cseScript = document.createElement('script');
+                        cseScript.src = 'https://cse.google.com/cse.js?cx=77dda7c5e4fd149d7';
+                        cseScript.async = true;
+                        document.body.appendChild(cseScript);
+
+                        var tries = 0;
+                        var interval = setInterval(function () {
+                            tries++;
+
+                            var searchInput = document.querySelector(".gsc-input input");
+                            if (searchInput) {
+                                searchInput.placeholder = "Search...";
+                                clearInterval(interval);
+                            }
+
+                            if (tries > 20) {
+                                clearInterval(interval);
+                            }
+                        }, 500);
+
+                        window.addEventListener('load', function () {
+                            if (window.location.hash.startsWith('#gsc.tab=')) {
+                                history.replaceState(null, document.title, window.location.pathname + window.location.search);
+                            }
+                        });
+                    })();
+                </script>
+
+
+
+
+                <div class="clearfix"></div>
+                <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
+
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a class="para" href="/">Home</a>
+                        </li>
+                        <li>
+                            <a class="para" href="/about-us">About Us</a>
+                        </li>
+                        <li>
+                            <a class="para" href="/exports">Exports</a>
+                        </li>
+                        <li class="dropdown mega-dropdown para hidden-md hidden-sm hidden-xs">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                                data-hover="dropdown">Products<span class="caret"></span></a>
+
+                            <ul class="dropdown-menu mega-dropdown-menu row">
+                                <li class="col-sm-3">
+                                    <ul>
+
+                                        <a href="/maliban-biscuit" id="bis-logo">
+                                            <div class="hvr">
+                                                <li class="dropdown-header menu-logo">
+                                                    <img src="/wp-content/uploads/local-cache/theme/images-min/common/maliban-bis-menu.png"
+                                                        alt="maliban biscuit logo">
+                                                </li>
+                                            </div>
+                                        </a>
+                                        <a href="/maliban-agri" id="agri-logo">
+                                            <div class="hvr">
+                                                <li class="dropdown-header menu-logo">
+                                                    <img src="/wp-content/uploads/local-cache/theme/images-min/common/maliban-agri-menu-logo.png"
+                                                        alt="maliban agri logo">
+                                                </li>
+                                            </div>
+                                        </a>
+                                        <a href="/maliban-milk" id="milk-logo">
+                                            <div class="hvr">
+                                                <li class="dropdown-header menu-logo">
+                                                    <img src="/wp-content/uploads/local-cache/malibangroup-2024/logo/Maliban-Kiri.webp"
+                                                        alt="maliban milk logo">
+                                                </li>
+                                            </div>
+                                        </a>
+                                        <a href="/little-lion" id="little-logo">
+                                            <div class="hvr">
+                                                <li class="dropdown-header menu-logo">
+                                                    <img src="/wp-content/uploads/local-cache/theme/little-lion/output-onlinepngtools%20(1).png"
+                                                        style="width:95%;" alt="little lion logo">
+                                                </li>
+                                            </div>
+                                        </a>
+
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3 bis-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/cracker">
+                                            <li class="dropdown-header">Cracker Range</li>
+                                        </a>
+                                        <li><a href="/smart-cream-cracker">Maliban Cream Cracker</a></li>
+                                        <li><a href="/bran-cracker">Real Bran Cracker</a></li>
+                                        <li><a href="/spicy-cracker">Spicy Cracker</a></li>
+                                        <li><a href="/veggie-cracker">Veggie Cracker</a></li>
+                                        <li><a href="/cracker-thins">Cracker Thins</a></li>
+                                        <!-- <li class="divider"></li> -->
+                                        <a href="/cream">
+                                            <li class="dropdown-header">Cream Range</li>
+                                        </a>
+                                        <li><a href="/orange-cream">Orange Cream</a></li>
+                                        <li><a href="/custard-cream">Custard Cream</a></li>
+                                        <li><a href="/real-double-chocolate-and-vanila">Real Double Chocolate &
+                                                Vanilla</a>
+                                        </li>
+                                        <li>
+                                            <a href="/real-double-strawberry-and-vanila">Real Double Strawberry &
+                                                Vanilla</a>
+                                        </li>
+                                        <li><a href="/chocolate-cream">Real Chocolate Cream</a></li>
+                                        <!-- <li class="divider"></li> -->
+                                        <a href="/puff">
+                                            <li class="dropdown-header">Puff Range</li>
+                                        </a>
+                                        <li><a href="/lemon-puff">Lemon Puff</a></li>
+                                        <li><a href="/chocolate-puff">Chocolate Puff</a></li>
+                                        <li><a href="/white-chocolate-puff">White Chocolate Puff</a></li>
+                                        <li><a href="/cheese-puff">Cheese Puff</a></li>
+                                        <!-- <li class="divider"></li> -->
+                                        <a href="/health-and-wellness">
+                                            <li class="dropdown-header">Health Range</li>
+                                        </a>
+                                        <li><a href="/sugar-free">Sugar Free</a></li>
+                                        <li><a href="/bran-cracker">Bran Cracker</a></li>
+                                        <li><a href="/maliban-digestive">Maliban Digestive<span
+                                                    class="label label-danger">New</span></a></li>
+                                        <li><a href="/less-sugar-range">30% Less Sugar Range<span
+                                                    class="label label-danger">New</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3 bis-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/sweet">
+                                            <li class="dropdown-header">Sweet Range</li>
+                                        </a>
+                                        <li><a href="/milk-short-cake">Milk Short Cake</a></li>
+                                        <li><a href="/inguru">Inguru</a></li>
+                                        <li><a href="/nice">Nice</a></li>
+                                        <li><a href="/sorties">Sorties</a></li>
+                                        <li><a href="/gold-marie">Gold Marie</a></li>
+                                        <li><a href="/light-marie">Light Marie</a></li>
+                                        <li><a href="/chocolate-marie">Chocolate Marie</a></li>
+                                        <li><a href="/chocolate-wafers">Chocolate Wafers</a></li>
+                                        <li><a href="/vanila-wafers">Vanilla Wafers</a></li>
+                                        <li><a href="/lemon-wafers">Lemon Wafers <span
+                                                    class="label label-danger">New</span></a></li>
+                                        <li><a href="/gem">Gem</a></li>
+                                        <li><a href="/hawaiian-cookies">Hawaiian Cookies</a></li>
+                                        <li><a href="/yo-yo-lemon">Yo Yo Lemon</a></li>
+                                        <li><a href="/yo-yo-choco">Yo Yo Choco</a></li>
+                                        <li><a href="/yo-yo-vanila">Yo Yo Vanilla</a></li>
+                                        <li><a href="/double-twist-cookies">Double Twist Cookies</a></li>
+                                        <li><a href="/zellers-imorre">Zellers Imorre<span
+                                                    class="label label-danger">New</span></a></li>
+                                        <li><a href="/zellers-roundies">Zellers Roundies<span
+                                                    class="label label-danger">New</span></a></li>
+                                        <li><a href="/chekkers-coffee-cookie">Chekkers Coffee Cookies<span
+                                                    class="label label-danger">New</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3 bis-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/gift-assortment">
+                                            <li class="dropdown-header">Gift Assortment Range</li>
+                                        </a>
+                                        <li><a href="/gift-selection">Gift Selection</a></li>
+                                        <li><a href="/tea-time-assortment">Tea Time Assortment</a></li>
+                                        <li><a href="/classic-biscuit-assortment">Classique Biscuit Assortment</a></li>
+                                        <li><a href="/family-collection">Family Collection</a></li>
+
+                                        <!-- <li class="divider"></li> -->
+                                        <a href="/savoury">
+                                            <li class="dropdown-header">Savoury Range</li>
+                                        </a>
+                                        <li><a href="/krisco">Krisco</a></li>
+                                        <li><a href="/cheesebits">Cheesebits</a></li>
+                                        <li><a href="/chick-bits">Chick Bits</a></li>
+                                        <li><a href="/snackers-cheese-and-chillie">Snackers Cheese & Chillie</a></li>
+                                        <li><a href="/snackers-masala">Snackers Masala</a></li>
+                                        <li><a href="/snackers-spicy">Snackers Spicy</a></li>
+                                        <li><a href="/snackers-korean-ramen">Snackers Korean Ramen<span
+                                                    class="label label-danger">New</span></a></li>
+                                        <li><a href="/maliban-tempo">Maliban Tempo<span
+                                                    class="label label-danger">New</span></a></li>
+                                        <!-- <li class="divider"></li> -->
+                                        <a href="/premium">
+                                            <li class="dropdown-header">Premium Range</li>
+                                        </a>
+                                        <li><a href="/real-temptation-white">Real Temptation White</a></li>
+                                        <li><a href="/real-temptation-dark">Real Temptation Dark</a></li>
+                                        <li><a href="/real-temptation-coffee">Real Temptation Coffee</a></li>
+                                        <li><a href="/real-temptation-hazelnut">Real Temptation Hazelnut<span
+                                                    class="label label-danger">New</span></a></li>
+
+
+                                    </ul>
+                                </li>
+                                <!-- Milk Range  -->
+                                <li class="col-sm-3 milk-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/maliban-kiri">
+                                            <li class="dropdown-header">Maliban Kiri</li>
+                                        </a>
+                                        <div class="agri-megamenu-image">
+                                            <a href="/maliban-kiri"><img
+                                                    src="/wp-content/uploads/local-cache/theme/images-min/menu/mom-kid.jpg"
+                                                    style="width: 100%;" alt="maliban kiri image"></a>
+                                        </div>
+                                        <!--                 <a href="/maliban-malt">
+                    <li class="dropdown-header">Maliban Malt</li>
+                </a>
+                <div class="agri-megamenu-image">
+                    <a href="/maliban-malt"><img src="/wp-content/uploads/local-cache/theme/images-min/menu/malt.jpg"
+                         alt="Maliban malt image"
+                            style="width: 100%;"></a>
+                </div> -->
+
+                                    </ul>
+                                </li>
+
+
+                                <li class="col-sm-3 milk-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/maliban-malt">
+                                            <li class="dropdown-header">Maliban Malt</li>
+                                        </a>
+                                        <div class="agri-megamenu-image">
+                                            <a href="/maliban-malt"><img
+                                                    src="/wp-content/uploads/local-cache/theme/images-min/menu/malt-menu.jpg"
+                                                    style="width: 100%;" alt="maliban malt image"></a>
+                                        </div>
+
+                                    </ul>
+                                </li>
+
+
+                                <li class="col-sm-3 milk-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/maliban-vitagen">
+                                            <li class="dropdown-header">Nutritional Range</li>
+                                        </a>
+                                        <div class="agri-megamenu-image">
+                                            <a href="/maliban-vitagen"><img
+                                                    src="/wp-content/uploads/local-cache/theme/images-min/menu/nutrition.jpg"
+                                                    style="width: 100%;" alt="maliban nutrutional range image"></a>
+                                        </div>
+                                        <!-- <a href="/slim-fit">
+                    <li class="dropdown-header">Milk Mix</li>
+                </a>
+                <div class="agri-megamenu-image">
+                    <a href="/slim-fit"><img src="/wp-content/uploads/local-cache/theme/images-min/menu/milkmix.jpg"
+                        alt="Maliban milk mix image"
+                            style="width: 100%;"></a>
+                </div> -->
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3 milk-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/">
+                                            <li class="dropdown-header">Fresh Milk</li>
+                                        </a>
+                                        <div class="agri-megamenu-image">
+                                            <a href="/fresh-milk"><img
+                                                    src="/wp-content/uploads/local-cache/theme/images-min/menu/fresh-milk-menu.jpg"
+                                                    style="width: 100%;" alt="maliban fresh milk image"></a>
+                                        </div>
+                                    </ul>
+                                </li>
+
+
+                                <!-- Agri Range  -->
+                                <li class="col-sm-3 agri-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/maliban-tea">
+                                            <li class="dropdown-header">Maliban Tea</li>
+                                        </a>
+                                        <div class="agri-megamenu-image">
+                                            <a href="/maliban-tea"><img
+                                                    src="/wp-content/uploads/local-cache/theme/images-min/agri/tea.jpg"
+                                                    style="width: 100%;" alt="maliban tea image"></a>
+                                        </div>
+
+
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3 agri-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/maliban-kahata-poronduwa">
+                                            <li class="dropdown-header">Maliban Kahata Poronduwa</li>
+                                        </a>
+                                        <div class="agri-megamenu-image">
+                                            <a href="/maliban-kahata-poronduwa"><img
+                                                    src="/wp-content/uploads/local-cache/theme/images-min/agri/Kahata%20Poronduwa-1500x762.jpg"
+                                                    style="width: 100%;" alt="maliban kahata poronduwa image"></a>
+                                        </div>
+
+
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3 agri-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/maliban-yahaposha">
+                                            <li class="dropdown-header">Maliban Yaha Posha</li>
+                                        </a>
+                                        <div class="agri-megamenu-image">
+                                            <a href="/maliban-yahaposha"><img
+                                                    src="/wp-content/uploads/local-cache/theme/images-min/agri/yahaposha2-menu.jpg"
+                                                    style="width: 100%;" alt="maliban yaha posha image"></a>
+                                        </div>
+
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3 agri-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/maliban-coffee">
+                                            <li class="dropdown-header">Maliban Coffee</li>
+                                        </a>
+                                        <div class="agri-megamenu-image">
+                                            <a href="/maliban-coffee"><img
+                                                    src="/wp-content/uploads/local-cache/theme/images-min/menu/coffee-menu-2.jpg"
+                                                    style="width: 100%;" alt="maliban coffee image"></a>
+                                        </div>
+
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3 agri-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/bopf">
+                                            <li class="dropdown-header">BOPF</li>
+                                        </a>
+                                        <div class="agri-megamenu-image">
+                                            <a href="/bopf"><img
+                                                    src="/wp-content/uploads/local-cache/theme/images-min/menu/bopf-menu.jpg"
+                                                    style="width: 100%;" alt="maliban bopf image"></a>
+                                        </div>
+
+                                    </ul>
+                                </li>
+
+                                <!-- little-lion -->
+                                <li class="col-sm-3 little-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/little-lion-biscuits">
+                                            <li class="dropdown-header">Biscuits Range</li>
+                                        </a>
+                                        <li><a href="/little-lion-batter-carol">Batter Carols</a></li>
+                                        <li><a href="/little-lion-cookies">Cookies</a></li>
+                                        <li><a href="/little-lion-wafers">Wafers</a></li>
+
+                                        <!-- <li class="divider"></li> -->
+                                        <a href="/little-lion-cakes">
+                                            <li class="dropdown-header">Cakes Range</li>
+                                        </a>
+                                        <li><a href="/little-lion-packeted-cakes">Packeted Cakes</a></li>
+                                        <li><a href="/little-lion-sponge-rolls">Sponge Rolls</a></li>
+                                        <li><a href="/little-lion-ambient">Soft Log</a></li>
+
+                                        <!-- <li class="divider"></li> -->
+                                        <a href="/little-lion-baby-products">
+                                            <li class="dropdown-header">Baby Rusks</li>
+                                        </a>
+                                        <li><a href="/little-lion-golden-cow-original">Golden Cow Original</a></li>
+                                        <li><a href="/little-lion-golden-cow-banana">Golden Cow Banana</a></li>
+                                        <li><a href="/little-lion-golden-cow-apple">Golden Cow Apple</a></li>
+
+                                        <!-- <li class="divider"></li> -->
+                                        <a href="/little-lion-bakery-items">
+                                            <li class="dropdown-header">Bakery Items Range</li>
+                                        </a>
+                                        <li><a href="/little-lion-buns">Buns</a></li>
+                                        <li><a href="/little-lion-pastries">Pastries</a></li>
+                                        <li><a href="/little-lion-fried-items">Fried Items</a></li>
+                                        <li><a href="/little-lion-sweets">Sweets</a></li>
+
+                                    </ul>
+                                </li>
+                                <li class="col-sm-3 little-range animatable fadeIn">
+                                    <ul>
+                                        <a href="/little-lion-customized-cakes">
+                                            <li class="dropdown-header">Customized Cakes Range</li>
+                                        </a>
+                                        <li><a href="/little-lion-birthday">Birthday Cakes</a></li>
+                                        <li><a href="/little-lion-anniversary">Anniversary Cakes</a></li>
+                                        <li><a href="/little-lion-celebration">Celebration Cakes</a></li>
+                                        <li><a href="/little-lion-structure">Structure Cakes</a></li>
+
+
+
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="dropdown hidden-lg hidden-xl">
+                            <a class="dropdown-toggle para" data-toggle="dropdown" href="#">Products
+                                <span class="caret"></span></a>
+                            <ul class="dropdown-menu para">
+                                <li><a href="/maliban-biscuit">Biscuits</a></li>
+                                <li><a href="/maliban-milk">Milk</a></li>
+                                <li><a href="/maliban-agri">Agri</a></li>
+                                <li><a href="/little-lion">Little Lion</a></li>
+                            </ul>
+                        </li>
+                        <!-- <li>
+                        <a class="para" href="/products">PRODUCTS</a>
+                    </li> -->
+                        <li>
+                            <a class="para" href="/sustainability">Sustainability</a>
+                        </li>
+                        <li>
+                            <a class="para" href="/tv-commercials">Media</a>
+                        </li>
+                        <li>
+                            <a class="para" href="/careers">Careers</a>
+                        </li>
+                        <li>
+                            <a class="para" href="/contact-us">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!--  cream cracker popup  -->
+        <!--<div class='popup-onload'>
+	<div class='cnt223'>
+
+	<p>
+
+		<br/>
+			<img class="img-responsive " alt="Yahagunakam Rasa Siththam"src="/wp-content/uploads/local-cache/theme/images-min/common/yahagunakam-rasa-siththam-2024.webp">
+		<br/>
+		<a class='clkhr' href='https://malibanrasasiththam.com/' target="_blank">click here</a>
+
+		<a  class='close'>Close</a>	
+	</p>
+	</div>
+</div>-->
+
+        <style>
+            #overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #000;
+                filter: alpha(opacity=70);
+                -moz-opacity: 0.7;
+                -khtml-opacity: 0.7;
+                opacity: 0.7;
+                z-index: 100;
+                display: none;
+            }
+
+            .cnt223 a {
+                text-decoration: none;
+            }
+
+            .popup-onload {
+                width: 100%;
+                margin: 0 auto;
+                display: none;
+                position: fixed;
+                z-index: 101;
+            }
+
+            .cnt223 {
+                width: 50%;
+                margin: 100px auto;
+                background: #f3f3f3;
+                position: relative;
+                z-index: 103;
+                padding: 15px 35px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px #000;
+            }
+
+            @media (max-width: 1500px) {
+                .cnt223 {
+                    width: 50%;
+                }
+            }
+
+            @media (max-width: 800px) {
+                .cnt223 {
+                    width: 90%;
+                    padding: 1px 18px;
+                }
+
+                .clkhr {
+                    font-size: 15px;
+                }
+
+                .close {
+                    font-size: 15px;
+                }
+            }
+
+            .cnt223 p {
+                clear: both;
+                color: #555555;
+                /* text-align: justify; */
+                font-size: 20px;
+                font-family: sans-serif;
+            }
+
+            .cnt223 p a {
+                color: #d91900;
+                font-weight: bold;
+            }
+
+            .cnt223 .x {
+                float: right;
+                height: 35px;
+                left: 22px;
+                position: relative;
+                top: -25px;
+                width: 34px;
+            }
+
+            .cnt223 .x:hover {
+                cursor: pointer;
+            }
+
+            .clkhr:hover,
+            .clkhr:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+                filter: alpha(opacity=50);
+                opacity: .5;
+            }
+
+            .clkhr {
+                border: 1px solid;
+                padding: 6px;
+            }
+
+            .close {
+                opacity: 1;
+                border: 1px solid;
+                padding: 6px;
+            }
+        </style>
+
+        <!-- Old popup script disabled because popup HTML is commented -->
+
+        <!--  cream cracker popup   -->
+
+        <!-- old video wrapper  -->
+        <!-- 	<div class="video-wrapper">
+		<video id="myVideo" autoplay muted width=100% height=auto>
+			<source id="mp4Source" src="/wp-content/uploads/local-cache/theme/videos/home-videos/video1.mp4" type="video/mp4" />
+		</video>
+
+		<div class="sound-icon-wrapper hidden-sm hidden-xs">
+			<div class="sound-icon sound-icon-on">
+				<img src="/wp-content/uploads/local-cache/theme/images-min/common/sound-on.png" alt="sound on">
+			</div>
+			<div class="sound-icon sound-icon-off">
+				<img src="/wp-content/uploads/local-cache/theme/images-min/common/sound-off.png" alt="sound off">
+			</div>
+		</div>
+	</div> -->
+        <div class="banner-wrapper" style="display:block; width:100%; line-height:0; overflow:hidden;">
+            <picture style="display:block; width:100%;">
+                <source media="(max-width: 768px)"
+                    srcset="/wp-content/uploads/local-cache/malibangroup-2024/theme/images-min/media/homepage-banner-mobile.webp"
+                    type="image/webp">
+
+                <source media="(min-width: 769px)"
+                    srcset="/wp-content/uploads/desktop-optimized/homepage-banner-desktop.webp" type="image/webp">
+
+                <img src="/wp-content/uploads/local-cache/malibangroup-2024/theme/images-min/media/homepage-banner-mobile.webp"
+                    alt="Home Banner" width="768" height="431"
+                    style="display:block; width:100%; height:auto; aspect-ratio: 1400 / 785;" fetchpriority="high"
+                    loading="eager" decoding="async">
+            </picture>
+        </div>
+
+        <!-- old video wrapper  -->
+
+        <!-- Old video script disabled because old video HTML is commented -->
+
+        <!-- Page Content -->
+        <div class="container container-cs" id="scrollTo" role="main" aria-label="Maliban main content">
+            <div class="row">
+
+                <div class="col-lg-12 l-mr-top l-mr-bottom">
+                    <h1 class="w-600 text-center">Product Categories</h1>
+                    <p class="para w-600 text-center">Quality is The Best Thing We Follow</p>
+                </div>
+
+                <div class="catagories-container">
+                    <div class="col-sm-3 col-xs-3 zoomInContainer"
+                        style="border: 1px solid #d3d3d3; padding: 5px; border-radius: 4px; margin-bottom: 15px;">
+                        <a href="/maliban-biscuit" id="zoomIn">
+                            <img class="img-responsive" style="width:100%;" alt="Maliban Biscuit" width="360"
+                                height="433" loading="lazy" decoding="async"
+                                src="/wp-content/uploads/local-cache/malibangroup-2024/theme/images-min/images/biscuit.webp"
+                                srcset="/wp-content/uploads/mobile-optimized/biscuit-mobile.webp 240w,
+            /wp-content/uploads/local-cache/malibangroup-2024/theme/images-min/images/biscuit.webp 360w"
+                                sizes="(max-width: 768px) 118px, 360px">
+                        </a>
+                    </div>
+                    <div class="col-sm-3 col-xs-3 zoomInContainer"
+                        style="border: 1px solid #d3d3d3; padding: 5px; border-radius: 4px; margin-bottom: 15px;">
+                        <a href="/maliban-milk" id="zoomIn">
+                            <img class="img-responsive" style="width:100%;" alt="Maliban Milk" width="360" height="434"
+                                loading="lazy" decoding="async"
+                                src="/wp-content/uploads/local-cache/malibangroup-2024/logo/kiri-V3.webp" srcset="/wp-content/uploads/mobile-optimized/kiri-mobile.webp 240w,
+            /wp-content/uploads/local-cache/malibangroup-2024/logo/kiri-V3.webp 360w"
+                                sizes="(max-width: 768px) 118px, 360px">
+                        </a>
+                    </div>
+                    <div class="col-sm-3 col-xs-3 zoomInContainer"
+                        style="border: 1px solid #d3d3d3; padding: 5px; border-radius: 4px; margin-bottom: 15px;">
+                        <a href="/maliban-agri" id="zoomIn">
+                            <img class="img-responsive" style="width:100%;" alt="Maliban Agri" width="360" height="433"
+                                loading="lazy" decoding="async"
+                                src="/wp-content/uploads/local-cache/malibangroup-2024/theme/images-min/images/agri_V2_3.webp"
+                                srcset="/wp-content/uploads/mobile-optimized/agri-mobile.webp 240w,
+            /wp-content/uploads/local-cache/malibangroup-2024/theme/images-min/images/agri_V2_3.webp 360w"
+                                sizes="(max-width: 768px) 118px, 360px">
+                        </a>
+                    </div>
+                    <div class="col-sm-3 col-xs-3 zoomInContainer"
+                        style="border: 1px solid #d3d3d3; padding: 5px; border-radius: 4px; margin-bottom: 15px;">
+                        <a href="/little-lion" id="zoomIn">
+                            <img class="img-responsive" style="width:100%;" alt="Little Lion" width="407" height="493"
+                                loading="lazy" decoding="async"
+                                src="/wp-content/uploads/local-cache/malibangroup-2024/theme/images-min/images/little-lion.webp"
+                                srcset="/wp-content/uploads/mobile-optimized/little-lion-mobile.webp 240w,
+            /wp-content/uploads/local-cache/malibangroup-2024/theme/images-min/images/little-lion.webp 360w"
+                                sizes="(max-width: 768px) 118px, 360px">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- <div class="col-sm-3 col-xs-6 no-padding zoomInContainer"><a href="maliban-yahaposha" id="zoomIn"><img class="img-responsive"alt="Maliban product category" src="/wp-content/uploads/local-cache/theme/images-min/catogories/04.jpg" ></a></div> -->
+
+            </div>
+        </div>
+
+        <div class="container container-cs">
+            <!-- <div class="footer-award-logos">
+            <a href="https://topweb.lk/winners/malibangroup/" target="_blank" rel="noopener">
+                <img src="/wp-content/uploads/local-cache/malibangroup-2024/tw2025.webp" class="footer-topweb-logo"
+                    alt="top web logo" style="border-radius: 10px;">
+            </a>
+            <a href="https://ebadge.bestweb.lk/api/v1/clicked/malibangroup.lk/BestWeb/2025/Rate_Us" target="_blank"
+                rel="noopener">
+                <img class="footer-bestweb-logo"
+                    src="/wp-content/uploads/local-cache/theme/images-min/images/BestWeb.webp"
+                    alt="BestWeb 2025 Badge" width="120" height="120">
+            </a>
+        </div> -->
+            <div class="row">
+                <div class="col-lg-12 l-mr-top l-mr-bottom">
+                    <h1 class="w-600 text-center">Explore the World of Maliban</h1>
+                    <p class="para w-600 text-center">Find Out everything that's happening in the World of Maliban.</p>
+                    <p class="para w-600 text-center">Get up-to-date news and information, as well as recipe ideas and
+                        inspiration.</p>
+                </div>
+
+                <div class="col-md-3 no-padding-xs">
+                    <!-- <a href="/exports"> -->
+                    <!-- 				<div class="col-sm-12 no-padding sctblockone" style="background-image: url(&quot;https://storage.googleapis.com/cdn.malibangroup.com/theme/images-min/explore/01.webp&quot;); background-position: center center; height: 691.6px;"> -->
+                    <!-- <div class="col-sm-12 no-padding sctblockone"
+                        style='background-image: url("/wp-content/uploads/local-cache/theme/images-min/media/export.webp"); background-position: center center; height: 702px;'> -->
+                    <!-- ;); background-position: center center; height: 691.6px;"> -->
+                    <!-- <div class="caption-sct-block">
+                            <div class="col-xs-12">
+                                <p class="para w-600  low-line" style="color: #fff;">Maliban exports</p>
+                            </div> -->
+                    <!-- <div class="col-xs-3" style="margin-top: 4px;">
+								<a href="https://www.malibangroup.com/exports">
+									<svg width="30" xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="Capa_1" x="0px"
+										y="0px" viewBox="0 0 510 510" style="enable-background:new 0 0 510 510;"
+										xml:space="preserve">
+										<g>
+											<g class="unknown-3">
+												<path
+													d="M280.5,153h-51v76.5H153v51h76.5V357h51v-76.5H357v-51h-76.5V153z M255,0C114.75,0,0,114.75,0,255s114.75,255,255,255    s255-114.75,255-255S395.25,0,255,0z M255,459c-112.2,0-204-91.8-204-204S142.8,51,255,51s204,91.8,204,204S367.2,459,255,459z"
+													fill="#FFFFFF" />
+											</g>
+										</g>
+									</svg>
+								</a>
+							<!-- </div> -->
+                    <!-- </div>
+                    </div>
+                </a> -->
+
+
+
+                    <!-- </div>
+
+            <div class="col-md-5 col-xs-12 no-padding-xs"> -->
+
+
+                    <!-- <a href="/awards">
+                    <div>
+                        <div class="col-sm-12 no-padding sctblocktwo"
+                            style='background-image: url("/wp-content/uploads/2025/06/13-scaled.webp"); background-position: center center; height: 334.8px;'>
+
+                            <div class="caption-sct-block">
+                                <div class="col-xs-12">
+                                    <p class="para w-600  low-line" style="color: #fff;">Awards...</p>
+                                </div> -->
+                    <!-- <div class="col-xs-2" style="margin-top: 4px;">
+									<a href="/awards">
+										<svg width="30" xmlns="http://www.w3.org/2000/svg"
+											xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="Capa_1"
+											x="0px" y="0px" viewBox="0 0 510 510"
+											style="enable-background:new 0 0 510 510;" xml:space="preserve">
+											<g>
+												<g class="unknown-3">
+													<path
+														d="M280.5,153h-51v76.5H153v51h76.5V357h51v-76.5H357v-51h-76.5V153z M255,0C114.75,0,0,114.75,0,255s114.75,255,255,255    s255-114.75,255-255S395.25,0,255,0z M255,459c-112.2,0-204-91.8-204-204S142.8,51,255,51s204,91.8,204,204S367.2,459,255,459z"
+														fill="#FFFFFF" />
+												</g>
+											</g>
+										</svg>
+									</a>
+								</div> -->
+                    <!-- </div>
+
+                        </div>
+                    </div>
+                </a> -->
+
+
+                    <!-- <div class="col-sm-12 no-padding sctblocktwo topsetjs"
+                    style='background-image: url("/wp-content/uploads/local-cache/theme/images-min/explore/03.webp"); background-position: center center; height: 334.8px; margin-top: 32.4px;'>
+                    <a href="/sustainability">
+                        <div class="caption-sct-block">
+                            <div class="col-xs-12">
+                                <p class="para w-600  low-line" style="color: #fff;">Uththama Pranama</p>
+                            </div> -->
+                    <!-- <div class="col-xs-2" style="margin-top: 4px;">
+								<a href="/sustainability">
+									<svg width="30" xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="Capa_1" x="0px"
+										y="0px" viewBox="0 0 510 510" style="enable-background:new 0 0 510 510;"
+										xml:space="preserve">
+										<g>
+											<g class="unknown-3">
+												<path
+													d="M280.5,153h-51v76.5H153v51h76.5V357h51v-76.5H357v-51h-76.5V153z M255,0C114.75,0,0,114.75,0,255s114.75,255,255,255    s255-114.75,255-255S395.25,0,255,0z M255,459c-112.2,0-204-91.8-204-204S142.8,51,255,51s204,91.8,204,204S367.2,459,255,459z"
+													fill="#FFFFFF" />
+											</g>
+										</g>
+									</svg>
+								</a>
+							</div> -->
+                    <!-- </div>
+                    </a>
+                </div> -->
+
+
+
+                    <!-- </div> -->
+
+
+
+                    <!-- <div class="col-md-3 no-padding-xs">
+                <a href="/news">
+                    <div class="col-sm-12 no-padding sctblockone"
+                        style='background-image: url("/wp-content/uploads/2025/06/3csadmin_A_mid_angle_shot_of_a_red_carpet_event_with_paparazzi__10a2837e-0a27-4baa-8d94-9546ea231ae3.webp"); background-position: center center; height: 702px;'>
+                        <div class="caption-sct-block">
+                            <div class="col-xs-12">
+                                <p class="para w-600 low-line" style="color: #fff;">News and Events</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div>
+                <div> -->
+
+                    <!-- <div class="col-md-5 no-padding-xs col-sm-12 sctblockthree topsetjs"
+                        style="height: 334.8px; margin-top: 32.4px;">
+                        <a href="/double-twist-cookies/">
+                            <div class="col-sm-12 no-padding sctblocktwo"
+                                style='background-image: url("/wp-content/uploads/local-cache/theme/images-min/explore/10.webp"); background-position: center center; height: 334.8px;'>
+
+                                <div class="caption-sct-block">
+                                    <div class="col-xs-12">
+                                        <p class="para w-600  low-line" style="color: #fff;">What's new at Maliban</p>
+                                    </div> -->
+
+
+                    <!-- <div class="col-xs-2" style="margin-top: 4px;">
+								<a href="/news">
+									<svg width="30" xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="Capa_1" x="0px"
+										y="0px" viewBox="0 0 510 510" style="enable-background:new 0 0 510 510;"
+										xml:space="preserve">
+										<g>
+											<g class="unknown-3">
+												<path
+													d="M280.5,153h-51v76.5H153v51h76.5V357h51v-76.5H357v-51h-76.5V153z M255,0C114.75,0,0,114.75,0,255s114.75,255,255,255    s255-114.75,255-255S395.25,0,255,0z M255,459c-112.2,0-204-91.8-204-204S142.8,51,255,51s204,91.8,204,204S367.2,459,255,459z"
+													fill="#FFFFFF" />
+											</g>
+										</g>
+									</svg>
+								</a>
+							</div> -->
+                </div>
+
+
+                <div class="col-sm-12 no-padding">
+
+                    <!-- Carousel container -->
+                    <div id="my-pics" class="carousel slide" style="margin:auto;">
+
+                        <!-- Indicators -->
+                        <!--<ol class="carousel-indicators">
+							<li data-target="#my-pics" data-slide-to="0" class="active"></li>
+							<li data-target="#my-pics" data-slide-to="1"></li>
+						</ol>-->
+                        <div class="carousel-fix">
+                        </div>
+
+                        <!-- Content -->
+
+
+
+                        <!-- <div class="item active">
+								<a href="/double-twist-cookies">
+									<div class="col-xs-12 no-padding sctblockfour topsetjs" style="background-image:url('/wp-content/uploads/local-cache/theme/images-min/explore/08.webp')"></div>
+								</a>
+							</div>
+							<div class="col-md-3 no-padding-xs">
+	<a href="/news">
+		<div class="col-sm-12 no-padding sctblockone" style="background-image: url('/wp-content/uploads/local-cache/theme/images-min/explore/04.webp'); background-position: center center; height: 300.3px;">
+			<div class="caption-sct-block">
+				<div class="col-xs-12">
+					<p class="para w-600 low-line" style="color: #fff;">What's new at Maliban</p>
+				</div>
+			</div>
+		</div>
+	</a>
+</div> -->
+
+                        <!-- Slide 2 -->
+                        <!--<div class="item">
+								<a href="/choco-orange">
+									<div class="col-xs-12 no-padding sctblockfour topsetjs" style="background-image:url('/wp-content/uploads/local-cache/theme/images-min/explore/09.jpg')"></div>
+								</a>
+							</div>-->
+
+                    </div>
+
+                    <!-- Previous/Next controls -->
+                    <!-- <a class="left carousel-control" href="#my-pics" role="button" data-slide="prev">
+							<span class="icon-prev" aria-hidden="true"></span>
+							<span class="sr-only">Previous</span>
+						</a>
+						<a class="right carousel-control" href="#my-pics" role="button" data-slide="next">
+							<span class="icon-next" aria-hidden="true"></span>
+							<span class="sr-only">Next</span>
+						</a> -->
+                </div>
+
+
+
+
+
+
+                <!-- <div class="col-xs-6 no-padding sctblockfour topsetjs" style="background-image:url('/wp-content/uploads/local-cache/theme/images-min/catogories/02.jpg')"></div> -->
+
+                <!-- <a href="/double-twist-cookies">
+									<svg width="30" xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" class="Capa_1" x="0px"
+										y="0px" viewBox="0 0 510 510" style="enable-background:new 0 0 510 510;"
+										xml:space="preserve">
+										<g>
+											<g class="unknown-3">
+												<path
+													d="M280.5,153h-51v76.5H153v51h76.5V357h51v-76.5H357v-51h-76.5V153z M255,0C114.75,0,0,114.75,0,255s114.75,255,255,255    s255-114.75,255-255S395.25,0,255,0z M255,459c-112.2,0-204-91.8-204-204S142.8,51,255,51s204,91.8,204,204S367.2,459,255,459z"
+													fill="#FFFFFF" />
+											</g>
+										</g>
+									</svg>
+								</a> -->
+                <!-- </div>
+                        </a>
+                    </div>
+                    <a href="/double-twist-cookies/">
+
+                    </a>
+                    <div class="col-md-3 no-padding-xs col-sm-12 sctblockthree topsetjs"
+                        style="height: 334.8px; margin-top: 32.4px;">
+                        <a href="/double-twist-cookies/">
+                        </a><a href="/careers">
+                            <div class="caption-sct-block caption-sct-block-long"
+                                style="background-image:url('/wp-content/uploads/2025/06/download-91.webp');background-position: center; height: 100%; max-width: 616px; ">
+                                <div class="caption-sct-block">
+                                    <div class="col-xs-12">
+                                        <p class="para w-600 low-line" style="color: white;">Careers in Maliban</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+                <!-- <div class="container container-cs">
+            <div class="footer-award-logos">
+                <a href="https://topweb.lk/winners/malibangroup/" target="_blank" rel="noopener">
+                    <img src="/wp-content/uploads/local-cache/malibangroup-2024/tw2025.webp" class="footer-topweb-logo" alt="top web logo"
+                        style="border-radius: 10px;">
+                </a>
+                <a href="https://ebadge.bestweb.lk/api/v1/clicked/malibangroup.lk/BestWeb/2025/Rate_Us" target="_blank"
+                    rel="noopener">
+                    <img class="footer-bestweb-logo"
+                        src="/wp-content/uploads/local-cache/theme/images-min/images/BestWeb.webp"
+                        alt="BestWeb 2025 Badge" width="120" height="120">
+                </a>
+            </div>
+		<div class="row"  style="margin-top:10%;">
+
+			</div>
+
+			<div class="clearfix visible-xs-block"></div>
+
+			<div class="col-sm-6">
+				<div class="col-sm-12 sctblockfive" style="background-color:#ffffff; padding: 15px;">
+
+					<div class="col-xs-12">
+						<p class="para w-600  low-line">Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+					</div>
+				</div>
+
+				<div class="clearfix"></div>
+
+				<div class="col-xs-12 no-padding-left no-padding-right news-fb-cap">
+					<div class="col-xs-10">
+						<p class="para w-600  low-line">Don't take our word for it...</p>
+					</div>
+					<div class="col-xs-2" style="margin-top: 4px;">
+						<a href="#">
+							<svg width="30" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+							 class="Capa_1" x="0px" y="0px" viewBox="0 0 510 510" style="enable-background:new 0 0 510 510;" xml:space="preserve">
+								<g>
+									<g class="unknown-3">
+										<path d="M280.5,153h-51v76.5H153v51h76.5V357h51v-76.5H357v-51h-76.5V153z M255,0C114.75,0,0,114.75,0,255s114.75,255,255,255    s255-114.75,255-255S395.25,0,255,0z M255,459c-112.2,0-204-91.8-204-204S142.8,51,255,51s204,91.8,204,204S367.2,459,255,459z"
+										 fill="#FFFFFF" />
+									</g>
+								</g>
+							</svg>
+						</a>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+    </div> -->
+            </div>
+
+            <style>
+                /* Base styles for the card grid */
+                .new-maliban-card-grid-container {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    grid-template-rows: auto auto;
+                    gap: 1rem;
+                }
+
+                /* Tall card (1 and 4) */
+                .new-maliban-card-grid-tall {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    height: 700px;
+                    background-size: cover;
+                    background-position: center;
+                    position: relative;
+                    border-radius: 4px;
+                    overflow: hidden;
+                }
+
+                /* Stacked column (2 + 3) */
+                .new-maliban-card-grid-stacked {
+                    display: grid;
+                    gap: 1rem;
+                    grid-template-rows: 1fr 1fr;
+                    height: 700px;
+                }
+
+                /* Standard card styling */
+                .new-maliban-card-grid-card {
+                    background-color: #ff3c3c;
+                    background-size: cover;
+                    background-position: center;
+                    border-radius: 4px;
+                    position: relative;
+                    overflow: hidden;
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-end;
+                }
+
+                /* Text overlay inside each card */
+                .new-maliban-card-grid-text-overlay {
+                    background: rgba(0, 0, 0, 0.489);
+                    color: white;
+                    width: 100%;
+                    text-align: center;
+                    padding: 20px;
+                    font-weight: bold;
+                    font-size: 20px;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                }
+
+                /* Row 2 â€“ wide cards */
+                .new-maliban-card-grid-row-2 {
+                    grid-column: 1 / -1;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 1rem;
+                    margin-top: 1rem;
+                }
+
+                .new-maliban-card-grid-wide-card {
+                    height: 350px;
+                }
+
+                @media (max-width: 768px) {
+                    .new-maliban-card-grid-container {
+                        grid-template-columns: 1fr;
+                    }
+
+                    .new-maliban-card-grid-container>* {
+                        grid-column: 1 / -1;
+                    }
+
+                    .new-maliban-card-grid-tall,
+                    .new-maliban-card-grid-card {
+                        height: 300px !important;
+                        /* Force correct height on mobile */
+                    }
+
+                    .new-maliban-card-grid-stacked {
+                        height: auto !important;
+                        /* Let content size define height */
+                    }
+
+                    .new-maliban-card-grid-row-2 {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            </style>
+
+            <div class="new-maliban-card-grid-container">
+                <!-- Card 1 -->
+                <a href="/exports/" class="new-maliban-card-grid-card new-maliban-card-grid-tall lazy-bg"
+                    data-bg="/wp-content/uploads/local-cache/theme/images-min/media/export.webp">
+                    <div class="new-maliban-card-grid-text-overlay">Maliban exports</div>
+                </a>
+
+                <!-- Cards 2 & 3 -->
+                <div class="new-maliban-card-grid-stacked">
+                    <a href="/awards/" class="new-maliban-card-grid-card lazy-bg"
+                        data-bg="/wp-content/uploads/2025/06/13-scaled.webp">
+                        <div class="new-maliban-card-grid-text-overlay">Awards</div>
+                    </a>
+                    <a href="/sustainability/" class="new-maliban-card-grid-card lazy-bg"
+                        data-bg="/wp-content/uploads/local-cache/theme/images-min/explore/03.webp">
+                        <div class="new-maliban-card-grid-text-overlay">Uththama Pranama</div>
+                    </a>
+                </div>
+
+                <!-- Card 4 -->
+                <a href="/news/" class="new-maliban-card-grid-card new-maliban-card-grid-tall lazy-bg"
+                    data-bg="/wp-content/uploads/2025/06/3csadmin_A_mid_angle_shot_of_a_red_carpet_event_with_paparazzi__10a2837e-0a27-4baa-8d94-9546ea231ae3.webp">
+                    <div class="new-maliban-card-grid-text-overlay">News and Events</div>
+                </a>
+
+                <!-- Row 2 cards (Card 5 & 6) -->
+                <div class="new-maliban-card-grid-row-2">
+                    <a href="/double-twist-cookies/"
+                        class="new-maliban-card-grid-card new-maliban-card-grid-wide-card lazy-bg"
+                        data-bg="/wp-content/uploads/local-cache/theme/images-min/explore/10.webp">
+                        <div class="new-maliban-card-grid-text-overlay">What's New at Maliban</div>
+                    </a>
+                    <a href="/careers/" class="new-maliban-card-grid-card new-maliban-card-grid-wide-card lazy-bg"
+                        data-bg="/wp-content/uploads/2025/06/download-91.webp">
+                        <div class="new-maliban-card-grid-text-overlay">Careers in Maliban</div>
+                    </a>
+                </div>
+            </div>
+
+            <script>
+                (function () {
+                    var lazyBgCards = document.querySelectorAll('.lazy-bg[data-bg]');
+
+                    function loadBgImage(card) {
+                        var imageUrl = card.getAttribute('data-bg');
+                        if (!imageUrl) return;
+
+                        card.style.backgroundImage = "url('" + imageUrl + "')";
+                        card.removeAttribute('data-bg');
+                        card.classList.remove('lazy-bg');
+                    }
+
+                    if (!('IntersectionObserver' in window)) {
+                        lazyBgCards.forEach(loadBgImage);
+                        return;
+                    }
+
+                    var observer = new IntersectionObserver(function (entries, obs) {
+                        entries.forEach(function (entry) {
+                            if (entry.isIntersecting) {
+                                loadBgImage(entry.target);
+                                obs.unobserve(entry.target);
+                            }
+                        });
+                    }, {
+                        rootMargin: '150px 0px',
+                        threshold: 0.01
+                    });
+
+                    lazyBgCards.forEach(function (card) {
+                        observer.observe(card);
+                    });
+                })();
+            </script>
+            <!-- BestWeb 2025 Badge Floating Image (Left) -->
+            <!-- <a href="https://ebadge.bestweb.lk/api/v1/clicked/malibangroup.lk/BestWeb/2025/Rate_Us" target="_blank"
+            rel="noopener" style="position: fixed; bottom: 220px; left: 20px; z-index: 1000;">
+            <img src="/wp-content/uploads/local-cache/theme/images-min/images/BestWeb.webp"
+                alt="BestWeb 2025 Badge" width="150" height="150"
+                style="width:150px; height:150px; object-fit: contain; transition: transform 0.3s ease; padding-bottom: 30px; margin-left: -20px;"
+                onmouseout="this.style.transform='scale(1)'">
+        </a> -->
+
+
+
+
+            <!--social media icons -->
+
+            <a href="https://api.whatsapp.com/send?phone=+94744130330&text=Thank%20you%20for%20contacting%20Maliban%20Exports.%20We%20will%20get%20back%20to%20you%20shortly."
+                class="float whatsapp" target="_blank" style="background-color:#25d366;">
+                <i class="fa fa-whatsapp my-float"></i>
+            </a>
+
+            <a href="https://www.linkedin.com/company/maliban/" class="float linkedin" target="_blank"
+                style="top: 180px; background-color:#0077b7;">
+                <i class="fa fa-linkedin my-float"></i>
+            </a>
+            <a href="https://www.facebook.com/Malibaninternational?mibextid=9R9pXO" class="float" target="_blank"
+                style="top: 250px; background-color:#0266ff;">
+                <i class="fa fa-facebook my-float"></i>
+            </a>
+            <a href="https://instagram.com/maliban_international?igshid=MzRlODBiNWFlZA==" class="float" target="_blank"
+                style="top: 320px;  background: #f09433; 
+background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );">
+                <i class="fa fa-instagram my-float"></i>
+            </a>
+            <style>
+                .float {
+                    position: fixed;
+                    width: 60px;
+                    height: 60px;
+
+                    right: 50px;
+
+                    color: #FFF;
+                    border-radius: 50px;
+                    text-align: center;
+                    font-size: 30px;
+                    box-shadow: 2px 2px 3px #999;
+                    z-index: 100;
+                }
+
+                .whatsapp {
+                    top: 110px;
+                }
+
+                linkedin {
+                    top: 200px;
+                }
+
+                .my-float {
+                    margin-top: 16px;
+                }
+            </style>
+            <!--social media icons -->
+
+            <!--Main Floating Container-->
+
+            <style>
+                /* Chatbot popup box - LEFT side same as live */
+                .chat-container {
+                    position: fixed;
+                    bottom: 100px;
+                    left: 30px;
+                    width: 380px;
+                    height: 550px;
+                    padding: 18px;
+                    box-sizing: border-box;
+                    display: none;
+                    flex-direction: column;
+                    overflow: hidden;
+                    font-family: 'Segoe UI', Arial, sans-serif;
+                    z-index: 9999;
+
+                    background: rgba(255, 255, 255, 0.14);
+                    border: 1.5px solid rgba(255, 255, 255, 0.78);
+                    box-shadow:
+                        0 24px 70px rgba(0, 0, 0, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.95),
+                        inset 0 -1px 0 rgba(255, 255, 255, 0.35);
+                    backdrop-filter: blur(28px) saturate(180%);
+                    -webkit-backdrop-filter: blur(28px) saturate(180%);
+                }
+
+                .chat-container::before {
+                    content: "";
+                    position: absolute;
+                    inset: 0;
+                    pointer-events: none;
+                    background: linear-gradient(145deg,
+                            rgba(255, 255, 255, 0.9) 0%,
+                            rgba(255, 255, 255, 0.22) 32%,
+                            rgba(255, 255, 255, 0.08) 55%,
+                            rgba(255, 255, 255, 0.45) 100%);
+                    opacity: 0.55;
+                    z-index: 0;
+                }
+
+                .chat-container>* {
+                    position: relative;
+                    z-index: 1;
+                }
+
+                /* Launcher icon - keep same first look */
+                .chatbot-launcher {
+                    position: fixed;
+                    bottom: 25px;
+                    left: 30px;
+                    width: 65px;
+                    height: 65px;
+                    background: #d8262f;
+                    border-radius: 50px !important;
+                    box-shadow: 0 4px 15px rgba(216, 38, 47, 0.4);
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 10000;
+                }
+
+                .chatbot-launcher img {
+                    width: 65%;
+                    filter: brightness(0) invert(1);
+                }
+
+                .ai-tag-custom {
+                    position: absolute;
+                    top: -2px;
+                    right: -2px;
+                    background: #8dc63f;
+                    color: white;
+                    font-size: 10px;
+                    padding: 3px 7px;
+                    border-radius: 50px !important;
+                    font-weight: bold;
+                    border: 2px solid white;
+                }
+
+                .chat-header {
+                    background: rgba(255, 255, 255, 0.94);
+                    color: #333333;
+                    padding: 18px 24px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border: 1px solid rgba(82, 82, 82, 0.1);
+                    border-bottom: none;
+                    flex-shrink: 0;
+                }
+
+                .header-left-bot {
+                    width: 32px;
+                    height: 32px;
+                    background-color: #d8262f;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: hidden;
+                }
+
+                .header-left-bot img {
+                    width: 75%;
+                    height: 75%;
+                    object-fit: contain;
+                    filter: brightness(0) invert(1);
+                }
+
+                .chat-close-btn {
+                    background: transparent;
+                    border: none;
+                    color: #525252;
+                    font-size: 24px;
+                    cursor: pointer;
+                    height: 30px;
+                    width: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    padding: 0;
+                    margin: 0;
+                    line-height: 1;
+                }
+
+                .chat-close-btn:hover {
+                    background: rgba(0, 0, 0, 0.04);
+                }
+
+                .chat-body {
+                    flex: 1;
+                    padding: 20px;
+                    overflow-y: auto;
+                    display: block;
+                    background: rgba(239, 244, 249, 0.82);
+                    scroll-behavior: smooth;
+                    border-left: 1px solid rgba(82, 82, 82, 0.1);
+                    border-right: 1px solid rgba(82, 82, 82, 0.1);
+                }
+
+                .msg-row-bot {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 10px;
+                    justify-content: flex-start;
+                    margin-bottom: 16px;
+                }
+
+                .msg-row-user {
+                    display: flex;
+                    flex-direction: row-reverse;
+                    align-items: flex-start;
+                    gap: 10px;
+                    justify-content: flex-start;
+                    margin-bottom: 16px;
+                }
+
+                .bot-bubble {
+                    color: #ffffff;
+                    background: linear-gradient(135deg, #d8262f 0%, #b81720 45%, #7f1118 100%);
+                    padding: 14px 16px;
+                    border-radius: 14px;
+                    border-top-left-radius: 4px;
+                    font-size: 14px;
+                    line-height: 1.5;
+                    border: 1px solid rgba(255, 255, 255, 0.18);
+                    max-width: calc(85% - 34px);
+                    margin-right: auto;
+                    box-shadow: 0 10px 25px rgba(40, 40, 40, 0.12);
+                    word-wrap: break-word;
+                }
+
+                .user-bubble {
+                    color: #525252;
+                    background: #ffffff;
+                    padding: 14px 16px;
+                    border-radius: 14px;
+                    border-top-right-radius: 4px;
+                    font-size: 14px;
+                    line-height: 1.5;
+                    border: none;
+                    max-width: 85%;
+                    margin-left: auto;
+                    box-shadow: 0 10px 25px rgba(40, 40, 40, 0.12);
+                    word-wrap: break-word;
+                }
+
+                .avatar-bot,
+                .avatar-user {
+                    width: 24px;
+                    height: 24px;
+                    min-width: 24px;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-shrink: 0;
+                    margin-top: 8px;
+                }
+
+                .avatar-bot {
+                    background: transparent;
+                }
+
+                .avatar-user {
+                    background: #d8262f;
+                    color: #ffffff;
+                    font-size: 13px;
+                }
+
+                .avatar-user svg {
+                    width: 14px;
+                    height: 14px;
+                    display: block;
+                    color: #ffffff;
+                }
+
+                .avatar-bot img {
+                    width: 24px;
+                    height: 24px;
+                    object-fit: contain;
+                    display: block;
+                    opacity: 1 !important;
+                    filter: brightness(0) saturate(100%) invert(22%) sepia(97%) saturate(2582%) hue-rotate(342deg) brightness(91%) contrast(98%) !important;
+
+                }
+
+                .pill-group {
+                    display: none;
+                }
+
+                .input-wrapper {
+                    padding: 16px 20px;
+                    border: 1px solid rgba(82, 82, 82, 0.2);
+                    display: flex;
+                    gap: 12px;
+                    background: rgba(255, 255, 255, 0.94);
+                    align-items: center;
+                    flex-shrink: 0;
+                }
+
+                .gradient-input {
+                    width: 100%;
+                    background: transparent;
+                    border-radius: 0;
+                    display: flex;
+                    align-items: center;
+                    padding: 0;
+                    gap: 12px;
+                }
+
+                .gradient-input input {
+                    flex: 1;
+                    padding: 12px 16px;
+                    border: 1px solid #d8d8d8;
+                    border-radius: 999px !important;
+                    outline: none;
+                    font-size: 14px;
+                    font-family: inherit;
+                    margin: 0;
+                    background: #ffffff;
+                    color: #333333;
+                    appearance: none;
+                    -webkit-appearance: none;
+                }
+
+                .gradient-input input::placeholder {
+                    color: #8a8f94;
+                }
+
+                .gradient-input input:focus {
+                    border-color: #d8262f;
+                    box-shadow: 0 0 0 2px rgba(216, 38, 47, 0.14);
+                }
+
+                .chat-send-btn {
+                    background: linear-gradient(135deg, #d8262f 0%, #b81720 45%, #7f1118 100%);
+                    color: white !important;
+                    border: none;
+                    padding: 0;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    width: 40px;
+                    height: 40px;
+                    min-width: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 20px !important;
+                    line-height: 1;
+                    margin: 0;
+                }
+
+                .chat-send-btn:hover {
+                    transform: scale(1.05);
+                }
+
+                .typing-bubble {
+                    display: flex;
+                    align-items: center;
+                    gap: 4px;
+                    color: #ffffff;
+                    background: linear-gradient(135deg, #d8262f 0%, #b81720 45%, #7f1118 100%);
+                    padding: 14px 16px;
+                    border-radius: 14px;
+                    border-top-left-radius: 4px;
+                    box-shadow: 0 10px 25px rgba(40, 40, 40, 0.12);
+                }
+
+                .typing-bubble span {
+                    width: 8px;
+                    height: 8px;
+                    background: #ffffff;
+                    border-radius: 50%;
+                    opacity: 0.6;
+                    animation: chatbotBounce 1.2s infinite;
+                }
+
+                .typing-bubble span:nth-child(2) {
+                    animation-delay: 0.2s;
+                }
+
+                .typing-bubble span:nth-child(3) {
+                    animation-delay: 0.4s;
+                }
+
+                @keyframes chatbotBounce {
+
+                    0%,
+                    100% {
+                        transform: translateY(0);
+                    }
+
+                    50% {
+                        transform: translateY(-5px);
+                        opacity: 1;
+                    }
+                }
+
+                .bot-bubble a {
+                    color: #ffffff;
+                    font-weight: 600;
+                    text-decoration: underline;
+                }
+
+                .chat-body::-webkit-scrollbar {
+                    width: 6px;
+                }
+
+                .chat-body::-webkit-scrollbar-track {
+                    background: #f1f1f1;
+                }
+
+                .chat-body::-webkit-scrollbar-thumb {
+                    background: #d0d0d0;
+                    border-radius: 10px;
+                }
+
+                @media (max-width: 768px) {
+                    .chat-container {
+                        background: rgba(255, 255, 255, 0.92);
+                        border: 1px solid rgba(230, 230, 230, 0.9);
+                        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+                        backdrop-filter: none;
+                        -webkit-backdrop-filter: none;
+                    }
+
+                    .chat-container::before {
+                        display: none;
+                    }
+                }
+
+                @media (max-width: 480px) {
+                    .chat-container {
+                        width: 85vw;
+                        height: 80vh;
+                        bottom: 90px;
+                        left: 10px;
+                        padding: 14px;
+                    }
+
+                    .chat-header {
+                        padding: 14px 18px;
+                    }
+
+                    .chat-body {
+                        padding: 14px;
+                    }
+
+                    .input-wrapper {
+                        padding: 12px 14px;
+                    }
+
+                    .gradient-input input {
+                        font-size: 13px;
+                        padding: 10px 14px;
+                    }
+                }
+            </style>
+
+            <div class="chatbot-launcher" onclick="toggleChat()">
+                <img src="/wp-content/uploads/local-cache/theme/images-min/images/chat_1_-1.webp" alt="Chatbot"
+                    width="42" height="42" loading="lazy" decoding="async">
+                <span class="ai-tag-custom">AI</span>
+            </div>
+
+            <div class="chat-container" id="chat-container">
+                <div class="chat-header">
+                    <div class="header-left-bot">
+                        <img src="/wp-content/uploads/local-cache/theme/images-min/images/chat_1_-1.webp" alt="Chatbot"
+                            width="24" height="24" loading="lazy" decoding="async">
+                    </div>
+                    <button class="chat-close-btn" type="button" onclick="toggleChat()"
+                        aria-label="Close chatbot">&times;</button>
+                </div>
+
+                <div class="chat-body" id="chat-body">
+                    <div class="msg-row-bot">
+                        <div class="avatar-bot">
+                            <img src="/wp-content/uploads/local-cache/theme/images-min/images/chat_1_-1.webp"
+                                alt="Chatbot" width="24" height="24" loading="lazy" decoding="async">
+                        </div>
+                        <div class="bot-bubble">
+                            <strong>Hi, I am an AI chatbot. How can I help you today?</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-wrapper">
+                    <div class="gradient-input">
+                        <input type="text" id="userInput" placeholder="Type your message here..."
+                            onkeypress="handleKeyPress(event)">
+                        <button class="chat-send-btn" type="button" onclick="sendMessage()" aria-label="Send message">
+                            &#10148;
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const MALIBAN_CHATBOT_ICON = "/wp-content/uploads/local-cache/theme/images-min/images/chat_1_-1.webp";
+                const MALIBAN_CHATBOT_WEBHOOK = "https://phantom.3cs.website/webhook/7ee78716-4d07-4768-8f5f-9e9eaa269766";
+
+                let sessionId = sessionStorage.getItem("sessionId");
+
+                if (!sessionId) {
+                    sessionId = "86" + Math.random().toString(36).substr(2, 9);
+                    sessionStorage.setItem("sessionId", sessionId);
+                }
+
+                function toggleChat() {
+                    const chatContainer = document.getElementById("chat-container");
+
+                    if (!chatContainer) return;
+
+                    const isOpening = chatContainer.style.display !== "flex";
+                    chatContainer.style.display = isOpening ? "flex" : "none";
+
+                    if (isOpening) {
+                        setTimeout(function () {
+                            const input = document.getElementById("userInput");
+                            if (input) input.focus();
+                        }, 100);
+                    }
+                }
+
+                function escapeChatHtml(value) {
+                    return String(value)
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")
+                        .replace(/"/g, "&quot;")
+                        .replace(/'/g, "&#039;");
+                }
+
+                function parseMarkdown(text) {
+                    if (!text) return "";
+
+                    let safeText = escapeChatHtml(text);
+
+                    safeText = safeText.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+                    safeText = safeText.replace(
+                        /\[(.*?)\]\((https?:\/\/.*?)\)/g,
+                        '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+                    );
+
+                    return safeText.replace(/\n/g, "<br>");
+                }
+
+                function addMessage(content, type, isMd = false, id = null) {
+                    const body = document.getElementById("chat-body");
+
+                    if (!body) return;
+
+                    const row = document.createElement("div");
+                    row.className = type === "bot" ? "msg-row-bot" : "msg-row-user";
+
+                    if (id) row.id = id;
+
+                    if (type === "bot") {
+                        row.innerHTML =
+                            '<div class="avatar-bot">' +
+                            '<img src="' + MALIBAN_CHATBOT_ICON + '" alt="Chatbot" width="24" height="24" loading="lazy" decoding="async">' +
+                            '</div>' +
+                            '<div class="bot-bubble">' +
+                            (isMd ? parseMarkdown(content) : escapeChatHtml(content)) +
+                            '</div>';
+                    } else {
+                        row.innerHTML =
+                            '<div class="avatar-user">' +
+                            '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">' +
+                            '<path fill="currentColor" d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"></path>' +
+                            '</svg>' +
+                            '</div>' +
+                            '<div class="user-bubble">' +
+                            escapeChatHtml(content) +
+                            '</div>';
+                    }
+
+                    body.appendChild(row);
+                    body.scrollTop = body.scrollHeight;
+                }
+
+                function addTypingMessage(id) {
+                    const body = document.getElementById("chat-body");
+
+                    if (!body) return;
+
+                    const row = document.createElement("div");
+                    row.className = "msg-row-bot";
+                    row.id = id;
+
+                    row.innerHTML =
+                        '<div class="avatar-bot">' +
+                        '<img src="' + MALIBAN_CHATBOT_ICON + '" alt="Chatbot" width="24" height="24" loading="lazy" decoding="async">' +
+                        '</div>' +
+                        '<div class="typing-bubble">' +
+                        '<span></span><span></span><span></span>' +
+                        '</div>';
+
+                    body.appendChild(row);
+                    body.scrollTop = body.scrollHeight;
+                }
+
+                async function sendMessage(manualText = null) {
+                    const input = document.getElementById("userInput");
+                    const text = manualText || (input ? input.value.trim() : "");
+
+                    if (!text) return;
+
+                    addMessage(text, "user");
+
+                    if (input) input.value = "";
+
+                    const typingId = "typing_" + Date.now();
+                    addTypingMessage(typingId);
+
+                    try {
+                        const res = await fetch(MALIBAN_CHATBOT_WEBHOOK, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                sessionId: sessionId,
+                                chatInput: text,
+                                route: "general"
+                            })
+                        });
+
+                        const data = await res.json();
+                        const typingRow = document.getElementById(typingId);
+
+                        if (typingRow) typingRow.remove();
+
+                        addMessage(
+                            data.output || data.reply || "I didn't receive a response. Please try again.",
+                            "bot",
+                            true
+                        );
+                    } catch (e) {
+                        const typingRow = document.getElementById(typingId);
+
+                        if (typingRow) typingRow.remove();
+
+                        addMessage("There was a connection error. Please try again later.", "bot");
+                    }
+                }
+
+                function handleKeyPress(e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                }
+            </script>
+        </div>
+
+        <!-- Page Content -->
+        <div class="col-xs-12" style="background-color:#ae0a09; margin-top:50px; padding-top:50px;">
+
+            <div class="container container-cs">
+                <div class="footer-award-logos">
+                    <a href="https://topweb.lk/winners/malibangroup/" target="_blank" rel="noopener">
+                        <img src="/wp-content/uploads/mobile-optimized/topweb-mobile.webp" class="footer-topweb-logo"
+                            alt="top web logo" width="100" height="100" loading="lazy" decoding="async"
+                            fetchpriority="low" style="border-radius: 10px;">
+                    </a>
+
+                    <a href="https://ebadge.bestweb.lk/api/v1/clicked/malibangroup.lk/BestWeb/2025/Rate_Us"
+                        target="_blank" rel="noopener">
+                        <img class="footer-bestweb-logo"
+                            src="/wp-content/uploads/mobile-optimized/bestweb-mobile-small.webp"
+                            alt="BestWeb 2025 Badge" width="120" height="120" loading="lazy" decoding="async"
+                            fetchpriority="low">
+                    </a>
+                </div>
+
+                <style>
+                    .footer-award-logos {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 20px;
+                        margin-bottom: 20px;
+                    }
+
+                    .footer-topweb-logo {
+                        width: 100px;
+                        height: 100px;
+                    }
+
+                    .footer-topweb-logo img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                    }
+
+                    .web-design-by {
+                        color: #ffffff !important;
+                        text-decoration: none !important;
+                        font-weight: 400 !important;
+                        border: none !important;
+                        outline: none !important;
+                    }
+
+                    .web-design-by:hover,
+                    .web-design-by:focus {
+                        color: #ffffff !important;
+                        text-decoration: none !important;
+                        border: none !important;
+                        outline: none !important;
+                    }
+                </style>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="row footer-alignment-fix">
+                            <div class="col-md-3">
+                                <img class="img-responsive center-xs" alt="Maliban Logo"
+                                    src="/wp-content/uploads/local-cache/theme/images-min/common/logo-footer.png"
+                                    width="150" height="68" loading="lazy" decoding="async">
+                            </div>
+                            <div class="col-md-9">
+                                <p style="color: #fff; font-size: 16px">ISO 9001, ISO 14001, ISO 22000, ISO 45001,
+                                    14064-1, BRCGS and FSSC 22000 certified company</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                            <!--<div class="btn-group" role="group">
+    						<a href="/contact-us" class="btn btn-default footer-menu bg-trans border-trans" style="color:#f3f0e7">Contact Us</a>
+    					</div>-->
+
+                            <!-- <div class="btn-group" role="group">
+    						<a href="/wp-content/uploads/local-cache/theme/images-min//about/Environmental%20Policy.pdf" class="btn btn-default footer-menu bg-trans border-trans"
+    							style="color:#f3f0e7">Environmental Policy</a>
+    					</div> -->
+
+                            <!-- <div class="btn-group" role="group">
+    						<a href="#" class="btn btn-default footer-menu bg-trans border-trans " style=" color:#f3f0e7">Sitemap</a>
+    					</div> -->
+                            <!-- <div class="btn-group" role="group">
+    						<a href="#" class="btn btn-default footer-menu bg-trans border-trans " style="color:#f3f0e7">Legal</a>
+    					</div> -->
+
+                            <div class="btn-group hidden-xs" role="group">
+                                <a href="/privacy-policy" class="btn btn-default footer-menu bg-trans border-trans "
+                                    style="color:#f3f0e7">Privacy Policy</a>
+                            </div>
+                            <div class="btn-group hidden-xs" role="group">
+                                <a href="/cookie-policy" class="btn btn-default footer-menu bg-trans border-trans "
+                                    style="color:#f3f0e7">Cookie Policy</a>
+                            </div>
+                            <div class="btn-group hidden-xs" role="group">
+                                <a href="/sitemap" class="btn btn-default footer-menu bg-trans border-trans "
+                                    style="color:#f3f0e7">Sitemap</a>
+                            </div>
+                            <div class="btn-group hidden-xs" role="group">
+                                <a href="/faq" class="btn btn-default footer-menu bg-trans border-trans "
+                                    style="color:#f3f0e7">FAQ</a>
+
+                            </div>
+
+                            <!-- <div class="btn-group hidden-xs" role="group">
+    						<a href="#" class="btn btn-default footer-menu bg-trans border-trans "
+    							style="color:#f3f0e7">Feedback</a>
+    					</div> -->
+                        </div>
+
+                        <div class="btn-group btn-group-justified visible-xs" role="group" aria-label="...">
+                            <div class="btn-group" role="group">
+                                <a href="/privacy-policy" class="btn btn-default footer-menu bg-trans border-trans "
+                                    style="color:#f3f0e7">Privacy
+                                    Policy</a>
+                            </div>
+
+                            <div class="btn-group" role="group">
+                                <a href="/cookie-policy" class="btn btn-default footer-menu bg-trans border-trans "
+                                    style="color:#f3f0e7">Cookie
+                                    Policy</a>
+                            </div>
+
+                        </div>
+
+                        <div class="btn-group btn-group-justified visible-xs" role="group" aria-label="...">
+                            <div class="btn-group" role="group">
+                                <a href="/sitemap" class="btn btn-default footer-menu bg-trans border-trans "
+                                    style="color:#f3f0e7">Sitemap</a>
+                            </div>
+
+                            <div class="btn-group" role="group">
+                                <a href="/faq" class="btn btn-default footer-menu bg-trans border-trans "
+                                    style="color:#f3f0e7">FAQ</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="btn-group pull-right sos-icon-line" role="group" aria-label="...">
+
+
+
+                            <p class="btn social-button hidden-xs"
+                                style="margin-right: 3px; color:#ffffff; font-size: 22px;">JOIN US
+                                ON</p>
+
+                            <a aria-label="Visit Maliban Facebook" href="https://www.facebook.com/malibanbiscuits.lk/"
+                                class="btn btn-default social-button bg-trans no-bg"
+                                style="border-right: 2px solid #f3f0e7;" target="_blank"><i class="fa fa-facebook fa-lg"
+                                    aria-hidden="true"></i></a>
+                            <a aria-label="Visit Maliban LinkedIn"
+                                href="https://www.linkedin.com/company/maliban/?originalSubdomain=lk"
+                                class="btn btn-default social-button bg-trans no-bg"
+                                style="border-right: 2px solid #f3f0e7;" target="_blank"><i class="fa fa-linkedin fa-lg"
+                                    aria-hidden="true"></i></a>
+                            <a aria-label="Visit Maliban Instagram" href="https://www.instagram.com/malibanbiscuits/"
+                                class="btn btn-default social-button bg-trans no-bg"
+                                style="border-right: 2px solid #f3f0e7;" target="_blank"><i
+                                    class="fa fa-instagram fa-lg" aria-hidden="true"></i></a>
+                            <!-- <a href="#" class="btn btn-default social-button bg-trans no-bg"
+    						style=" border-right: 2px solid #f3f0e7;"><i class="fa fa-google-plus fa-lg" aria-hidden="true"></i></a>
+    					<a href="#" class="btn btn-default social-button bg-trans no-bg"
+    						style=" border-right: 2px solid #f3f0e7;"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a>
+    					<a href="#" class="btn btn-default social-button bg-trans no-bg"
+    						style=" border-right: 2px solid #f3f0e7;"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a> -->
+                            <a aria-label="Visit Maliban YouTube"
+                                href="https://www.youtube.com/channel/UCB9vVJw46JNnY4-wQYgrcYQ"
+                                class="btn btn-default social-button bg-trans no-bg" target="_blank"><i
+                                    class="fa fa-youtube fa-lg" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+
+                        <!--bestweb logo-->
+
+                        <div class="clearfix"></div>
+                        <p class=" text-right status-ft hidden-xs"
+                            style="margin-right: 3px; color:#ffffff; margin-top:10px;">©
+                            2026 Maliban Biscuit Manufactories (Pvt) Limited <a class="web-design-by"
+                                style="padding-left: 20px;" href="http://www.3cs.lk/" target="_blank">Web Design
+                                by&nbsp;3CS</a>
+                        </p>
+                        <p class=" text-center status-ft visible-xs"
+                            style="margin-right: 3px; color:#ffffff; margin-top:10px;">©
+                            2026 Maliban Biscuit Manufactories (Pvt) Limited | <a class="web-design-by"
+                                style="padding-left: 20px;" href="http://www.3cs.lk/" target="_blank">Web Design
+                                by&nbsp;3CS</a>
+                        </p>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+    <script src="js/group-main.js"></script>-->
+        <script src="/wp-content/themes/maliboon/js/vendor/jquery-1.12.4.min.js"></script>
+        <script src="/wp-content/themes/maliboon/js/vendor/bootstrap-3.3.7.min.js"></script>
+        <script src="/wp-content/themes/maliboon/js/group-main.js"></script>
+
+        <script>
+            var btn = $('#button');
+
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 300) {
+                    btn.addClass('show');
+                } else {
+                    btn.removeClass('show');
+                }
+            });
+
+            btn.on('click', function (e) {
+                e.preventDefault();
+                $('html, body').animate({ scrollTop: 0 }, '300');
+            });
+        </script>
+        <script>
+            $('.gmg-sp-header, .gmg-sp-close').click(function () {
+                $('#gmg-side-popup').toggleClass('open');
+            });
+
+            $('#gmg-spf-button').click(function (e) {
+                e.preventDefault();
+                $('#gmg-side-popup-form').fadeIn('fast');
+            });
+
+            $('.gmg-spf-overlay, .gmg-spf-close').click(function () {
+                $('#gmg-side-popup-form').fadeOut('fast');
+            });
+        </script>
+        <!-- Script to Activate the Carousel -->
+        <script>
+            $(function () {
+                var $carousel = $('#my-pics');
+
+                if ($carousel.length && $carousel.find('.item').length > 0) {
+                    $carousel.carousel({
+                        interval: 5000
+                    });
+                }
+
+                $('.scroll-down').on('click', function () {
+                    var $target = $('section.ok');
+
+                    if ($target.length) {
+                        $('html, body').animate({
+                            scrollTop: $target.offset().top
+                        }, 'slow');
+                    }
+
+                    return false;
+                });
+
+                if ($.fn.affix && $('nav').length) {
+                    $('nav').affix({
+                        offset: {
+                            top: 205
+                        }
+                    });
+                }
+            });
+        </script>
+
+
+        <!--<script src="https://cdn.enable.co.il/licenses/enable-L8443s2wcpftljz-0421-46809/init.js"></script>-->
+        <script>
+            (function () {
+                var quickSearchForm = document.getElementById('quickSearchForm');
+
+                if (!quickSearchForm) {
+                    return;
+                }
+
+                quickSearchForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    var queryInput = document.getElementById('quickSearchInput');
+                    var feedback = document.getElementById('quickSearchFeedback');
+
+                    if (!queryInput || !feedback) {
+                        return;
+                    }
+
+                    var query = queryInput.value.trim();
+
+                    if (!query) {
+                        feedback.innerHTML = '<p>Please enter a search term.<\/p>';
+                        return;
+                    }
+
+                    fetch('/wp-json/custom/v1/search?s=' + encodeURIComponent(query))
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (data) {
+                            if (data.length === 1) {
+                                window.location.href = data[0].link;
+                            } else if (data.length > 1) {
+                                feedback.innerHTML = '<p>Multiple matches found. Please be more specific.<\/p>';
+                            } else {
+                                feedback.innerHTML = '<p>No page found for "' + query + '".<\/p>';
+                            }
+                        })
+                        .catch(function () {
+                            feedback.innerHTML = '<p>Something went wrong. Try again.<\/p>';
+                        });
+                });
+            })();
+        </script>
+
+
+        <script>
+            (function () {
+                var enableObserverStarted = false;
+                var enableObserver = null;
+                var enableScriptLoaded = false;
+
+                function cleanText(el) {
+                    return (el && el.textContent ? el.textContent : "")
+                        .replace(/\s+/g, " ")
+                        .trim();
+                }
+
+                function setAttr(el, name, value) {
+                    if (el && el.getAttribute(name) !== value) {
+                        el.setAttribute(name, value);
+                    }
+                }
+
+                function setAccessibleName(el, label) {
+                    if (!el) return;
+                    setAttr(el, "aria-label", label);
+                    setAttr(el, "title", label);
+                }
+
+                function removeBrokenAriaLabelledBy(el, fallbackLabel) {
+                    if (!el || !el.hasAttribute("aria-labelledby")) return;
+
+                    var ids = el.getAttribute("aria-labelledby").split(/\s+/).filter(Boolean);
+                    var hasValidId = ids.some(function (id) {
+                        return document.getElementById(id);
+                    });
+
+                    if (!hasValidId) {
+                        el.removeAttribute("aria-labelledby");
+                        setAccessibleName(el, fallbackLabel);
+                    }
+                }
+
+                function getEnableLabel(el) {
+                    var text = cleanText(el);
+                    var cls = (el.className || "").toString().toLowerCase();
+                    var lang = (el.getAttribute("data-enable-lang") || "").toLowerCase();
+
+                    if (lang === "en_us") return "Switch accessibility language to English";
+                    if (lang === "he_il") return "Switch accessibility language to Hebrew";
+                    if (text) return text;
+
+                    if (cls.indexOf("tr-trigger") !== -1) return "Switch accessibility language";
+                    if (cls.indexOf("close") !== -1) return "Close accessibility toolbar";
+                    if (cls.indexOf("stopblinks") !== -1) return "Stop blinking content";
+                    if (cls.indexOf("monochrome") !== -1) return "Enable monochrome mode";
+                    if (cls.indexOf("sepia") !== -1) return "Enable sepia mode";
+                    if (cls.indexOf("highcontrast") !== -1) return "Enable high contrast mode";
+                    if (cls.indexOf("blackyellow") !== -1) return "Enable black and yellow contrast";
+                    if (cls.indexOf("invert") !== -1) return "Invert colors";
+                    if (cls.indexOf("highlightstitles") !== -1) return "Highlight titles";
+                    if (cls.indexOf("highlightslinks") !== -1) return "Highlight links";
+                    if (cls.indexOf("tooltipvisible") !== -1) return "Show tooltips";
+                    if (cls.indexOf("readablefonts") !== -1) return "Use readable fonts";
+                    if (cls.indexOf("increasefont") !== -1) return "Increase font size";
+                    if (cls.indexOf("decreasefont") !== -1) return "Decrease font size";
+                    if (cls.indexOf("zoomincrease") !== -1) return "Increase zoom";
+                    if (cls.indexOf("zoomdecrease") !== -1) return "Decrease zoom";
+
+                    return "Accessibility option";
+                }
+
+                function fixEnableAccessibilityIssues() {
+                    var toolbar = document.getElementById("enable-toolbar-buttons");
+
+                    if (toolbar) {
+                        toolbar.removeAttribute("aria-labelledby");
+                        toolbar.setAttribute("aria-label", "Accessibility toolbar");
+                        toolbar.setAttribute("title", "Accessibility toolbar");
+                        toolbar.setAttribute("role", "menu");
+                    }
+
+                    var enableModal = document.getElementById("enable-modal");
+
+                    if (enableModal) {
+                        enableModal.removeAttribute("aria-labelledby");
+                        setAccessibleName(enableModal, "Accessibility settings");
+                    }
+
+                    var trigger =
+                        document.getElementById("enable-toolbar-trigger") ||
+                        document.querySelector(".enable-toolbar-trigger, [class*='enable-toolbar-trigger']");
+
+                    if (trigger) {
+                        setAccessibleName(trigger, "Open accessibility toolbar");
+                    }
+
+                    document.querySelectorAll("[role='dialog'], [role='alertdialog']").forEach(function (dialog) {
+                        removeBrokenAriaLabelledBy(dialog, "Accessibility dialog");
+
+                        if (!dialog.getAttribute("aria-label") && !dialog.getAttribute("aria-labelledby")) {
+                            setAccessibleName(dialog, "Accessibility dialog");
+                        }
+                    });
+
+                    document.querySelectorAll(
+                        "#enable-toolbar [role='menuitem'], #enable-toolbar-buttons [role='menuitem'], #enable-toolbar-links [role='menuitem'], #enable-modal [role='menuitem'], li[class*='enable-button'][role='menuitem']"
+                    ).forEach(function (item) {
+                        var label = getEnableLabel(item);
+
+                        item.setAttribute("role", "menuitem");
+                        item.setAttribute("tabindex", "0");
+
+                        setAccessibleName(item, label);
+                        removeBrokenAriaLabelledBy(item, label);
+                    });
+
+                    document.querySelectorAll(
+                        "#enable-toolbar button, #enable-toolbar-links button, #enable-modal button, button[class*='enable'], button.tr-trigger"
+                    ).forEach(function (button) {
+                        setAccessibleName(button, getEnableLabel(button));
+                    });
+
+                    document.querySelectorAll(
+                        "#enable-toolbar a, #enable-toolbar-links a, #enable-modal a, a[class*='enable']"
+                    ).forEach(function (link) {
+                        setAccessibleName(link, getEnableLabel(link));
+                    });
+
+                    document.querySelectorAll("[aria-labelledby]").forEach(function (el) {
+                        removeBrokenAriaLabelledBy(el, cleanText(el) || "Accessibility element");
+                    });
+                }
+
+                function startEnableObserver() {
+                    if (enableObserverStarted || !document.body) return;
+
+                    enableObserverStarted = true;
+
+                    enableObserver = new MutationObserver(function () {
+                        window.requestAnimationFrame(fixEnableAccessibilityIssues);
+                    });
+
+                    enableObserver.observe(document.body, {
+                        childList: true,
+                        subtree: true,
+                        attributes: true,
+                        attributeFilter: ["aria-labelledby", "role", "id", "class", "data-enable-lang", "aria-label"]
+                    });
+
+                    setTimeout(function () {
+                        if (enableObserver) {
+                            enableObserver.disconnect();
+                        }
+                    }, 45000);
+                }
+
+                function loadEnableWidget() {
+                    if (enableScriptLoaded) return;
+
+                    enableScriptLoaded = true;
+
+                    var enableScript = document.createElement("script");
+                    enableScript.src = "https://cdn.enable.co.il/licenses/enable-L8443s2wcpftljz-0421-78957/init.js";
+                    enableScript.async = true;
+
+                    enableScript.onload = function () {
+                        fixEnableAccessibilityIssues();
+                        startEnableObserver();
+
+                        setTimeout(fixEnableAccessibilityIssues, 500);
+                        setTimeout(fixEnableAccessibilityIssues, 1500);
+                        setTimeout(fixEnableAccessibilityIssues, 3000);
+                        setTimeout(fixEnableAccessibilityIssues, 6000);
+                        setTimeout(fixEnableAccessibilityIssues, 10000);
+                        setTimeout(fixEnableAccessibilityIssues, 15000);
+                        setTimeout(fixEnableAccessibilityIssues, 25000);
+                        setTimeout(fixEnableAccessibilityIssues, 35000);
+                    };
+
+                    document.body.appendChild(enableScript);
+                    startEnableObserver();
+                }
+
+                window.addEventListener("load", function () {
+                    ["scroll", "mousemove", "touchstart", "keydown"].forEach(function (eventName) {
+                        window.addEventListener(eventName, loadEnableWidget, {
+                            once: true,
+                            passive: true
+                        });
+                    });
+                });
+            })();
+        </script>
+
+        <!-- Keep old direct Enable script commented -->
+        <!--<script src="https://cdn.enable.co.il/licenses/enable-L8443s2wcpftljz-0421-46809/init.js"></script>-->
+
+
+
+
+        <script>
+            (function () {
+                var typekitLoaded = false;
+
+                function loadTypekitAfterInitialRender() {
+                    if (typekitLoaded) return;
+                    typekitLoaded = true;
+
+                    var typekitScript = document.createElement('script');
+                    typekitScript.src = 'https://use.typekit.net/yzd0zyt.js';
+                    typekitScript.async = true;
+
+                    typekitScript.onload = function () {
+                        try {
+                            Typekit.load({
+                                async: true,
+                                timeout: 1000
+                            });
+                        } catch (e) { }
+                    };
+
+                    document.body.appendChild(typekitScript);
+                }
+
+                window.addEventListener('load', function () {
+                    setTimeout(loadTypekitAfterInitialRender, 6000);
+                });
+
+                ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach(function (eventName) {
+                    window.addEventListener(eventName, loadTypekitAfterInitialRender, {
+                        once: true,
+                        passive: true
+                    });
+                });
+            })();
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
