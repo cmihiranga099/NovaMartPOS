@@ -171,7 +171,7 @@ namespace NovaMartPOS.API
                         partitionKey: httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown",
                         factory: _ => new FixedWindowRateLimiterOptions
                         {
-                            PermitLimit = 5,
+                            PermitLimit = 30,
                             Window = TimeSpan.FromMinutes(1),
                             QueueLimit = 0
                         }));
@@ -220,7 +220,7 @@ namespace NovaMartPOS.API
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher>();
 
-                if (!db.Users.Any())
+                if (!db.Users.Any(u => u.Username == "admin"))
                 {
                     db.Users.Add(new User
                     {
@@ -231,8 +231,44 @@ namespace NovaMartPOS.API
                         IsActive = true,
                         PinHash = hasher.Hash("1234")
                     });
-                    db.SaveChanges();
                 }
+                if (!db.Users.Any(u => u.Username == "manager"))
+                {
+                    db.Users.Add(new User
+                    {
+                        FullName = "Store Manager",
+                        Username = "manager",
+                        PasswordHash = hasher.Hash("Manager@123"),
+                        Role = UserRole.Manager,
+                        IsActive = true,
+                        PinHash = hasher.Hash("5678")
+                    });
+                }
+                if (!db.Users.Any(u => u.Username == "cashier"))
+                {
+                    db.Users.Add(new User
+                    {
+                        FullName = "Kasun Perera (Cashier 1)",
+                        Username = "cashier",
+                        PasswordHash = hasher.Hash("Cashier@123"),
+                        Role = UserRole.Cashier,
+                        IsActive = true,
+                        PinHash = hasher.Hash("1111")
+                    });
+                }
+                if (!db.Users.Any(u => u.Username == "cashier2"))
+                {
+                    db.Users.Add(new User
+                    {
+                        FullName = "Nadeesha Silva (Cashier 2)",
+                        Username = "cashier2",
+                        PasswordHash = hasher.Hash("Cashier@123"),
+                        Role = UserRole.Cashier,
+                        IsActive = true,
+                        PinHash = hasher.Hash("2222")
+                    });
+                }
+                db.SaveChanges();
                 if (!db.Customers.Any())
                 {
                     db.Customers.Add(new Customer
