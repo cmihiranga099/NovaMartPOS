@@ -210,7 +210,8 @@
     "searchPlaceholder": "සැපයුම්කරුවන් සොයන්න...",
     "noneFound": "සැපයුම්කරුවන් හමු නොවීය",
     "getStarted": "ආරම්භ කිරීමට ඔබේ පළමු සැපයුම්කරු එකතු කරන්න.",
-    "noContactInfo": "සම්බන්ධතා තොරතුරු නැත"
+    "noContactInfo": "සම්බන්ධතා තොරතුරු නැත",
+    "logoUrl": "ලාංඡන URL (SVG / PNG)"
   },
   "customers": {
     "title": "පාරිභෝගිකයන්",

@@ -210,7 +210,8 @@
     "searchPlaceholder": "Search suppliers...",
     "noneFound": "No suppliers found",
     "getStarted": "Add your first supplier to get started.",
-    "noContactInfo": "No contact info"
+    "noContactInfo": "No contact info",
+    "logoUrl": "Logo URL (SVG / PNG)"
   },
   "customers": {
     "title": "Customers",
