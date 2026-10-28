@@ -4,5 +4,5 @@ namespace NovaMartPOS.Application.Interfaces;
 
 public interface IReturnService
 {
-    Task<(ReturnDto? Result, string? Error)> ProcessReturnAsync(CreateReturnDto dto);
+    Task<(ReturnDto? Result, string? Error)> ProcessReturnAsync(CreateReturnDto dto, int? cashierId = null);
 }

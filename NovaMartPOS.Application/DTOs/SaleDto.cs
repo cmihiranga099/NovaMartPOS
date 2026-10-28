@@ -63,6 +63,8 @@ public class SaleDto
     public string PaymentMethod { get; set; } = string.Empty;
     public int CustomerId { get; set; }
     public string CustomerName { get; set; } = string.Empty;
+    public int LoyaltyPointsEarned { get; set; }
+    public int CustomerLoyaltyBalance { get; set; }
     public int CashierId { get; set; }
     public string CashierName { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
