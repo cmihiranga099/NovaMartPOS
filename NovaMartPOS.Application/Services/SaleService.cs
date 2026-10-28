@@ -9,17 +9,20 @@ public class SaleService : ISaleService
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IProductRepository _productRepository;
+    private readonly ICustomerRepository _customerRepository;
     private readonly IPromotionService _promotionService;
     private readonly INotificationService _notificationService;
 
     public SaleService(
         ISaleRepository saleRepository,
         IProductRepository productRepository,
+        ICustomerRepository customerRepository,
         IPromotionService promotionService,
         INotificationService notificationService)
     {
         _saleRepository = saleRepository;
         _productRepository = productRepository;
+        _customerRepository = customerRepository;
         _promotionService = promotionService;
         _notificationService = notificationService;
     }
@@ -175,10 +178,34 @@ public class SaleService : ISaleService
             });
         }
 
+        // Accrue loyalty points for registered customers (1 point per Rs. 100 spent)
+        int loyaltyPointsEarned = 0;
+        int customerLoyaltyBalance = 0;
+        if (dto.CustomerId > 0)
+        {
+            var customer = await _customerRepository.GetByIdAsync(dto.CustomerId);
+            if (customer != null && !customer.Name.Equals("Walk-in Customer", StringComparison.OrdinalIgnoreCase))
+            {
+                loyaltyPointsEarned = (int)(grandTotal / 100m);
+                if (loyaltyPointsEarned > 0)
+                {
+                    customer.LoyaltyPoints += loyaltyPointsEarned;
+                    customer.UpdatedAt = DateTime.UtcNow;
+                    await _customerRepository.UpdateAsync(customer);
+                }
+                customerLoyaltyBalance = customer.LoyaltyPoints;
+            }
+        }
+
         await _saleRepository.CreateSaleAsync(sale, stockTransactions);
 
         var saved = await _saleRepository.GetByIdWithDetailsAsync(sale.Id);
         var saleDto = MapToDto(saved!);
+        saleDto.LoyaltyPointsEarned = loyaltyPointsEarned;
+        if (customerLoyaltyBalance > 0)
+        {
+            saleDto.CustomerLoyaltyBalance = customerLoyaltyBalance;
+        }
 
         try
         {
@@ -212,6 +239,11 @@ public class SaleService : ISaleService
             ? string.Join(" + ", s.Payments.Select(p => p.Method.ToString()).Distinct())
             : "Cash";
 
+        int pointsEarned = (s.Customer != null && !s.Customer.Name.Equals("Walk-in Customer", StringComparison.OrdinalIgnoreCase))
+            ? (int)(s.GrandTotal / 100m)
+            : 0;
+        int loyaltyBalance = s.Customer?.LoyaltyPoints ?? 0;
+
         return new SaleDto
         {
             Id = s.Id,
@@ -227,6 +259,8 @@ public class SaleService : ISaleService
             PaymentMethod = methods,
             CustomerId = s.CustomerId,
             CustomerName = s.Customer?.Name ?? string.Empty,
+            LoyaltyPointsEarned = pointsEarned,
+            CustomerLoyaltyBalance = loyaltyBalance,
             CashierId = s.CashierId,
             CashierName = s.Cashier?.FullName ?? string.Empty,
             CreatedAt = s.CreatedAt,

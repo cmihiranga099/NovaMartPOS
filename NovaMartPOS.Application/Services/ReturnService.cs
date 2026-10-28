@@ -14,7 +14,7 @@ public class ReturnService : IReturnService
         _returnRepository = returnRepository;
     }
 
-    public async Task<(ReturnDto? Result, string? Error)> ProcessReturnAsync(CreateReturnDto dto)
+    public async Task<(ReturnDto? Result, string? Error)> ProcessReturnAsync(CreateReturnDto dto, int? cashierId = null)
     {
         if (dto.Items is null || dto.Items.Count == 0)
             return (null, "No items specified for return.");
@@ -51,7 +51,7 @@ public class ReturnService : IReturnService
                 SaleItemId = saleItem.Id,
                 Quantity = itemReq.Quantity,
                 RefundAmount = refundAmount,
-                Reason = itemReq.Reason
+                Reason = itemReq.Reason ?? dto.Reason
             });
 
             var product = saleItem.Product!;
@@ -72,6 +72,9 @@ public class ReturnService : IReturnService
         {
             SaleId = sale.Id,
             TotalRefund = totalRefund,
+            ProcessedByCashierId = cashierId,
+            ApprovedBy = dto.ApprovedBy,
+            Reason = dto.Reason,
             ReturnItems = returnItems
         };
 
@@ -83,6 +86,9 @@ public class ReturnService : IReturnService
             SaleId = sale.Id,
             InvoiceNumber = sale.InvoiceNumber,
             TotalRefund = totalRefund,
+            ProcessedByCashierId = cashierId,
+            ApprovedBy = dto.ApprovedBy,
+            Reason = dto.Reason,
             CreatedAt = returnRecord.CreatedAt,
             Items = returnItems.Select(ri => new ReturnItemDto
             {

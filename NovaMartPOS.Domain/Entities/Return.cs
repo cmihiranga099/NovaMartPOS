@@ -7,5 +7,11 @@ public class Return : BaseEntity
 
     public decimal TotalRefund { get; set; }
 
+    public int? ProcessedByCashierId { get; set; }
+    public User? ProcessedByCashier { get; set; }
+
+    public string? ApprovedBy { get; set; }
+    public string? Reason { get; set; }
+
     public ICollection<ReturnItem> ReturnItems { get; set; } = new List<ReturnItem>();
 }
