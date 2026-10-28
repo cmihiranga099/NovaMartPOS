@@ -24,29 +24,13 @@ public class ShiftRepository : IShiftRepository
             .FirstOrDefaultAsync(s => s.CashierId == cashierId && s.Status == ShiftStatus.Open);
     }
 
-    public async Task<Shift?> GetByIdWithDetailsAsync(int shiftId)
+    public async Task<Shift?> GetByIdWithDetailsAsync(int id)
     {
         return await _context.Shifts
             .Include(s => s.Cashier)
             .Include(s => s.CashMovements)
                 .ThenInclude(cm => cm.User)
-            .FirstOrDefaultAsync(s => s.Id == shiftId);
-    }
-
-    public async Task<List<Shift>> GetAllAsync(DateTime? from = null, DateTime? to = null)
-    {
-        var query = _context.Shifts
-            .Include(s => s.Cashier)
-            .Include(s => s.CashMovements)
-            .AsQueryable();
-
-        if (from.HasValue)
-            query = query.Where(s => s.StartTime >= from.Value);
-
-        if (to.HasValue)
-            query = query.Where(s => s.StartTime <= to.Value);
-
-        return await query.OrderByDescending(s => s.StartTime).ToListAsync();
+            .FirstOrDefaultAsync(s => s.Id == id);
     }
 
     public async Task<Shift> CreateAsync(Shift shift)
@@ -69,11 +53,28 @@ public class ShiftRepository : IShiftRepository
         return movement;
     }
 
+    public async Task<List<Shift>> GetAllAsync(DateTime? from = null, DateTime? to = null)
+    {
+        var query = _context.Shifts
+            .Include(s => s.Cashier)
+            .Include(s => s.CashMovements)
+                .ThenInclude(cm => cm.User)
+            .AsNoTracking()
+            .AsQueryable();
+
+        if (from.HasValue)
+            query = query.Where(s => s.StartTime >= from.Value);
+
+        if (to.HasValue)
+            query = query.Where(s => s.StartTime <= to.Value);
+
+        return await query.OrderByDescending(s => s.StartTime).ToListAsync();
+    }
+
     public async Task<List<Sale>> GetSalesInShiftAsync(DateTime startTime, DateTime? endTime, int? cashierId = null)
     {
         var query = _context.Sales
             .Include(s => s.Payments)
-            .Include(s => s.SaleItems)
             .Where(s => s.CreatedAt >= startTime);
 
         if (endTime.HasValue)
@@ -95,7 +96,7 @@ public class ShiftRepository : IShiftRepository
             query = query.Where(r => r.CreatedAt <= endTime.Value);
 
         if (cashierId.HasValue)
-            query = query.Where(r => r.Sale.CashierId == cashierId.Value);
+            query = query.Where(r => (r.ProcessedByCashierId.HasValue ? r.ProcessedByCashierId == cashierId.Value : r.Sale.CashierId == cashierId.Value));
 
         return await query.ToListAsync();
     }

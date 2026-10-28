@@ -16,9 +16,23 @@ public class SaleRepository : ISaleRepository
 
     public async Task<string> GenerateInvoiceNumberAsync()
     {
-        var count = await _context.Sales.CountAsync();
-        var next = count + 1;
-        return $"INV-{DateTime.UtcNow:yyyyMMdd}-{next:D5}";
+        var todayPrefix = $"INV-{DateTime.UtcNow:yyyyMMdd}-";
+        var lastInvoiceToday = await _context.Sales
+            .Where(s => s.InvoiceNumber.StartsWith(todayPrefix))
+            .OrderByDescending(s => s.InvoiceNumber)
+            .Select(s => s.InvoiceNumber)
+            .FirstOrDefaultAsync();
+
+        int nextSeq = 1;
+        if (lastInvoiceToday is not null && lastInvoiceToday.Length >= todayPrefix.Length)
+        {
+            var rawSeq = lastInvoiceToday.Substring(todayPrefix.Length);
+            var seqPart = rawSeq.Contains('-') ? rawSeq.Split('-')[0] : rawSeq;
+            if (int.TryParse(seqPart, out var parsed))
+                nextSeq = parsed + 1;
+        }
+
+        return $"{todayPrefix}{nextSeq:D5}";
     }
 
     public async Task CreateSaleAsync(Sale sale, List<StockTransaction> stockTransactions)
