@@ -50,6 +50,8 @@ export interface SaleResult {
   paymentMethod: string;
   customerId: number;
   customerName: string;
+  loyaltyPointsEarned?: number;
+  customerLoyaltyBalance?: number;
   cashierId: number;
   cashierName: string;
   createdAt: string;

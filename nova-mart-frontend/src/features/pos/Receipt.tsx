@@ -41,6 +41,7 @@ export default function Receipt({ sale }: { sale: SaleResult }) {
         <p className="font-bold text-sm tracking-wide uppercase">{shopInfo.name}</p>
         <p className="text-[10px]">{shopInfo.address}</p>
         <p className="text-[10px]">Tel: {shopInfo.phone}</p>
+        <p className="text-[9px] text-gray-700">TIN: {shopInfo.tin} | VAT Reg: {shopInfo.vatRegNo}</p>
       </div>
 
       {/* Meta block: cashier / order no */}
@@ -134,6 +135,22 @@ export default function Receipt({ sale }: { sale: SaleResult }) {
         <span>BALANCE</span>
         <span>{sale.change.toFixed(2)}</span>
       </div>
+
+      {sale.customerName && sale.customerName !== 'Walk-in Customer' && (
+        <>
+          <Dots />
+          <div className="text-[10px] space-y-0.5">
+            <div className="flex justify-between font-bold">
+              <span>LOYALTY POINTS EARNED</span>
+              <span>+{sale.loyaltyPointsEarned ?? 0}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>TOTAL LOYALTY BALANCE</span>
+              <span>{sale.customerLoyaltyBalance ?? 0} pts</span>
+            </div>
+          </div>
+        </>
+      )}
 
       <Dots />
 
