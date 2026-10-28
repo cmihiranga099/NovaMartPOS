@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NovaMartPOS.Application.DTOs;
@@ -19,19 +20,28 @@ public class ReturnsController : ControllerBase
         _authService = authService;
     }
 
-    // Voiding items off a completed sale. A Cashier may only do this with a
-    // Manager/Administrator's PIN approving it — enforced here, not just hidden in the UI.
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateReturnDto dto)
     {
+        int? cashierId = null;
+        var cashierIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (int.TryParse(cashierIdClaim, out var parsedId))
+            cashierId = parsedId;
+
         if (User.IsInRole("Cashier"))
         {
             var pinCheck = await _authService.VerifyManagerPinAsync(dto.ManagerOverridePin ?? string.Empty);
             if (!pinCheck.Approved)
-                return StatusCode(403, new { message = "Manager approval is required to process a return." });
+                return StatusCode(403, new { message = "Manager approval PIN is required to process a return." });
+
+            dto.ApprovedBy = pinCheck.ApprovedBy;
+        }
+        else
+        {
+            dto.ApprovedBy = User.Identity?.Name ?? "Manager";
         }
 
-        var (result, error) = await _service.ProcessReturnAsync(dto);
+        var (result, error) = await _service.ProcessReturnAsync(dto, cashierId);
         if (error is not null)
             return BadRequest(new { message = error });
 

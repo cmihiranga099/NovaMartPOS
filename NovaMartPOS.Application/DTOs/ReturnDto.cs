@@ -13,6 +13,8 @@ public class CreateReturnDto
     public List<ReturnItemRequestDto> Items { get; set; } = new();
     
     public string? ManagerOverridePin { get; set; }
+    public string? ApprovedBy { get; set; }
+    public string? Reason { get; set; }
 }
 
 public class ReturnItemDto
@@ -31,6 +33,9 @@ public class ReturnDto
     public int SaleId { get; set; }
     public string InvoiceNumber { get; set; } = string.Empty;
     public decimal TotalRefund { get; set; }
+    public int? ProcessedByCashierId { get; set; }
+    public string? ApprovedBy { get; set; }
+    public string? Reason { get; set; }
     public DateTime CreatedAt { get; set; }
     public List<ReturnItemDto> Items { get; set; } = new();
 }
