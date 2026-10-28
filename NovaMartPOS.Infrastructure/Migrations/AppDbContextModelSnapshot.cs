@@ -414,8 +414,19 @@ namespace NovaMartPOS.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ApprovedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("ProcessedByCashierId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<int>("SaleId")
                         .HasColumnType("int");
@@ -427,6 +438,10 @@ namespace NovaMartPOS.Infrastructure.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedAt");
+
+                    b.HasIndex("ProcessedByCashierId");
 
                     b.HasIndex("SaleId");
 
@@ -517,6 +532,8 @@ namespace NovaMartPOS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CashierId");
+
+                    b.HasIndex("CreatedAt");
 
                     b.HasIndex("CustomerId");
 
@@ -643,7 +660,7 @@ namespace NovaMartPOS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId", "CreatedAt");
 
                     b.ToTable("StockTransactions");
                 });
@@ -826,11 +843,18 @@ namespace NovaMartPOS.Infrastructure.Migrations
 
             modelBuilder.Entity("NovaMartPOS.Domain.Entities.Return", b =>
                 {
+                    b.HasOne("NovaMartPOS.Domain.Entities.User", "ProcessedByCashier")
+                        .WithMany()
+                        .HasForeignKey("ProcessedByCashierId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("NovaMartPOS.Domain.Entities.Sale", "Sale")
                         .WithMany()
                         .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ProcessedByCashier");
 
                     b.Navigation("Sale");
                 });

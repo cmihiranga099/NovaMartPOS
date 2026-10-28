@@ -67,6 +67,18 @@ public class AppDbContext : DbContext
             .Property(p => p.MaxDiscountAmount).HasColumnType("decimal(18,2)");
 
         modelBuilder.Entity<Return>().Property(r => r.TotalRefund).HasColumnType("decimal(18,2)");
+        modelBuilder.Entity<Return>()
+            .HasOne(r => r.ProcessedByCashier)
+            .WithMany()
+            .HasForeignKey(r => r.ProcessedByCashierId)
+            .OnDelete(DeleteBehavior.Restrict);
+        modelBuilder.Entity<Return>()
+            .Property(r => r.ApprovedBy).HasMaxLength(150);
+        modelBuilder.Entity<Return>()
+            .Property(r => r.Reason).HasMaxLength(250);
+        modelBuilder.Entity<Return>().HasIndex(r => r.CreatedAt);
+        modelBuilder.Entity<Sale>().HasIndex(s => s.CreatedAt);
+        modelBuilder.Entity<StockTransaction>().HasIndex(st => new { st.ProductId, st.CreatedAt });
         modelBuilder.Entity<ReturnItem>().Property(ri => ri.RefundAmount).HasColumnType("decimal(18,2)");    
 
         modelBuilder.Entity<PurchaseOrder>()
